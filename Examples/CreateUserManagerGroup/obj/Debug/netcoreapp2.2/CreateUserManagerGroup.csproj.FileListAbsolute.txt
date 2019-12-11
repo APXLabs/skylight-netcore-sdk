@@ -1,0 +1,10 @@
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp2.2\CreateUserManagerGroup.deps.json
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp2.2\CreateUserManagerGroup.runtimeconfig.json
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp2.2\CreateUserManagerGroup.runtimeconfig.dev.json
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp2.2\CreateUserManagerGroup.dll
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp2.2\CreateUserManagerGroup.pdb
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\obj\Debug\netcoreapp2.2\CreateUserManagerGroup.csprojAssemblyReference.cache
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\obj\Debug\netcoreapp2.2\CreateUserManagerGroup.AssemblyInfoInputs.cache
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\obj\Debug\netcoreapp2.2\CreateUserManagerGroup.AssemblyInfo.cs
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\obj\Debug\netcoreapp2.2\CreateUserManagerGroup.dll
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\obj\Debug\netcoreapp2.2\CreateUserManagerGroup.pdb

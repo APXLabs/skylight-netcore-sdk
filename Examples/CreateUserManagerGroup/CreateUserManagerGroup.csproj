@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>  
+    <StartupObject>CreateUserManagerGroup.Program</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0-rc1.19456.10" />
+      <PackageReference Include="nunit" Version="3.11.0" />
+      <PackageReference Include="NUnit3TestAdapter" Version="3.11.0" />
+      <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+      <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.6.0-rc1.19456.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+      <ProjectReference Include="..\..\skylight-netcore-api\skylight-netcore-client\Skylight.Client\Skylight.Client.csproj" />
+      <ProjectReference Include="..\..\skylight-netcore-api\skylight-netcore-client\Skylight.Utilities\Skylight.Utilities.csproj" />
+    <ProjectReference Include="..\..\skylight-netcore-api\Skylight\Skylight.csproj" />
+  </ItemGroup>
+
+</Project>
