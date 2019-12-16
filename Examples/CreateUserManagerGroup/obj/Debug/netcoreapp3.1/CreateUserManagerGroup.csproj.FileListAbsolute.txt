@@ -16,8 +16,6 @@ C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\Skylight.dll
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\Skylight.Utilities.dll
-C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\Skylight.pdb
-C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\Skylight.Utilities.pdb
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\obj\Debug\netcoreapp3.1\CreateUserManagerGroup.csproj.CopyComplete
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\NUnit3.TestAdapter.dll
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\NUnit3.TestAdapter.pdb
@@ -120,4 +118,3 @@ C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\Skylight.Client.dll
-C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\Skylight.Client.pdb

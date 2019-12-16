@@ -11,9 +11,9 @@
           "Microsoft.Extensions.Configuration.Json": "3.0.0-rc1.19456.10",
           "Microsoft.NET.Test.Sdk": "15.9.0",
           "NUnit3TestAdapter": "3.11.0",
-          "Skylight": "1.0.0",
-          "Skylight.Client": "1.0.0",
-          "Skylight.Utilities": "1.0.0",
+          "Skylight": "1.0.0-CI-20191211-195421",
+          "Skylight.Client": "1.0.0-CI-20191211-185941",
+          "Skylight.Utilities": "1.0.0-CI-20191211-185941",
           "System.Configuration.ConfigurationManager": "4.6.0-rc1.19456.4",
           "NUnit": "3.11.0"
         },
@@ -589,6 +589,41 @@
         "dependencies": {
           "Microsoft.NETCore.Platforms": "3.0.0-rc1.19456.4",
           "Microsoft.NETCore.Targets": "1.1.0"
+        }
+      },
+      "Skylight/1.0.0-CI-20191211-195421": {
+        "dependencies": {
+          "Skylight.Utilities": "1.0.0-CI-20191211-185941",
+          "System.IdentityModel.Tokens.Jwt": "5.5.0"
+        },
+        "runtime": {
+          "lib/netcoreapp2.2/Skylight.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Skylight.Client/1.0.0-CI-20191211-185941": {
+        "dependencies": {
+          "Skylight.Utilities": "1.0.0-CI-20191211-185941",
+          "System.IdentityModel.Tokens.Jwt": "5.5.0"
+        },
+        "runtime": {
+          "lib/netcoreapp2.2/Skylight.Client.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Skylight.Utilities/1.0.0-CI-20191211-185941": {
+        "dependencies": {
+          "Newtonsoft.Json": "10.0.1"
+        },
+        "runtime": {
+          "lib/netcoreapp2.2/Skylight.Utilities.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       },
       "System.AppContext/4.1.0": {
@@ -1305,32 +1340,6 @@
             "fileVersion": "4.6.24705.1"
           }
         }
-      },
-      "Skylight/1.0.0": {
-        "dependencies": {
-          "Skylight.Utilities": "1.0.0",
-          "System.IdentityModel.Tokens.Jwt": "5.5.0"
-        },
-        "runtime": {
-          "Skylight.dll": {}
-        }
-      },
-      "Skylight.Client/1.0.0": {
-        "dependencies": {
-          "Skylight.Utilities": "1.0.0",
-          "System.IdentityModel.Tokens.Jwt": "5.5.0"
-        },
-        "runtime": {
-          "Skylight.Client.dll": {}
-        }
-      },
-      "Skylight.Utilities/1.0.0": {
-        "dependencies": {
-          "Newtonsoft.Json": "10.0.1"
-        },
-        "runtime": {
-          "Skylight.Utilities.dll": {}
-        }
       }
     }
   },
@@ -1542,6 +1551,27 @@
       "sha512": "sha512-c/qWt2LieNZIj1jGnVNsE2Kl23Ya2aSTBuXMD6V7k9KWr6l16Tqdwq+hJScEpWER9753NWC8h96PaVNY5Ld7Jw==",
       "path": "runtime.native.system/4.3.0",
       "hashPath": "runtime.native.system.4.3.0.nupkg.sha512"
+    },
+    "Skylight/1.0.0-CI-20191211-195421": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Ea3G+0kKMzqADzZXOHd/17j/9iN7U1O279Np13cjApRnTwiF91Nf/7rnkYI41fMD7UbqIh3Qz5ngjkrsL1Y/gw==",
+      "path": "skylight/1.0.0-ci-20191211-195421",
+      "hashPath": "skylight.1.0.0-ci-20191211-195421.nupkg.sha512"
+    },
+    "Skylight.Client/1.0.0-CI-20191211-185941": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-H2ieYv3MBn9GeWAtmrG6Hp66MhBXhyD6c1ARweN3K8AGxfV6MpjTzhqSXhL9F9iXRcZpzjyb2AXl1G3kwgb4pw==",
+      "path": "skylight.client/1.0.0-ci-20191211-185941",
+      "hashPath": "skylight.client.1.0.0-ci-20191211-185941.nupkg.sha512"
+    },
+    "Skylight.Utilities/1.0.0-CI-20191211-185941": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-cd8SPVlSAF9tJnUXmWljpkqGPHGLUkXbXVM0+iXdKdtqBSsBpEVTdpCk9dALVxlJCeNaHfElDhSpDxiyZujg6w==",
+      "path": "skylight.utilities/1.0.0-ci-20191211-185941",
+      "hashPath": "skylight.utilities.1.0.0-ci-20191211-185941.nupkg.sha512"
     },
     "System.AppContext/4.1.0": {
       "type": "package",
@@ -2018,21 +2048,6 @@
       "sha512": "sha512-A/uxsWi/Ifzkmd4ArTLISMbfFs6XpRPsXZonrIqyTY70xi8t+mDtvSM5Os0RqyRDobjMBwIDHDL4NOIbkDwf7A==",
       "path": "system.xml.xpath.xmldocument/4.3.0",
       "hashPath": "system.xml.xpath.xmldocument.4.3.0.nupkg.sha512"
-    },
-    "Skylight/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Skylight.Client/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
-    },
-    "Skylight.Utilities/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     }
   }
 }

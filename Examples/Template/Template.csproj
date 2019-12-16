@@ -2,8 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>  
-    <StartupObject>CreateUserManagerGroup.Program</StartupObject>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,5 +16,4 @@
       <PackageReference Include="Skylight.Utilities" Version="1.0.0-CI-20191211-185941" />
       <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.6.0-rc1.19456.4" />
   </ItemGroup>
-
 </Project>
