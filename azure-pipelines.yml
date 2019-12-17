@@ -1,0 +1,60 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  branches: 
+    include: [ "master", "azure-pipelines-integration" ]
+  tags:
+    include: ["v*.*.*"]
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  configuration: 'Release'
+  projectPath: "Skylight.Sdk/Skylight.Sdk.csproj"
+
+stages:
+- stage: Build
+  jobs:
+  - job: BuildJob
+    condition: startsWith(variables['build.sourceBranch'], 'refs/tags/v')
+    steps:
+      - script: VERSION=$(echo $BUILD_SOURCEBRANCH | cut -d '/' -f3 | cut -d 'v' -f2); echo "##vso[task.setvariable variable=version;isOutput=true]$VERSION"
+        displayName: 'Setting Variables'
+        name: skyvars
+
+      - task: UseDotNet@2
+        displayName: 'Installing .NET Core SDK'
+        inputs:
+          packageType: 'sdk'
+          version: '2.x'
+      - task: DotNetCoreCLI@2
+        displayName: 'Building .NET Core SDK'
+        inputs:
+          command: 'build'
+          configuration: $(configuration)
+          projects: $(projectPath)
+      - task: DotNetCoreCLI@2
+        displayName: 'Packing .NET Core SDK'
+        inputs:
+          command: 'pack'
+          packagesToPack: '$(projectPath)'
+          configuration: '$(configuration)'
+          versioningScheme: 'byEnvVar'
+          versionEnvVar: 'skyvars.version'
+      - task: DotNetCoreCLI@2
+        displayName: 'Pushing Nuget Packages to Feed'
+        inputs:
+          command: 'push'
+          packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+          nuGetFeedType: 'internal'
+          publishVstsFeed: '9b9e778e-25b8-4e5e-917a-86b19443baa0/a858f596-3222-4665-afcd-9e45afe45f76'
+      - task: PublishBuildArtifacts@1
+        displayName: 'Pushing Nuget Packages to Artifacts'
+        inputs:
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          ArtifactName: 'drop'
+          publishLocation: 'Container'
