@@ -4,39 +4,24 @@ using System;
 using Microsoft.Extensions.Configuration;
 using Skylight.Client;
 using System.Threading.Tasks;
-using Skylight.Api.Assignments.V1.Models;
+using Skylight.Sdk;
 
 namespace CreateUserManagerGroup
 {
     class Program
     {
-        public static ApiClient ApiClient;
+        public static Manager Manager;
         static async Task Main(string[] args)
         {
-            var path = Directory.GetCurrentDirectory();
-
-            var config = new ConfigurationBuilder()
-                .SetBasePath(Path.Combine(path, ".."))
-                .AddJsonFile("exampleSettings.json")
-                .Build();
+            //Create our manager and point it to our credentials file
+            Manager = new Manager(Path.Combine("..", "..", "credentials.json"));
             
-            var username = config["username"];
-            var password = config["password"];
-            var realm = config["domain"];
-            var apiUri = config["apiUrl"];
-            var mqttUrl = config["mqttUrl"];
-            
-            var connection = new ConnectionInfo(username, password, realm, apiUri);
-            
-            ApiClient = new ApiClient(connection);
-
+            //This is a sample GET request to list all the files in the domain
             var getRequest = new Skylight.Api.Media.V3.GetListFileInfosRequest();
-            var result = await ApiClient.ExecuteRequestAsync(getRequest);
+            var result = await Manager.ApiClient.ExecuteRequestAsync(getRequest);
             foreach(Skylight.Api.Media.V3.Models.FileInfo info in result.Content){
                 Console.WriteLine(info.Filename);
             }
-            Console.WriteLine("End of example");
-            
         }
     }
 }

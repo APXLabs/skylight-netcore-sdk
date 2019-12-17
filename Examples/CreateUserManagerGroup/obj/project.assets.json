@@ -842,10 +842,11 @@
           }
         }
       },
-      "Skylight/1.0.0-CI-20191211-195421": {
+      "Skylight.Api/1.0.7": {
         "type": "package",
         "dependencies": {
-          "Skylight.Utilities": "1.0.0-CI-20191211-185941",
+          "Skylight.Client": "1.0.3",
+          "Skylight.Utilities": "1.0.3",
           "System.IdentityModel.Tokens.Jwt": "5.5.0"
         },
         "compile": {
@@ -855,10 +856,10 @@
           "lib/netcoreapp2.2/Skylight.dll": {}
         }
       },
-      "Skylight.Client/1.0.0-CI-20191211-185941": {
+      "Skylight.Client/1.0.3": {
         "type": "package",
         "dependencies": {
-          "Skylight.Utilities": "1.0.0-CI-20191211-185941",
+          "Skylight.Utilities": "1.0.3",
           "System.IdentityModel.Tokens.Jwt": "5.5.0"
         },
         "compile": {
@@ -868,7 +869,7 @@
           "lib/netcoreapp2.2/Skylight.Client.dll": {}
         }
       },
-      "Skylight.Mqtt/1.0.0-CI-20191211-202250": {
+      "Skylight.Mqtt/1.0.3": {
         "type": "package",
         "dependencies": {
           "MQTTnet": "3.0.8",
@@ -883,7 +884,7 @@
           "lib/netcoreapp2.2/Skylight.Mqtt.dll": {}
         }
       },
-      "Skylight.Utilities/1.0.0-CI-20191211-185941": {
+      "Skylight.Utilities/1.0.3": {
         "type": "package",
         "dependencies": {
           "Newtonsoft.Json": "10.0.1"
@@ -2459,6 +2460,21 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
         }
+      },
+      "Skylight.Sdk/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v2.2",
+        "dependencies": {
+          "Skylight.Api": "1.0.7",
+          "Skylight.Mqtt": "1.0.3",
+          "System.IdentityModel.Tokens.Jwt": "5.5.0"
+        },
+        "compile": {
+          "bin/placeholder/Skylight.Sdk.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Skylight.Sdk.dll": {}
+        }
       }
     }
   },
@@ -3614,47 +3630,47 @@
         "runtimes/ubuntu.16.10-x64/native/System.Security.Cryptography.Native.OpenSsl.so"
       ]
     },
-    "Skylight/1.0.0-CI-20191211-195421": {
-      "sha512": "Ea3G+0kKMzqADzZXOHd/17j/9iN7U1O279Np13cjApRnTwiF91Nf/7rnkYI41fMD7UbqIh3Qz5ngjkrsL1Y/gw==",
+    "Skylight.Api/1.0.7": {
+      "sha512": "gc/aKh7j2iyhoiz0Ga5emSqPVrWh3xSV4tsQqJ9mQImUmrra9wICrqyqX2P9yOkgNxNvjrI51NsHUnNRLB+tpw==",
       "type": "package",
-      "path": "skylight/1.0.0-ci-20191211-195421",
+      "path": "skylight.api/1.0.7",
       "files": [
         ".nupkg.metadata",
         "lib/netcoreapp2.2/Skylight.dll",
-        "skylight.1.0.0-ci-20191211-195421.nupkg.sha512",
-        "skylight.nuspec"
+        "skylight.api.1.0.7.nupkg.sha512",
+        "skylight.api.nuspec"
       ]
     },
-    "Skylight.Client/1.0.0-CI-20191211-185941": {
-      "sha512": "H2ieYv3MBn9GeWAtmrG6Hp66MhBXhyD6c1ARweN3K8AGxfV6MpjTzhqSXhL9F9iXRcZpzjyb2AXl1G3kwgb4pw==",
+    "Skylight.Client/1.0.3": {
+      "sha512": "+NaNGRVFkne+DEy5pp70T/Mgd+t4DVvrFQA0gSHbY4Gtc0Q5ZT120ITCNbPfjrdL0sFCy7C0/J0DeP8tUFmSWw==",
       "type": "package",
-      "path": "skylight.client/1.0.0-ci-20191211-185941",
+      "path": "skylight.client/1.0.3",
       "files": [
         ".nupkg.metadata",
         "lib/netcoreapp2.2/Skylight.Client.dll",
-        "skylight.client.1.0.0-ci-20191211-185941.nupkg.sha512",
+        "skylight.client.1.0.3.nupkg.sha512",
         "skylight.client.nuspec"
       ]
     },
-    "Skylight.Mqtt/1.0.0-CI-20191211-202250": {
-      "sha512": "SzcG7GkMSurrMNwpcDObEzktmByR9vGAiXpwMAcxHZFBzqWrx9tF/SUxU0wNDOae0RMw5LDO0pshI9c2/Y9Rtw==",
+    "Skylight.Mqtt/1.0.3": {
+      "sha512": "wghkC8jnXWAYVX9zWWi9fDg06chWp5AjQ5Z+FDtoGpMANglg59f/7VGl8tDHWGzf0QzK9bNxI6lwzlpTUJ5CCA==",
       "type": "package",
-      "path": "skylight.mqtt/1.0.0-ci-20191211-202250",
+      "path": "skylight.mqtt/1.0.3",
       "files": [
         ".nupkg.metadata",
         "lib/netcoreapp2.2/Skylight.Mqtt.dll",
-        "skylight.mqtt.1.0.0-ci-20191211-202250.nupkg.sha512",
+        "skylight.mqtt.1.0.3.nupkg.sha512",
         "skylight.mqtt.nuspec"
       ]
     },
-    "Skylight.Utilities/1.0.0-CI-20191211-185941": {
-      "sha512": "cd8SPVlSAF9tJnUXmWljpkqGPHGLUkXbXVM0+iXdKdtqBSsBpEVTdpCk9dALVxlJCeNaHfElDhSpDxiyZujg6w==",
+    "Skylight.Utilities/1.0.3": {
+      "sha512": "HY5yCe2Q6fhs3atgr1Hp85QVf5jFatAJ/PHHE4Mib/sZpBfK6rZL1p91/EPchLiBogcoaYfPT2fZR8Qp50IVFw==",
       "type": "package",
-      "path": "skylight.utilities/1.0.0-ci-20191211-185941",
+      "path": "skylight.utilities/1.0.3",
       "files": [
         ".nupkg.metadata",
         "lib/netcoreapp2.2/Skylight.Utilities.dll",
-        "skylight.utilities.1.0.0-ci-20191211-185941.nupkg.sha512",
+        "skylight.utilities.1.0.3.nupkg.sha512",
         "skylight.utilities.nuspec"
       ]
     },
@@ -7897,6 +7913,11 @@
         "system.xml.xpath.xmldocument.4.3.0.nupkg.sha512",
         "system.xml.xpath.xmldocument.nuspec"
       ]
+    },
+    "Skylight.Sdk/1.0.0": {
+      "type": "project",
+      "path": "../../Skylight.Sdk/Skylight.Sdk.csproj",
+      "msbuildProject": "../../Skylight.Sdk/Skylight.Sdk.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -7904,10 +7925,7 @@
       "Microsoft.Extensions.Configuration.Json >= 3.0.0-rc1.19456.10",
       "Microsoft.NET.Test.Sdk >= 15.9.0",
       "NUnit3TestAdapter >= 3.11.0",
-      "Skylight >= 1.0.0-CI-20191211-195421",
-      "Skylight.Client >= 1.0.0-CI-20191211-185941",
-      "Skylight.Mqtt >= 1.0.0-CI-20191211-202250",
-      "Skylight.Utilities >= 1.0.0-CI-20191211-185941",
+      "Skylight.Sdk >= 1.0.0",
       "System.Configuration.ConfigurationManager >= 4.6.0-rc1.19456.4",
       "nunit >= 3.11.0"
     ]
@@ -7942,7 +7960,11 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-sdk\\skylight-netcore-sdk\\Skylight.Sdk\\Skylight.Sdk.csproj": {
+              "projectPath": "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-sdk\\skylight-netcore-sdk\\Skylight.Sdk\\Skylight.Sdk.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -7965,22 +7987,6 @@
           "NUnit3TestAdapter": {
             "target": "Package",
             "version": "[3.11.0, )"
-          },
-          "Skylight": {
-            "target": "Package",
-            "version": "[1.0.0-CI-20191211-195421, )"
-          },
-          "Skylight.Client": {
-            "target": "Package",
-            "version": "[1.0.0-CI-20191211-185941, )"
-          },
-          "Skylight.Mqtt": {
-            "target": "Package",
-            "version": "[1.0.0-CI-20191211-202250, )"
-          },
-          "Skylight.Utilities": {
-            "target": "Package",
-            "version": "[1.0.0-CI-20191211-185941, )"
           },
           "System.Configuration.ConfigurationManager": {
             "target": "Package",

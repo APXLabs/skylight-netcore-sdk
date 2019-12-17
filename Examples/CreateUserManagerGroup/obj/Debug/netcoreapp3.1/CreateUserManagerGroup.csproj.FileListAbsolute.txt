@@ -118,3 +118,8 @@ C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\Skylight.Client.dll
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\MQTTnet.dll
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\MQTTnet.Extensions.ManagedClient.dll
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\Skylight.Mqtt.dll
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\Skylight.Sdk.dll
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\Skylight.Sdk.pdb

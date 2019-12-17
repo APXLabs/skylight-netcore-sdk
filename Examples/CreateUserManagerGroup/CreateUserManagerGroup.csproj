@@ -11,11 +11,15 @@
       <PackageReference Include="nunit" Version="3.11.0" />
       <PackageReference Include="NUnit3TestAdapter" Version="3.11.0" />
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
-      <PackageReference Include="Skylight" Version="1.0.0-CI-20191211-195421" />
-      <PackageReference Include="Skylight.Client" Version="1.0.0-CI-20191211-185941" />
-      <PackageReference Include="Skylight.Mqtt" Version="1.0.0-CI-20191211-202250" />
-      <PackageReference Include="Skylight.Utilities" Version="1.0.0-CI-20191211-185941" />
       <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.6.0-rc1.19456.4" />
   </ItemGroup>
 
+  <ItemGroup Condition="Exists('..\..\Skylight.Sdk')">
+    <ProjectReference Include="..\..\Skylight.Sdk\Skylight.Sdk.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="!Exists('..\..\Skylight.Sdk')"> 
+    <PackageReference Include="Skylight.Sdk" Version="1.0.11" />
+  </ItemGroup>
+     
 </Project>
