@@ -1,9 +1,0 @@
-{
-    "id": "df2bb664-73b1-4498-92e8-92c5b19692f5",
-    "username": "i-eceee075-00aa-11ea-8867-164aa07ce9d3",
-    "password": "tWfeMCpMmAlhEIrsrDIz",
-    "domain": "cs_sandbox",
-    "apiUrl": "https://api.skylight.upskill.io/",
-    "wsUrl": "wss://ws.skylight.upskill.io",
-    "mqttUrl": "ssl://mqtt.skylight.upskill.io"
-  }
