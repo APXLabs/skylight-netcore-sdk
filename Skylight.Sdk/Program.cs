@@ -7,7 +7,6 @@ namespace Skylight.Sdk
 {
     public class Manager
     {
-
         public ApiClient ApiClient;
         public Manager(string credentialsPath = "credentials.json") {
             
