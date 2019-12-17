@@ -11,7 +11,7 @@ namespace Skylight.Sdk
         public ApiClient ApiClient;
 
         private dynamic Credentials;
-        public Manager(string credentialsPath ) {
+        public Manager(string credentialsPath = "credentials.json" ) {
             if(!this.ReadCredentials(credentialsPath)) throw new Exception("Credentials Error");
             
             //Set up a new connection
@@ -21,7 +21,7 @@ namespace Skylight.Sdk
             ApiClient = new ApiClient(connection);
         }
 
-        private bool ReadCredentials(string credentialsPath = "credentials.json") {
+        private bool ReadCredentials(string credentialsPath) {
             try {
                 //Read in our credentials
                 using(StreamReader reader = new StreamReader(credentialsPath)){
