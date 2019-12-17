@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Skylight.Client;
 
 class Program
 {
@@ -7,7 +8,7 @@ class Program
     {
         var connection = new ConnectionInfo(username, password, realm, apiUri);
         
-        ApiClient = new ApiClient(connection);
+        var ApiClient = new ApiClient(connection);
 
         var getRequest = new Skylight.Api.Media.V3.GetListFileInfosRequest();
         var result = await ApiClient.ExecuteRequestAsync(getRequest);
