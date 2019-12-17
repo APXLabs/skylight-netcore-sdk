@@ -11,7 +11,7 @@ class Program
     static async Task Main(string[] args)
     {
         //Create our manager and point it to our credentials file
-        Manager = new Manager(Path.Combine("..", "..", "credentials.json"));
+        Manager = new Manager();
         
         //This is a sample GET request to list all the files in the domain
         var getRequest = new Skylight.Api.Media.V3.GetListFileInfosRequest();
