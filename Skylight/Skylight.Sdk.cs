@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Skylight
+namespace Skylight.Sdk
 {
     public class Class1
     {

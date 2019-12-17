@@ -14,7 +14,7 @@ pool:
 
 variables:
   configuration: 'Release'
-  projectPath: "Skylight/Skylight.csproj"
+  projectPath: "Skylight.Sdk/Skylight.Sdk.csproj"
 
 stages:
 - stage: Build
