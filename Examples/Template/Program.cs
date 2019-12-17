@@ -1,7 +1,6 @@
 ﻿
 using System.IO;
 using System;
-using Microsoft.Extensions.Configuration;
 using Skylight.Client;
 using System.Threading.Tasks;
 using Skylight.Sdk;
