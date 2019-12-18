@@ -21,7 +21,7 @@ namespace Authentication
                     The path is also optional; the constructor for the SDK's manager can also take 0 arguments, in which case it will search for a file called `credentials.json` in the root directory of the extension.
                 */
                 Manager = new Manager(Path.Combine("..", "..", "credentials.json"));
-                //@skydocs.end
+                //@skydocs.end()
             } catch { return; }
 
         }
