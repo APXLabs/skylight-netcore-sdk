@@ -43,6 +43,7 @@ namespace CreateUserManagerGroup
         static async Task CreateUser(string first, string last, string role, string username, string password) {
             
             //@skydocs.start(users.create)
+            //This is the body of information we use to create a new user
             var newUserBody = new Skylight.Api.Authentication.V1.Models.UserNew
             {
                 FirstName = first,
@@ -52,8 +53,13 @@ namespace CreateUserManagerGroup
                 Password = password     //The password can be set as temporary by using another user update
             };
 
+            //This is our API request for creating a new user
             var createUserRequest = new Skylight.Api.Authentication.V1.UsersRequests.CreateUserRequest(newUserBody);
+
+            //Execute the request
             var result = await Manager.ApiClient.ExecuteRequestAsync(createUserRequest);
+
+            //Handle the resulting status code appropriately
             switch(result.StatusCode) {
                 case System.Net.HttpStatusCode.Forbidden:
                     Console.Error.WriteLine("Error creating user: Permission forbidden.");
@@ -74,14 +80,20 @@ namespace CreateUserManagerGroup
         static async Task CreateGroup(string name, string description) {
             
             //@skydocs.start(groups.create)
+            //This is the body of information we use to create a new group
             var newGroupBody = new Skylight.Api.Authentication.V1.Models.GroupNew
             {
                 Name = name,
                 Description = description
             };
 
+            //This is our API request for creating a new group
             var createGroupRequest = new Skylight.Api.Authentication.V1.GroupsRequests.CreateGroupRequest(newGroupBody);
+
+            //Execute our API request
             var result = await Manager.ApiClient.ExecuteRequestAsync(createGroupRequest);
+
+            //Handle the resulting status code appropriately
             switch(result.StatusCode) {
                 case System.Net.HttpStatusCode.Forbidden:
                     Console.Error.WriteLine("Error creating group: Permission forbidden.");
@@ -102,8 +114,13 @@ namespace CreateUserManagerGroup
         static async Task AddUserToGroup(string userId, string groupId) {
             
             //@skydocs.start(groups.assign)
+            //Create our API request for assigning a user to a group, specifying IDs for both
             var assignGroupRequest = new Skylight.Api.Authentication.V1.GroupsRequests.AssignUserToGroupRequest(userId, groupId);
+
+            //Execute the API request
             var result = await Manager.ApiClient.ExecuteRequestAsync(assignGroupRequest);
+
+            //Handle the resulting status code appropriately
             switch(result.StatusCode) {
                 case System.Net.HttpStatusCode.Forbidden:
                     Console.Error.WriteLine("Error assigning group: Permission forbidden.");
@@ -127,13 +144,20 @@ namespace CreateUserManagerGroup
         static async Task SetUserPasswordAsTemporary(string userId) {
             
             //@skydocs.start(users.temporarypassword)
+            //This is the body of information for changing a user's password
             var temporaryPasswordRequestBody = new Skylight.Api.Authentication.V1.Models.UsersIdChangePasswordBody
             {
                 Temporary = true, //Setting this to true will force the user to change their password upon next login
                 NewPassword = "temporary-password" //The user will use this as their password to login (until they change it themselves)
             };
+
+            //Create our password change API request
             var temporaryPasswordRequest = new Skylight.Api.Authentication.V1.UsersRequests.UsersIdChangePasswordPutRequest(temporaryPasswordRequestBody, userId);
+
+            //Execute the API request
             var result = await Manager.ApiClient.ExecuteRequestAsync(temporaryPasswordRequest);
+
+            //Handle the resulting status code appropriately
             switch(result.StatusCode) {
                 case System.Net.HttpStatusCode.BadRequest:
                     Console.Error.WriteLine("Error setting temporary password: Bad request.");
@@ -160,8 +184,13 @@ namespace CreateUserManagerGroup
         static async Task DeleteUserById(string userId) {
             
             //@skydocs.start(users.delete)
+            //Create our user deletion API request by specifying the user's ID
             var deleteUserRequest = new Skylight.Api.Authentication.V1.UsersRequests.DeleteUserRequest(userId);
+            
+            //Execute the API request
             var result = await Manager.ApiClient.ExecuteRequestAsync(deleteUserRequest);
+
+            //Handle the resulting status code appropriately
             switch(result.StatusCode) {
                 case System.Net.HttpStatusCode.Forbidden:
                     Console.Error.WriteLine("Error deleting user: Permission forbidden.");
@@ -185,8 +214,13 @@ namespace CreateUserManagerGroup
         static async Task DeleteGroupById(string groupId) {
             
             //@skydocs.start(groups.delete)
+            //Create a group deletion request by specifying the group's ID
             var deleteGroupRequest = new Skylight.Api.Authentication.V1.GroupsRequests.DeleteGroupRequest(groupId);
+
+            //Execute our API request
             var result = await Manager.ApiClient.ExecuteRequestAsync(deleteGroupRequest);
+            
+            //Handle the resulting status code appropriately
             switch(result.StatusCode) {
                 case System.Net.HttpStatusCode.Forbidden:
                     Console.Error.WriteLine("Error deleting froup: Permission forbidden.");
@@ -210,8 +244,13 @@ namespace CreateUserManagerGroup
         static async Task<string> GetUserIdForUsername(string username) {
             
             //@skydocs.start(users.getbyname)
+            //Create an API request for retrieving all users
             var getUsersRequest = new Skylight.Api.Authentication.V1.UsersRequests.GetUsersListRequest();
+
+            //Execute the API request
             var result = await Manager.ApiClient.ExecuteRequestAsync(getUsersRequest);
+
+            //The users will be stored as a list in the result's Content, so we can iterate through them
             foreach(var user in result.Content) {
                 if(user.Username == username)return user.Id;
             }
@@ -222,8 +261,13 @@ namespace CreateUserManagerGroup
         static async Task<string> GetGroupIdForGroupname(string name) {
             
             //@skydocs.start(groups.getbyname)
+            //Create an API request for retrieving all groups
             var getGroupsRequest = new Skylight.Api.Authentication.V1.GroupsRequests.GetGroupsListRequest();
+            
+            //Execute the API request
             var result = await Manager.ApiClient.ExecuteRequestAsync(getGroupsRequest);
+
+            //The list of groups visible using our API credentials will be returned in the result's Content
             foreach(var group in result.Content) {
                 if(group.Name == name)return group.Id;
             }
