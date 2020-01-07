@@ -656,7 +656,7 @@
       "runtime.ubuntu.14.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {},
       "runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {},
       "runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {},
-      "Skylight.Api/1.0.7": {
+      "Skylight.Api/1.0.34": {
         "dependencies": {
           "Skylight.Client": "1.0.3",
           "Skylight.Utilities": "1.0.3",
@@ -1676,7 +1676,7 @@
       },
       "Skylight.Sdk/1.0.0": {
         "dependencies": {
-          "Skylight.Api": "1.0.7",
+          "Skylight.Api": "1.0.34",
           "Skylight.Mqtt": "1.0.3",
           "System.IdentityModel.Tokens.Jwt": "5.5.0"
         },
@@ -2014,12 +2014,12 @@
       "path": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl/4.3.2",
       "hashPath": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512"
     },
-    "Skylight.Api/1.0.7": {
+    "Skylight.Api/1.0.34": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-gc/aKh7j2iyhoiz0Ga5emSqPVrWh3xSV4tsQqJ9mQImUmrra9wICrqyqX2P9yOkgNxNvjrI51NsHUnNRLB+tpw==",
-      "path": "skylight.api/1.0.7",
-      "hashPath": "skylight.api.1.0.7.nupkg.sha512"
+      "sha512": "sha512-ARVQF9frSpjejei16VF56q9x8hdanRsRuAswP9UPOrgqsyfxm2qr/z9wY2pGoFpaDDgMWRlv84S85K33McX3NA==",
+      "path": "skylight.api/1.0.34",
+      "hashPath": "skylight.api.1.0.34.nupkg.sha512"
     },
     "Skylight.Client/1.0.3": {
       "type": "package",

@@ -3,12 +3,15 @@ using System;
 using System.IO;
 using Newtonsoft.Json;
 using Skylight.Client;
+using Skylight.Mqtt;
+using System.Threading.Tasks;
 
 namespace Skylight.Sdk
 {
     public class Manager
     {
         public ApiClient ApiClient;
+        public MessagingClient MessagingClient;
 
         private dynamic Credentials;
         public Manager(string credentialsPath = "credentials.json" ) {
@@ -19,6 +22,18 @@ namespace Skylight.Sdk
 
             //Use the connection to create a client
             ApiClient = new ApiClient(connection);
+
+            //Set up a new MQTT connection
+            var mqttUrl = (string)Credentials.mqttUrl;
+            mqttUrl = mqttUrl.Substring(mqttUrl.IndexOf("://") + 3);
+            var mqttConnection = new MqttConnectionInfo((string)Credentials.username, (string)Credentials.password, (string)Credentials.domain, (string)Credentials.apiUrl, mqttUrl);
+        
+            //Use the MQTT connection information to create a messaging client
+            MessagingClient = new MessagingClient(mqttConnection);
+        }
+
+        public async Task StartListening() {
+            await MessagingClient.StartListeningAsync();
         }
 
         private bool ReadCredentials(string credentialsPath) {

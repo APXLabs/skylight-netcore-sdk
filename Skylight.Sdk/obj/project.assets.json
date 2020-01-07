@@ -517,7 +517,7 @@
           }
         }
       },
-      "Skylight.Api/1.0.7": {
+      "Skylight.Api/1.0.34": {
         "type": "package",
         "dependencies": {
           "Skylight.Client": "1.0.3",
@@ -2634,14 +2634,14 @@
         "runtimes/ubuntu.16.10-x64/native/System.Security.Cryptography.Native.OpenSsl.so"
       ]
     },
-    "Skylight.Api/1.0.7": {
-      "sha512": "gc/aKh7j2iyhoiz0Ga5emSqPVrWh3xSV4tsQqJ9mQImUmrra9wICrqyqX2P9yOkgNxNvjrI51NsHUnNRLB+tpw==",
+    "Skylight.Api/1.0.34": {
+      "sha512": "ARVQF9frSpjejei16VF56q9x8hdanRsRuAswP9UPOrgqsyfxm2qr/z9wY2pGoFpaDDgMWRlv84S85K33McX3NA==",
       "type": "package",
-      "path": "skylight.api/1.0.7",
+      "path": "skylight.api/1.0.34",
       "files": [
         ".nupkg.metadata",
         "lib/netcoreapp2.2/Skylight.dll",
-        "skylight.api.1.0.7.nupkg.sha512",
+        "skylight.api.1.0.34.nupkg.sha512",
         "skylight.api.nuspec"
       ]
     },
@@ -6083,7 +6083,7 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
       "Microsoft.NETCore.App >= 2.2.0",
-      "Skylight.Api >= 1.0.7",
+      "Skylight.Api >= 1.0.34",
       "Skylight.Mqtt >= 1.0.3",
       "System.IdentityModel.Tokens.Jwt >= 5.5.0"
     ]
@@ -6138,7 +6138,7 @@
           },
           "Skylight.Api": {
             "target": "Package",
-            "version": "[1.0.7, )"
+            "version": "[1.0.34, )"
           },
           "Skylight.Mqtt": {
             "target": "Package",
