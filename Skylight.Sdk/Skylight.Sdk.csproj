@@ -6,8 +6,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Skylight.Api" Version="1.0.34" />
+      <PackageReference Include="Skylight.Api" Version="1.0.58" />
       <PackageReference Include="Skylight.Mqtt" Version="1.0.3" />
+      <PackageReference Include="Skylight.FileClient" Version="1.0.58" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />
     </ItemGroup>
 

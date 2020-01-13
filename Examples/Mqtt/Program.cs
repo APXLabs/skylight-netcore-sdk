@@ -10,7 +10,7 @@ namespace mqtt
 {
     class Program
     {
-        public static Manager Manager;
+        public static Manager SkyManager;
         static async Task Main(string[] args)
         {
             try {
@@ -20,31 +20,44 @@ namespace mqtt
                     This json file has our API credentials copy-pasted from Skylight Web.
                     The path is also optional; the constructor for the SDK's manager can also take 0 arguments, in which case it will search for a file called `credentials.json` in the root directory of the extension.
                 */
-                Manager = new Manager(Path.Combine("..", "..", "credentials.json"));
+                SkyManager = new Manager(Path.Combine("..", "..", "credentials.json"));
                 //@skydocs.end()
             } catch { return; }
             
             //@skydocs.start(mqtt.lifecycle)
-            Manager.MessagingClient.Connected += (object sender, MqttClientConnectedEventArgs args) => {
+            SkyManager.MessagingClient.Connected += (object sender, MqttClientConnectedEventArgs args) => {
                 Console.WriteLine("MQTT client connected.");
             };
 
-            Manager.MessagingClient.Disconnected += (object sender, MqttClientDisconnectedEventArgs args) => {
+            SkyManager.MessagingClient.Disconnected += (object sender, MqttClientDisconnectedEventArgs args) => {
                 Console.WriteLine("MQTT client disconnected.");
                 Console.WriteLine(args.Exception.Message);
             };
 
-            Manager.MessagingClient.TopicSubscribed += (object sender, MqttMsgSubscribedEventArgs args) => {
+            SkyManager.MessagingClient.TopicSubscribed += (object sender, MqttMsgSubscribedEventArgs args) => {
                 Console.WriteLine("MQTT client subscribed to: " + args.Topic);
             };
 
-            Manager.MessagingClient.MessageReceived += (object sender, MessageReceivedEventArgs args) => {
+            SkyManager.MessagingClient.MessageReceived += (object sender, MessageReceivedEventArgs args) => {
                 Console.WriteLine("Message received on topic " + args.Topic + " " + args.Message);
             };
 
-            await Manager.StartListening();
+            SkyManager.MessagingClient.CardUpdated += async (object sender, CardUpdatedEventArgs args) => { await CardUpdated(sender, args); };
+
+
+            await SkyManager.StartListening();
             Console.ReadLine();
             //@skydocs.end()
+        }
+
+        static async Task CardUpdated(object sender, CardUpdatedEventArgs args) {
+            var cardRequest = new Skylight.Api.Assignments.V1.CardRequests.GetCardRequest(args.AssignmentId, args.SequenceId, args.CardId);
+            var response = await SkyManager.ApiClient.ExecuteRequestAsync(cardRequest);
+            var card = response.Content;
+            var cardComponentType = card.Component.GetType();
+            if(cardComponentType == typeof(Skylight.Api.Assignments.V1.Models.ComponentCompletion)){
+
+            }
         }
     }
 }

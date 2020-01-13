@@ -1,12 +1,10 @@
 ﻿
-using System.Security.Authentication;
-using System.Security.Principal;
 using System.IO;
 using System;
-using Microsoft.Extensions.Configuration;
 using Skylight.Client;
 using System.Threading.Tasks;
 using Skylight.Sdk;
+using Skylight.Api.Authentication.V1.Models;
 
 namespace CreateUserManagerGroup
 {
@@ -36,7 +34,9 @@ namespace CreateUserManagerGroup
 
             await AddUserToGroup(userId, groupId);
             await SetUserPasswordAsTemporary(userId);
-            await DeleteUserById(userId);
+            await GetUserById(userId);
+            await UpdateUserJobTitle(userId, "Developer");
+            //await DeleteUserById(userId);
             await DeleteGroupById(groupId);
         }
 
@@ -50,7 +50,7 @@ namespace CreateUserManagerGroup
                 LastName = last,
                 Role = role,            //For role, the API accepts the string values "user", "manager", and "admin"
                 Username = username,
-                Password = password     //The password can be set as temporary by using another user update
+                Password = password     //The password can be set as temporary by using the "change password" API call
             };
 
             //This is our API request for creating a new user
@@ -142,17 +142,17 @@ namespace CreateUserManagerGroup
         }
 
         static async Task SetUserPasswordAsTemporary(string userId) {
-            
+            /*
             //@skydocs.start(users.temporarypassword)
             //This is the body of information for changing a user's password
-            var temporaryPasswordRequestBody = new Skylight.Api.Authentication.V1.Models.UsersIdChangePasswordBody
+            var temporaryPasswordRequestBody = new Skylight.Api.Authentication.V1.Models.NewPasswordStruct
             {
                 Temporary = true, //Setting this to true will force the user to change their password upon next login
                 NewPassword = "temporary-password" //The user will use this as their password to login (until they change it themselves)
             };
 
             //Create our password change API request
-            var temporaryPasswordRequest = new Skylight.Api.Authentication.V1.UsersRequests.UsersIdChangePasswordPutRequest(temporaryPasswordRequestBody, userId);
+            var temporaryPasswordRequest = new Skylight.Api.Authentication.V1.UsersRequests.ChangeUserPasswordRequest(temporaryPasswordRequestBody, userId);
 
             //Execute the API request
             var result = await Manager.ApiClient.ExecuteRequestAsync(temporaryPasswordRequest);
@@ -179,6 +179,7 @@ namespace CreateUserManagerGroup
                     break;
             }
             //@skydocs.end()
+            */
         }
 
         static async Task DeleteUserById(string userId) {
@@ -223,7 +224,7 @@ namespace CreateUserManagerGroup
             //Handle the resulting status code appropriately
             switch(result.StatusCode) {
                 case System.Net.HttpStatusCode.Forbidden:
-                    Console.Error.WriteLine("Error deleting froup: Permission forbidden.");
+                    Console.Error.WriteLine("Error deleting group: Permission forbidden.");
                     break;
                 case System.Net.HttpStatusCode.NotFound:
                     Console.Error.WriteLine("Error deleting group: Group not found.");
@@ -238,6 +239,136 @@ namespace CreateUserManagerGroup
                     Console.Error.WriteLine("Unhandled group deletion status code: " + result.StatusCode);
                     break;
             }
+            //@skydocs.end()
+        }
+
+        static async Task UpdateUserJobTitle(string userId, string jobTitle) {
+            //@skydocs.start(users.update)
+            //This is the body of information for updating the user
+            //In this example, we update the job title
+            var updateUserBody = new UserUpdate {
+                JobTitle = jobTitle
+            };
+
+            //Create an API request for updating a user
+            var updateUserRequest = new Skylight.Api.Authentication.V1.UsersRequests.UpdateUserRequest(updateUserBody, userId);
+
+            //Execute the API request
+            var result = await Manager.ApiClient.ExecuteRequestAsync(updateUserRequest);
+
+            //Handle the resulting status code appropriately
+            switch(result.StatusCode) {
+                case System.Net.HttpStatusCode.Forbidden:
+                    Console.Error.WriteLine("Error updating user: Permission forbidden.");
+                    break;
+                case System.Net.HttpStatusCode.NotFound:
+                    Console.Error.WriteLine("Error updating user: User not found.");
+                    break;
+                case System.Net.HttpStatusCode.Unauthorized:
+                    Console.Error.WriteLine("Error updating user: Method call was unauthenticated.");
+                    break;
+                case System.Net.HttpStatusCode.NoContent:
+                    Console.WriteLine("User successfully updated.");
+                    break;
+                default:
+                    Console.Error.WriteLine("Unhandled user update status code: " + result.StatusCode);
+                    break;
+            }
+            //@skydocs.end()
+        }
+
+        static async Task UpdateUserRole(string userId, string role) {
+            //@skydocs.start(users.updaterole)
+            //This is the body of information for updating the user role
+            //Right now this requires a manual JSON string -- will be updated in a future API fix
+            var updateUserRoleBody =  "{\"role\":\"" + role + "\"}";
+
+            //Create an API request for updating a user
+            var updateUserRoleRequest = new Skylight.Api.Authentication.V1.UsersRequests.UpdateUserRoleRequest(updateUserRoleBody, userId);
+
+            //Execute the API request
+            var result = await Manager.ApiClient.ExecuteRequestAsync(updateUserRoleRequest);
+
+            //Handle the resulting status code appropriately
+            switch(result.StatusCode) {
+                case System.Net.HttpStatusCode.Forbidden:
+                    Console.Error.WriteLine("Error updating user role: Permission forbidden.");
+                    break;
+                case System.Net.HttpStatusCode.NotFound:
+                    Console.Error.WriteLine("Error updating user role: User not found.");
+                    break;
+                case System.Net.HttpStatusCode.Unauthorized:
+                    Console.Error.WriteLine("Error updating user role: Method call was unauthenticated.");
+                    break;
+                case System.Net.HttpStatusCode.NoContent:
+                    Console.WriteLine("User role successfully updated.");
+                    break;
+                default:
+                    Console.Error.WriteLine("Unhandled user role update status code: " + result.StatusCode);
+                    break;
+            }
+            //@skydocs.end()
+        }
+
+        static async Task LogoutUser(string userId) {
+            //@skydocs.start(users.logout)
+            //Create an API request for logging out a user
+            var logoutUserRequest = new Skylight.Api.Authentication.V1.UsersRequests.LogoutUserRequest(userId);
+
+            //Execute the API request
+            var result = await Manager.ApiClient.ExecuteRequestAsync(logoutUserRequest);
+
+            //Handle the resulting status code appropriately
+            switch(result.StatusCode) {
+                case System.Net.HttpStatusCode.Forbidden:
+                    Console.Error.WriteLine("Error logging out user: Permission forbidden.");
+                    break;
+                case System.Net.HttpStatusCode.NotFound:
+                    Console.Error.WriteLine("Error logging out user: User not found.");
+                    break;
+                case System.Net.HttpStatusCode.Unauthorized:
+                    Console.Error.WriteLine("Error logging out user: Method call was unauthenticated.");
+                    break;
+                case System.Net.HttpStatusCode.BadRequest:
+                    Console.Error.WriteLine("Error logging out user: Incorrect parameters.");
+                    break;
+                case System.Net.HttpStatusCode.NoContent:
+                    Console.WriteLine("User logged out successfully.");
+                    break;
+                default:
+                    Console.Error.WriteLine("Unhandled user role update status code: " + result.StatusCode);
+                    break;
+            }
+            //@skydocs.end()
+        }
+
+        static async Task<UserInfo> GetUserById(string userId) {
+            //@skydocs.start(users.getbyid)
+            //Create an API request for retrieving the user by its id
+            var getUserRequest = new Skylight.Api.Authentication.V1.UsersRequests.GetUserRequest(userId);
+
+            //Execute the API request
+            var result = await Manager.ApiClient.ExecuteRequestAsync(getUserRequest);
+
+            //Handle the resulting status code appropriately
+            switch(result.StatusCode) {
+                case System.Net.HttpStatusCode.Forbidden:
+                    Console.Error.WriteLine("Error retrieving user: Permission forbidden.");
+                    break;
+                case System.Net.HttpStatusCode.NotFound:
+                    Console.Error.WriteLine("Error retrieving user: User not found.");
+                    break;
+                case System.Net.HttpStatusCode.Unauthorized:
+                    Console.Error.WriteLine("Error retrieving user: Method call was unauthenticated.");
+                    break;
+                case System.Net.HttpStatusCode.OK:
+                    Console.WriteLine("User successfully retrieved.");
+                    break;
+                default:
+                    Console.Error.WriteLine("Unhandled user update status code: " + result.StatusCode);
+                    break;
+            }
+            return result.Content;
             //@skydocs.end()
         }
 

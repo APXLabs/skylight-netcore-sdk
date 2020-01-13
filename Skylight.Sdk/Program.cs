@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using Skylight.Client;
 using Skylight.Mqtt;
 using System.Threading.Tasks;
+using Skylight.FileClient;
 
 namespace Skylight.Sdk
 {
@@ -12,6 +13,8 @@ namespace Skylight.Sdk
     {
         public ApiClient ApiClient;
         public MessagingClient MessagingClient;
+        public FileClient.FileTransferClient MediaClient;
+        public string IntegrationId;
 
         private dynamic Credentials;
         public Manager(string credentialsPath = "credentials.json" ) {
@@ -30,6 +33,13 @@ namespace Skylight.Sdk
         
             //Use the MQTT connection information to create a messaging client
             MessagingClient = new MessagingClient(mqttConnection);
+
+            //Use our API client to create a media client
+            MediaClient = new FileTransferClient(ApiClient);
+
+            //Set our integration id
+            IntegrationId = (string)Credentials.id;
+
         }
 
         public async Task StartListening() {

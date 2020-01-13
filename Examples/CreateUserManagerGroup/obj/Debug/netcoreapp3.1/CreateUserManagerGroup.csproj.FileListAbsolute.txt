@@ -123,3 +123,4 @@ C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\Skylight.Mqtt.dll
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\Skylight.Sdk.dll
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\Skylight.Sdk.pdb
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\CreateUserManagerGroup\bin\Debug\netcoreapp3.1\Skylight.FileClient.dll

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-sdk\\skylight-netcore-sdk\\Skylight.Sdk\\Skylight.Sdk.csproj": {}
+    "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-sdk\\skylight-netcore-sdk\\Skylight.Sdk\\Skylight.Sdk.csproj": {}
   },
   "projects": {
-    "c:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-sdk\\skylight-netcore-sdk\\Skylight.Sdk\\Skylight.Sdk.csproj": {
+    "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-sdk\\skylight-netcore-sdk\\Skylight.Sdk\\Skylight.Sdk.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-sdk\\skylight-netcore-sdk\\Skylight.Sdk\\Skylight.Sdk.csproj",
+        "projectUniqueName": "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-sdk\\skylight-netcore-sdk\\Skylight.Sdk\\Skylight.Sdk.csproj",
         "projectName": "Skylight.Sdk",
-        "projectPath": "c:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-sdk\\skylight-netcore-sdk\\Skylight.Sdk\\Skylight.Sdk.csproj",
+        "projectPath": "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-sdk\\skylight-netcore-sdk\\Skylight.Sdk\\Skylight.Sdk.csproj",
         "packagesPath": "C:\\Users\\andrew.sugaya\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-sdk\\skylight-netcore-sdk\\Skylight.Sdk\\obj\\",
+        "outputPath": "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-sdk\\skylight-netcore-sdk\\Skylight.Sdk\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "c:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-sdk\\skylight-netcore-sdk\\Skylight.Sdk\\NuGet.Config",
+          "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-sdk\\skylight-netcore-sdk\\Skylight.Sdk\\NuGet.Config",
           "C:\\Users\\andrew.sugaya\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -50,7 +50,11 @@
             },
             "Skylight.Api": {
               "target": "Package",
-              "version": "[1.0.34, )"
+              "version": "[1.0.58, )"
+            },
+            "Skylight.FileClient": {
+              "target": "Package",
+              "version": "[1.0.58, )"
             },
             "Skylight.Mqtt": {
               "target": "Package",

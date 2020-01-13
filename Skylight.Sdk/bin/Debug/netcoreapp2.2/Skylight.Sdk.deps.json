@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v2.2": {
       "Skylight.Sdk/1.0.0": {
         "dependencies": {
-          "Skylight.Api": "1.0.34",
+          "Skylight.Api": "1.0.58",
+          "Skylight.FileClient": "1.0.58",
           "Skylight.Mqtt": "1.0.3",
           "System.IdentityModel.Tokens.Jwt": "5.5.0"
         },
@@ -167,10 +168,10 @@
       "runtime.ubuntu.14.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {},
       "runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {},
       "runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {},
-      "Skylight.Api/1.0.34": {
+      "Skylight.Api/1.0.58": {
         "dependencies": {
-          "Skylight.Client": "1.0.3",
-          "Skylight.Utilities": "1.0.3",
+          "Skylight.Client": "1.0.4",
+          "Skylight.Utilities": "1.0.4",
           "System.IdentityModel.Tokens.Jwt": "5.5.0"
         },
         "runtime": {
@@ -180,9 +181,9 @@
           }
         }
       },
-      "Skylight.Client/1.0.3": {
+      "Skylight.Client/1.0.4": {
         "dependencies": {
-          "Skylight.Utilities": "1.0.3",
+          "Skylight.Utilities": "1.0.4",
           "System.IdentityModel.Tokens.Jwt": "5.5.0"
         },
         "runtime": {
@@ -192,12 +193,24 @@
           }
         }
       },
+      "Skylight.FileClient/1.0.58": {
+        "dependencies": {
+          "Skylight.Api": "1.0.58",
+          "Skylight.Client": "1.0.4"
+        },
+        "runtime": {
+          "lib/netcoreapp2.2/Skylight.FileClient.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "Skylight.Mqtt/1.0.3": {
         "dependencies": {
           "MQTTnet": "3.0.8",
           "MQTTnet.Extensions.ManagedClient": "3.0.8",
-          "Skylight.Client": "1.0.3",
-          "Skylight.Utilities": "1.0.3"
+          "Skylight.Client": "1.0.4",
+          "Skylight.Utilities": "1.0.4"
         },
         "runtime": {
           "lib/netcoreapp2.2/Skylight.Mqtt.dll": {
@@ -206,7 +219,7 @@
           }
         }
       },
-      "Skylight.Utilities/1.0.3": {
+      "Skylight.Utilities/1.0.4": {
         "dependencies": {
           "Newtonsoft.Json": "10.0.1"
         },
@@ -1027,19 +1040,26 @@
       "path": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl/4.3.2",
       "hashPath": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512"
     },
-    "Skylight.Api/1.0.34": {
+    "Skylight.Api/1.0.58": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-ARVQF9frSpjejei16VF56q9x8hdanRsRuAswP9UPOrgqsyfxm2qr/z9wY2pGoFpaDDgMWRlv84S85K33McX3NA==",
-      "path": "skylight.api/1.0.34",
-      "hashPath": "skylight.api.1.0.34.nupkg.sha512"
+      "sha512": "sha512-4KhD84fVSfRMPaEUVYciono2wXFBYlhfCkHm5P9u///JNgl3DbSB5hgiF2xB92DEh5zT9JlesK49b/USsDCU/Q==",
+      "path": "skylight.api/1.0.58",
+      "hashPath": "skylight.api.1.0.58.nupkg.sha512"
     },
-    "Skylight.Client/1.0.3": {
+    "Skylight.Client/1.0.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-+NaNGRVFkne+DEy5pp70T/Mgd+t4DVvrFQA0gSHbY4Gtc0Q5ZT120ITCNbPfjrdL0sFCy7C0/J0DeP8tUFmSWw==",
-      "path": "skylight.client/1.0.3",
-      "hashPath": "skylight.client.1.0.3.nupkg.sha512"
+      "sha512": "sha512-HR0dIpL8zWKpxbuXTFukn/xI/+zBHspehOEl3jdoIkuorpTm0cohCnCUtujx6QTr2Y7QsWOKd69kmA8Js+IP7Q==",
+      "path": "skylight.client/1.0.4",
+      "hashPath": "skylight.client.1.0.4.nupkg.sha512"
+    },
+    "Skylight.FileClient/1.0.58": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-PZ+0AtH2FKcwsq2bqFJ3N78Dvnc2kg41WulOQkjDszGl6r/tRaT86oAU/RFtXh8sHuboD7jLLrDeRa0T4XP8pg==",
+      "path": "skylight.fileclient/1.0.58",
+      "hashPath": "skylight.fileclient.1.0.58.nupkg.sha512"
     },
     "Skylight.Mqtt/1.0.3": {
       "type": "package",
@@ -1048,12 +1068,12 @@
       "path": "skylight.mqtt/1.0.3",
       "hashPath": "skylight.mqtt.1.0.3.nupkg.sha512"
     },
-    "Skylight.Utilities/1.0.3": {
+    "Skylight.Utilities/1.0.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-HY5yCe2Q6fhs3atgr1Hp85QVf5jFatAJ/PHHE4Mib/sZpBfK6rZL1p91/EPchLiBogcoaYfPT2fZR8Qp50IVFw==",
-      "path": "skylight.utilities/1.0.3",
-      "hashPath": "skylight.utilities.1.0.3.nupkg.sha512"
+      "sha512": "sha512-kMg63eyYhke5+LkAXeKy7K0/1HQA1VpJ08260d3fctCBVMygNVFlrspRZb9Y6y3fAGocHRlRWCBbDos5+CQCsw==",
+      "path": "skylight.utilities/1.0.4",
+      "hashPath": "skylight.utilities.1.0.4.nupkg.sha512"
     },
     "System.Collections/4.3.0": {
       "type": "package",
