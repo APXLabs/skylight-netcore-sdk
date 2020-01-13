@@ -23,8 +23,11 @@ namespace Media
                 //@skydocs.end()
             } catch { return; }
 
+            //@skydocs.start(media.upload)
+            //We upload a file by specifying its file path, title, and description
+            //The SDK takes care of deciding between whether to use a singlepart or multipart upload.
             await Manager.MediaClient.UploadFile(new FileInfo(Path.Join(".", "files", "test.png")), "SDK Upload Test", "This is a file uploaded using the Skylight C# SDK");
-            
+            //@skydocs.end()
         }
     }
 }
