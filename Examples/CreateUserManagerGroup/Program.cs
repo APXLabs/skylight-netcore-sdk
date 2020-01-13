@@ -32,7 +32,7 @@ namespace CreateUserManagerGroup
             }
             string groupId = await GetGroupIdForGroupname("API Test Group");
 
-            await AddUserToGroup(userId, groupId);
+            await AssignUserToGroup(userId, groupId);
             await SetUserPasswordAsTemporary(userId);
             await GetUserById(userId);
             await UpdateUserJobTitle(userId, "Developer");
@@ -41,7 +41,6 @@ namespace CreateUserManagerGroup
         }
 
         static async Task CreateUser(string first, string last, string role, string username, string password) {
-            
             //@skydocs.start(users.create)
             //This is the body of information we use to create a new user
             var newUserBody = new Skylight.Api.Authentication.V1.Models.UserNew
@@ -78,7 +77,6 @@ namespace CreateUserManagerGroup
         }
 
         static async Task CreateGroup(string name, string description) {
-            
             //@skydocs.start(groups.create)
             //This is the body of information we use to create a new group
             var newGroupBody = new Skylight.Api.Authentication.V1.Models.GroupNew
@@ -111,8 +109,7 @@ namespace CreateUserManagerGroup
             //@skydocs.end()
         }
 
-        static async Task AddUserToGroup(string userId, string groupId) {
-            
+        static async Task AssignUserToGroup(string userId, string groupId) {
             //@skydocs.start(groups.assign)
             //Create our API request for assigning a user to a group, specifying IDs for both
             var assignGroupRequest = new Skylight.Api.Authentication.V1.GroupsRequests.AssignUserToGroupRequest(userId, groupId);
@@ -132,10 +129,40 @@ namespace CreateUserManagerGroup
                     Console.Error.WriteLine("Error assigning group: User or group not found.");
                     break;
                 case System.Net.HttpStatusCode.NoContent:
-                    Console.WriteLine("Group successfully assigned.");
+                    Console.WriteLine("User successfully assigned to group.");
                     break;
                 default:
                     Console.Error.WriteLine("Unhandled group assignment status code: " + result.StatusCode);
+                    break;
+            }
+            //@skydocs.end()
+        }
+
+        
+        static async Task UnassignUserFromGroup(string userId, string groupId) {
+            //@skydocs.start(groups.unassign)
+            //Create our API request for assigning a user to a group, specifying IDs for both
+            var unassignGroupRequest = new Skylight.Api.Authentication.V1.GroupsRequests.UnassignUserFromGroupRequest(userId, groupId);
+
+            //Execute the API request
+            var result = await Manager.ApiClient.ExecuteRequestAsync(unassignGroupRequest);
+
+            //Handle the resulting status code appropriately
+            switch(result.StatusCode) {
+                case System.Net.HttpStatusCode.Forbidden:
+                    Console.Error.WriteLine("Error unassigning group: Permission forbidden.");
+                    break;
+                case System.Net.HttpStatusCode.Unauthorized:
+                    Console.Error.WriteLine("Error unassigning group: Method call was unauthenticated.");
+                    break;
+                case System.Net.HttpStatusCode.NotFound:
+                    Console.Error.WriteLine("Error unassigning group: User or group not found.");
+                    break;
+                case System.Net.HttpStatusCode.NoContent:
+                    Console.WriteLine("User successfully unassigned from group.");
+                    break;
+                default:
+                    Console.Error.WriteLine("Unhandled group unassignment status code: " + result.StatusCode);
                     break;
             }
             //@skydocs.end()
@@ -183,7 +210,6 @@ namespace CreateUserManagerGroup
         }
 
         static async Task DeleteUserById(string userId) {
-            
             //@skydocs.start(users.delete)
             //Create our user deletion API request by specifying the user's ID
             var deleteUserRequest = new Skylight.Api.Authentication.V1.UsersRequests.DeleteUserRequest(userId);
@@ -213,7 +239,6 @@ namespace CreateUserManagerGroup
         }
 
         static async Task DeleteGroupById(string groupId) {
-            
             //@skydocs.start(groups.delete)
             //Create a group deletion request by specifying the group's ID
             var deleteGroupRequest = new Skylight.Api.Authentication.V1.GroupsRequests.DeleteGroupRequest(groupId);
@@ -374,7 +399,7 @@ namespace CreateUserManagerGroup
 
         static async Task<string> GetUserIdForUsername(string username) {
             
-            //@skydocs.start(users.getbyname)
+            //@skydocs.start(users.getall)
             //Create an API request for retrieving all users
             var getUsersRequest = new Skylight.Api.Authentication.V1.UsersRequests.GetUsersListRequest();
 
@@ -389,9 +414,75 @@ namespace CreateUserManagerGroup
             //@skydocs.end()
         }
 
+        
+        static async Task UpdateGroupDescription(string groupId, string description) {
+            //@skydocs.start(groups.update)
+            //This is the body of information for updating the group
+            //In this example, we update the job title
+            var updateGroupBody = new GroupUpdate {
+                Description = description
+            };
+
+            //Create an API request for updating a group
+            var updateGroupRequest = new Skylight.Api.Authentication.V1.GroupsRequests.GroupsGroupIdPutRequest(updateGroupBody, groupId);
+
+            //Execute the API request
+            var result = await Manager.ApiClient.ExecuteRequestAsync(updateGroupRequest);
+
+            //Handle the resulting status code appropriately
+            switch(result.StatusCode) {
+                case System.Net.HttpStatusCode.Forbidden:
+                    Console.Error.WriteLine("Error updating group: Permission forbidden.");
+                    break;
+                case System.Net.HttpStatusCode.NotFound:
+                    Console.Error.WriteLine("Error updating group: Group not found.");
+                    break;
+                case System.Net.HttpStatusCode.Unauthorized:
+                    Console.Error.WriteLine("Error updating group: Method call was unauthenticated.");
+                    break;
+                case System.Net.HttpStatusCode.NoContent:
+                    Console.WriteLine("Group successfully updated.");
+                    break;
+                default:
+                    Console.Error.WriteLine("Unhandled group update status code: " + result.StatusCode);
+                    break;
+            }
+            //@skydocs.end()
+        }
+
+        static async Task<GroupInfo> GetGroupById(string groupId) {
+            //@skydocs.start(groups.getbyid)
+            //Create an API request for retrieving the group by its id
+            var getGroupRequest = new Skylight.Api.Authentication.V1.GroupsRequests.GroupsGroupIdGetRequest(groupId);
+
+            //Execute the API request
+            var result = await Manager.ApiClient.ExecuteRequestAsync(getGroupRequest);
+
+            //Handle the resulting status code appropriately
+            switch(result.StatusCode) {
+                case System.Net.HttpStatusCode.Forbidden:
+                    Console.Error.WriteLine("Error retrieving group: Permission forbidden.");
+                    break;
+                case System.Net.HttpStatusCode.NotFound:
+                    Console.Error.WriteLine("Error retrieving group: Group not found.");
+                    break;
+                case System.Net.HttpStatusCode.Unauthorized:
+                    Console.Error.WriteLine("Error retrieving group: Method call was unauthenticated.");
+                    break;
+                case System.Net.HttpStatusCode.OK:
+                    Console.WriteLine("Group successfully retrieved.");
+                    break;
+                default:
+                    Console.Error.WriteLine("Unhandled group update status code: " + result.StatusCode);
+                    break;
+            }
+            return result.Content;
+            //@skydocs.end()
+        }
+
         static async Task<string> GetGroupIdForGroupname(string name) {
             
-            //@skydocs.start(groups.getbyname)
+            //@skydocs.start(groups.getall)
             //Create an API request for retrieving all groups
             var getGroupsRequest = new Skylight.Api.Authentication.V1.GroupsRequests.GetGroupsListRequest();
             
