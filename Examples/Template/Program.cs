@@ -96,6 +96,8 @@ class Program
     }
 
     static async Task CardUpdated(object sender, CardUpdatedEventArgs args) {
+        
+        //@skydocs.start(media.download)
         /*
             There are many ways we can handle this event. We could:
             - use the cardId to determine what action to take
@@ -149,6 +151,7 @@ class Program
                 Console.WriteLine(photoCaptureURI);
             }
         }
+        //@skydocs.end()
 
     }
 
