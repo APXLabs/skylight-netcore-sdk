@@ -462,6 +462,8 @@ namespace Assignments
     }
 
     static async Task DeleteAssignment(string assignmentId) {
+        
+        //@skydocs.start(assignments.delete)
         var result = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.AssignmentRequests.DeleteAssignmentRequest(assignmentId));
         
         //Handle the resulting status code appropriately
@@ -482,6 +484,7 @@ namespace Assignments
                 Console.Error.WriteLine("Unhandled user creation status code: " + result.StatusCode);
                 throw new Exception("Error deleting assignment.");
         }
+        //@skydocs.end()
     }
 
     }
