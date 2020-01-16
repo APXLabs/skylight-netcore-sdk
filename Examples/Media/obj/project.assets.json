@@ -344,7 +344,7 @@
           }
         }
       },
-      "Skylight.Api/1.0.58": {
+      "Skylight.Api/1.0.62": {
         "type": "package",
         "dependencies": {
           "Skylight.Client": "1.0.4",
@@ -371,11 +371,10 @@
           "lib/netcoreapp2.2/Skylight.Client.dll": {}
         }
       },
-      "Skylight.FileClient/1.0.58": {
+      "Skylight.FileClient/1.0.62": {
         "type": "package",
         "dependencies": {
-          "Skylight.Api": "1.0.58",
-          "Skylight.Client": "1.0.4"
+          "Skylight.Api": "1.0.62"
         },
         "compile": {
           "lib/netcoreapp2.2/Skylight.FileClient.dll": {}
@@ -1561,8 +1560,8 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.2",
         "dependencies": {
-          "Skylight.Api": "1.0.58",
-          "Skylight.FileClient": "1.0.58",
+          "Skylight.Api": "1.0.62",
+          "Skylight.FileClient": "1.0.62",
           "Skylight.Mqtt": "1.0.3",
           "System.IdentityModel.Tokens.Jwt": "5.5.0"
         },
@@ -2181,14 +2180,14 @@
         "runtimes/ubuntu.16.10-x64/native/System.Security.Cryptography.Native.OpenSsl.so"
       ]
     },
-    "Skylight.Api/1.0.58": {
-      "sha512": "4KhD84fVSfRMPaEUVYciono2wXFBYlhfCkHm5P9u///JNgl3DbSB5hgiF2xB92DEh5zT9JlesK49b/USsDCU/Q==",
+    "Skylight.Api/1.0.62": {
+      "sha512": "K9UFf0dVZ3PXBC/h5UAO3e2mzWbDxjpwHQl6cTgrsd/BwfkyUCvVgTR4lp7Vv4wbUuLZ6mwcrAeADwGUvqNckw==",
       "type": "package",
-      "path": "skylight.api/1.0.58",
+      "path": "skylight.api/1.0.62",
       "files": [
         ".nupkg.metadata",
         "lib/netcoreapp2.2/Skylight.dll",
-        "skylight.api.1.0.58.nupkg.sha512",
+        "skylight.api.1.0.62.nupkg.sha512",
         "skylight.api.nuspec"
       ]
     },
@@ -2203,14 +2202,14 @@
         "skylight.client.nuspec"
       ]
     },
-    "Skylight.FileClient/1.0.58": {
-      "sha512": "PZ+0AtH2FKcwsq2bqFJ3N78Dvnc2kg41WulOQkjDszGl6r/tRaT86oAU/RFtXh8sHuboD7jLLrDeRa0T4XP8pg==",
+    "Skylight.FileClient/1.0.62": {
+      "sha512": "GgBNduBXmv/akPePKKaJAbMQJhcsJ+U11jXcxYLZBhi/FtWpa1NG4ELZ3Od96uUqTEItAIGdgcQC4OTayuiC5w==",
       "type": "package",
-      "path": "skylight.fileclient/1.0.58",
+      "path": "skylight.fileclient/1.0.62",
       "files": [
         ".nupkg.metadata",
         "lib/netcoreapp2.2/Skylight.FileClient.dll",
-        "skylight.fileclient.1.0.58.nupkg.sha512",
+        "skylight.fileclient.1.0.62.nupkg.sha512",
         "skylight.fileclient.nuspec"
       ]
     },

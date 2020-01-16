@@ -190,7 +190,7 @@
       "runtime.ubuntu.14.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {},
       "runtime.ubuntu.16.04-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {},
       "runtime.ubuntu.16.10-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {},
-      "Skylight.Api/1.0.58": {
+      "Skylight.Api/1.0.62": {
         "dependencies": {
           "Skylight.Client": "1.0.4",
           "Skylight.Utilities": "1.0.4",
@@ -215,10 +215,9 @@
           }
         }
       },
-      "Skylight.FileClient/1.0.58": {
+      "Skylight.FileClient/1.0.62": {
         "dependencies": {
-          "Skylight.Api": "1.0.58",
-          "Skylight.Client": "1.0.4"
+          "Skylight.Api": "1.0.62"
         },
         "runtime": {
           "lib/netcoreapp2.2/Skylight.FileClient.dll": {
@@ -944,8 +943,8 @@
       },
       "Skylight.Sdk/1.0.0": {
         "dependencies": {
-          "Skylight.Api": "1.0.58",
-          "Skylight.FileClient": "1.0.58",
+          "Skylight.Api": "1.0.62",
+          "Skylight.FileClient": "1.0.62",
           "Skylight.Mqtt": "1.0.3",
           "System.IdentityModel.Tokens.Jwt": "5.5.0"
         },
@@ -1150,12 +1149,12 @@
       "path": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl/4.3.2",
       "hashPath": "runtime.ubuntu.16.10-x64.runtime.native.system.security.cryptography.openssl.4.3.2.nupkg.sha512"
     },
-    "Skylight.Api/1.0.58": {
+    "Skylight.Api/1.0.62": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-4KhD84fVSfRMPaEUVYciono2wXFBYlhfCkHm5P9u///JNgl3DbSB5hgiF2xB92DEh5zT9JlesK49b/USsDCU/Q==",
-      "path": "skylight.api/1.0.58",
-      "hashPath": "skylight.api.1.0.58.nupkg.sha512"
+      "sha512": "sha512-K9UFf0dVZ3PXBC/h5UAO3e2mzWbDxjpwHQl6cTgrsd/BwfkyUCvVgTR4lp7Vv4wbUuLZ6mwcrAeADwGUvqNckw==",
+      "path": "skylight.api/1.0.62",
+      "hashPath": "skylight.api.1.0.62.nupkg.sha512"
     },
     "Skylight.Client/1.0.4": {
       "type": "package",
@@ -1164,12 +1163,12 @@
       "path": "skylight.client/1.0.4",
       "hashPath": "skylight.client.1.0.4.nupkg.sha512"
     },
-    "Skylight.FileClient/1.0.58": {
+    "Skylight.FileClient/1.0.62": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-PZ+0AtH2FKcwsq2bqFJ3N78Dvnc2kg41WulOQkjDszGl6r/tRaT86oAU/RFtXh8sHuboD7jLLrDeRa0T4XP8pg==",
-      "path": "skylight.fileclient/1.0.58",
-      "hashPath": "skylight.fileclient.1.0.58.nupkg.sha512"
+      "sha512": "sha512-GgBNduBXmv/akPePKKaJAbMQJhcsJ+U11jXcxYLZBhi/FtWpa1NG4ELZ3Od96uUqTEItAIGdgcQC4OTayuiC5w==",
+      "path": "skylight.fileclient/1.0.62",
+      "hashPath": "skylight.fileclient.1.0.62.nupkg.sha512"
     },
     "Skylight.Mqtt/1.0.3": {
       "type": "package",

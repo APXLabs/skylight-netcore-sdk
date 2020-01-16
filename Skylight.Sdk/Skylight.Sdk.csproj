@@ -6,10 +6,20 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Skylight.Api" Version="1.0.58" />
+      <!--<PackageReference Include="Skylight.Api" Version="1.0.62" />
+      <PackageReference Include="Skylight.FileClient" Version="1.0.62" />-->
       <PackageReference Include="Skylight.Mqtt" Version="1.0.3" />
-      <PackageReference Include="Skylight.FileClient" Version="1.0.58" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />
     </ItemGroup>
+
+    
+  <ItemGroup Condition="Exists('..\..\..\skylight-netcore-api')">
+    <ProjectReference Include="..\..\..\skylight-netcore-api\Skylight\Skylight.csproj" />
+    <ProjectReference Include="..\..\..\skylight-netcore-api\Skylight.FileClient\Skylight.FileClient.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="!Exists('..\..\..\skylight-netcore-api')"> 
+    <PackageReference Include="Skylight.Api" Version="1.0.62" />
+  </ItemGroup>
 
 </Project>

@@ -132,11 +132,11 @@
             },
             "Skylight.Api": {
               "target": "Package",
-              "version": "[1.0.54, )"
+              "version": "[1.0.58, )"
             },
             "Skylight.FileClient": {
               "target": "Package",
-              "version": "[1.0.44, )"
+              "version": "[1.0.58, )"
             },
             "Skylight.Mqtt": {
               "target": "Package",

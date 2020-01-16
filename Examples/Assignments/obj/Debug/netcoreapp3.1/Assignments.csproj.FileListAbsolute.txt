@@ -124,3 +124,6 @@ C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\Assignments\obj\Debug\netcoreapp3.1\Assignments.csproj.CopyComplete
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\Assignments\obj\Debug\netcoreapp3.1\Assignments.dll
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\Assignments\obj\Debug\netcoreapp3.1\Assignments.pdb
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\Assignments\bin\Debug\netcoreapp3.1\JsonSubTypes.dll
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\Assignments\bin\Debug\netcoreapp3.1\Skylight.pdb
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\Assignments\bin\Debug\netcoreapp3.1\Skylight.FileClient.pdb

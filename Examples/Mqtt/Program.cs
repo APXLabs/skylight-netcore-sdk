@@ -5,6 +5,7 @@ using MQTTnet.Client.Connecting;
 using MQTTnet.Client.Disconnecting;
 using Skylight.Mqtt;
 using Skylight.Sdk;
+using Skylight.Api.Assignments.V1.Models;
 
 namespace mqtt
 {
@@ -44,20 +45,34 @@ namespace mqtt
 
             SkyManager.MessagingClient.CardUpdated += async (object sender, CardUpdatedEventArgs args) => { await CardUpdated(sender, args); };
 
-
             await SkyManager.StartListening();
             Console.ReadLine();
             //@skydocs.end()
         }
 
+        //@skydocs.start(mqtt.cardupdated)
         static async Task CardUpdated(object sender, CardUpdatedEventArgs args) {
             var cardRequest = new Skylight.Api.Assignments.V1.CardRequests.GetCardRequest(args.AssignmentId, args.SequenceId, args.CardId);
             var response = await SkyManager.ApiClient.ExecuteRequestAsync(cardRequest);
             var card = response.Content;
-            var cardComponentType = card.Component.GetType();
-            if(cardComponentType == typeof(Skylight.Api.Assignments.V1.Models.ComponentCompletion)){
-
+            //We could use the card tags (card.Tags), card id (args.CardId), or the component type (see below) of the card to see what action we should take. See the Hello World example for how to use card tags.
+            switch(card.Component.ComponentType){
+                case ComponentType.CapturePhoto:
+                    //For a more in-depth example of downloading a captured photo, see the Hello World example.
+                    Console.WriteLine("Photo captured.");
+                    break;
+                case ComponentType.Completion:
+                    Console.WriteLine("Completion card selected.");
+                    break;
+                case ComponentType.Scanning:
+                    var scanComponent = (ComponentScanning)card.Component;
+                    var scanResult = scanComponent.Result;
+                    Console.WriteLine("Scan component updated with scan result: " + scanResult);
+                    break;
+                default:
+                    break;
             }
         }
+        //@skydocs.end()
     }
 }

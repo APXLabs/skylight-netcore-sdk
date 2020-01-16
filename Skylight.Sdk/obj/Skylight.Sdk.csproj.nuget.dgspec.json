@@ -4,6 +4,144 @@
     "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-sdk\\skylight-netcore-sdk\\Skylight.Sdk\\Skylight.Sdk.csproj": {}
   },
   "projects": {
+    "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight.FileClient\\Skylight.FileClient.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight.FileClient\\Skylight.FileClient.csproj",
+        "projectName": "Skylight.FileClient",
+        "projectPath": "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight.FileClient\\Skylight.FileClient.csproj",
+        "packagesPath": "C:\\Users\\andrew.sugaya\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight.FileClient\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\NuGet.Config",
+          "C:\\Users\\andrew.sugaya\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://pkgs.dev.azure.com/UpskillSDK/dotnet-sdk/_packaging/skylight-sdk/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {
+              "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight\\Skylight.csproj": {
+                "projectPath": "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight\\Skylight.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight\\Skylight.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight\\Skylight.csproj",
+        "projectName": "Skylight.Api",
+        "projectPath": "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight\\Skylight.csproj",
+        "packagesPath": "C:\\Users\\andrew.sugaya\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\NuGet.Config",
+          "C:\\Users\\andrew.sugaya\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp2.2"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {},
+          "https://pkgs.dev.azure.com/UpskillSDK/dotnet-sdk/_packaging/skylight-sdk/nuget/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp2.2": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp2.2": {
+          "dependencies": {
+            "JsonSubTypes": {
+              "target": "Package",
+              "version": "[1.6.0, )"
+            },
+            "Microsoft.NETCore.App": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "autoReferenced": true
+            },
+            "Skylight.Client": {
+              "target": "Package",
+              "version": "[1.0.4, )"
+            },
+            "Skylight.Utilities": {
+              "target": "Package",
+              "version": "[1.0.4, )"
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[5.5.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-sdk\\skylight-netcore-sdk\\Skylight.Sdk\\Skylight.Sdk.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -30,7 +168,14 @@
         },
         "frameworks": {
           "netcoreapp2.2": {
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight.FileClient\\Skylight.FileClient.csproj": {
+                "projectPath": "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight.FileClient\\Skylight.FileClient.csproj"
+              },
+              "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight\\Skylight.csproj": {
+                "projectPath": "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight\\Skylight.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -47,14 +192,6 @@
               "target": "Package",
               "version": "[2.2.0, )",
               "autoReferenced": true
-            },
-            "Skylight.Api": {
-              "target": "Package",
-              "version": "[1.0.58, )"
-            },
-            "Skylight.FileClient": {
-              "target": "Package",
-              "version": "[1.0.58, )"
             },
             "Skylight.Mqtt": {
               "target": "Package",

@@ -15,6 +15,7 @@ namespace Skylight.Sdk
         public MessagingClient MessagingClient;
         public FileClient.FileTransferClient MediaClient;
         public string IntegrationId;
+        public string Domain;
 
         private dynamic Credentials;
         public Manager(string credentialsPath = "credentials.json" ) {
@@ -39,6 +40,9 @@ namespace Skylight.Sdk
 
             //Set our integration id
             IntegrationId = (string)Credentials.id;
+
+            //Set our domain
+            Domain = (string)Credentials.domain;
 
         }
 
