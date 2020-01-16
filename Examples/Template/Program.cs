@@ -1,4 +1,5 @@
 ﻿
+using System.Net.Http.Headers;
 using System.IO;
 using System;
 using Skylight.Client;
@@ -151,7 +152,8 @@ class Program
 
     }
 
-    static async Task DownloadPhoto(string uri) {
+    //@skydocs.start(media.download)
+    static async Task DownloadPhoto(string uri) { //This uri can be, for example, a URI from a capture photo component's captures field.
         //First, get the file metadata so we have some more information about the file
         string[] splitString = uri.Split("/");
         var photoId = splitString[splitString.Length-2];
@@ -220,6 +222,7 @@ class Program
         }
 
     }
+    //@skydocs.end()
 
     /*
         This method will prompt for a username to use for this Hello World and then:
