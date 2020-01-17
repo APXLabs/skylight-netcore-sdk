@@ -2,3 +2,4 @@ credentials.json
 bin/**
 obj/**
 .vscode/**
+**/.vscode/**

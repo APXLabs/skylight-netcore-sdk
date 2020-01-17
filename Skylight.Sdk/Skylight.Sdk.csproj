@@ -20,6 +20,7 @@
   
   <ItemGroup Condition="!Exists('..\..\..\skylight-netcore-api')"> 
     <PackageReference Include="Skylight.Api" Version="1.0.62" />
+    <PackageReference Include="Skylight.FileClient" Version="1.0.62" />
   </ItemGroup>
 
 </Project>
