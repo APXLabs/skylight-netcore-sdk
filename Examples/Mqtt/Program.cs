@@ -39,18 +39,20 @@ namespace mqtt
                 Console.WriteLine("MQTT client subscribed to: " + args.Topic);
             };
 
+            //All messages will be routed to this callback, so use this for any messages that don't have a supported event handler
             SkyManager.MessagingClient.MessageReceived += (object sender, MessageReceivedEventArgs args) => {
                 Console.WriteLine("Message received on topic " + args.Topic + " " + args.Message);
             };
 
+            //This is an example of a supported event handler
             SkyManager.MessagingClient.CardUpdated += async (object sender, CardUpdatedEventArgs args) => { await CardUpdated(sender, args); };
 
-            await SkyManager.StartListening();
-            Console.ReadLine();
+            await SkyManager.StartListening(); //IMPORTANT: This line starts the MQTT client and is necessary for receiving MQTT messages
+            Console.ReadLine(); //This line keeps our program alive so that it can listen to messages
             //@skydocs.end()
         }
 
-        //@skydocs.start(mqtt.cardupdated)
+        //@skydocs.start(mqtt.cardupdated.componenttype)
         static async Task CardUpdated(object sender, CardUpdatedEventArgs args) {
             var cardRequest = new Skylight.Api.Assignments.V1.CardRequests.GetCardRequest(args.AssignmentId, args.SequenceId, args.CardId);
             var response = await SkyManager.ApiClient.ExecuteRequestAsync(cardRequest);

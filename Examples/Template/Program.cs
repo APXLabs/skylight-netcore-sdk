@@ -95,9 +95,9 @@ class Program
         await SkyManager.StartListening();
     }
 
+    //@skydocs.start(mqtt.cardupdated.cardtags)
     //@skydocs.start(media.download)
     static async Task CardUpdated(object sender, CardUpdatedEventArgs args) {
-        
         /*
             There are many ways we can handle this event. We could:
             - use the cardId to determine what action to take
@@ -439,6 +439,7 @@ class Program
         labelHelloCard.Position = 1;
         labelHelloCard.Id = "card1"; //This could be a UUID -- as long as it's unique within the sequence, we're good
         
+        //@skydocs.start(cards.tags)
         CardNew photoCaptureCard = CreatePhotoCaptureCard();
         photoCaptureCard.Position = 2;
         photoCaptureCard.Id = "card2";
@@ -459,6 +460,7 @@ class Program
         {
             MARK_COMPLETE_TAG
         };
+        //@skydocs.end()
 
         //Set the cards to live in the sequence. We could create more cards and add them in a similar manner
         sequence.Cards = new System.Collections.Generic.List<CardNew>

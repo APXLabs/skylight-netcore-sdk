@@ -48,6 +48,7 @@ namespace Assignments
             SpinWait.SpinUntil(() => false);
         }
 
+        //@skydocs.start(mqtt.cardupdated.cardid)
         static async Task CardUpdated(object sender, CardUpdatedEventArgs args) {
 
             var shouldResetCard = false;
@@ -75,6 +76,7 @@ namespace Assignments
             //Mark the card as not done, to allow the user to select the card again.
             await ResetCard(card);
         }
+        //@skydocs.end()
 
         static async Task ResetCard(Card card) {
             
