@@ -25,7 +25,7 @@ class Program
         try {
             //Create our manager and point it to our credentials file
             //We leave the parameter blank, so that it looks for the `credentials.json` in the root directory.
-            SkyManager = new Manager(Path.Combine("..", "..", "credentials.json"));
+            SkyManager = new Manager();
         } catch { return; }
         
         /* In this Hello World example, we:
