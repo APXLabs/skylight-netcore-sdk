@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp2.2;netcoreapp3.1</TargetFramework>
+        <TargetFrameworks>netcoreapp2.2;netcoreapp3.1</TargetFrameworks>
         <PackageId>Skylight.Sdk</PackageId>
     </PropertyGroup>
 
