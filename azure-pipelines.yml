@@ -30,7 +30,7 @@ stages:
         displayName: 'Installing .NET Core SDK'
         inputs:
           packageType: 'sdk'
-          version: '2.x'
+          version: '3.x'
       - task: DotNetCoreCLI@2
         displayName: 'Building .NET Core SDK'
         inputs:
