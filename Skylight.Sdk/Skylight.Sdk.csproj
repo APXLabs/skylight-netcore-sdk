@@ -6,7 +6,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Skylight.Mqtt" Version="1.0.5" />
+      <PackageReference Include="Skylight.Mqtt" Version="1.1.0" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />
       <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     </ItemGroup>
@@ -18,8 +18,8 @@
   </ItemGroup>
   
   <ItemGroup Condition="!Exists('..\..\..\skylight-netcore-api')"> 
-    <PackageReference Include="Skylight.Api" Version="1.0.65" />
-    <PackageReference Include="Skylight.FileClient" Version="1.0.65" />
+    <PackageReference Include="Skylight.Api" Version="1.1.0" />
+    <PackageReference Include="Skylight.FileClient" Version="1.1.0" />
   </ItemGroup>
 
 </Project>
