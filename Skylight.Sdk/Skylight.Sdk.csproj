@@ -1,13 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netcoreapp2.2;netcoreapp3.1</TargetFrameworks>
+        <TargetFrameworks>netcoreapp2.2;netstandard2.0;netcoreapp3.1</TargetFrameworks>
         <PackageId>Skylight.Sdk</PackageId>
     </PropertyGroup>
 
     <ItemGroup>
-      <!--<PackageReference Include="Skylight.Api" Version="1.0.62" />
-      <PackageReference Include="Skylight.FileClient" Version="1.0.62" />-->
       <PackageReference Include="Skylight.Mqtt" Version="1.0.3" />
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />
     </ItemGroup>
@@ -19,8 +17,8 @@
   </ItemGroup>
   
   <ItemGroup Condition="!Exists('..\..\..\skylight-netcore-api')"> 
-    <PackageReference Include="Skylight.Api" Version="1.0.62" />
-    <PackageReference Include="Skylight.FileClient" Version="1.0.62" />
+    <PackageReference Include="Skylight.Api" Version="1.0.65" />
+    <PackageReference Include="Skylight.FileClient" Version="1.0.65" />
   </ItemGroup>
 
 </Project>

@@ -15,10 +15,11 @@ namespace Assignments
     class Program
     {
         public static Manager SkyManager;
-        private static readonly string TEST_ACCOUNT_USERNAME = "hello.world";
+        private static readonly string TEST_ACCOUNT_USERNAME = "api.test.user";
         private static readonly string ROOT_SEQUENCE_ID = "rootSequence";
         private const string CREATE_CARD_ID = "createCard";
         private const string DELETE_CARD_ID = "deleteCard";
+        private const string ASSIGNMENT_NAME = "SDK Example Assignment";
         private static int numSequencesCreated = 0;
         static async Task Main(string[] args)
         {
@@ -51,6 +52,11 @@ namespace Assignments
         //@skydocs.start(mqtt.cardupdated.cardid)
         static async Task CardUpdated(object sender, CardUpdatedEventArgs args) {
 
+            //In this example, we'll first check the assignment to make sure its name matches our assignment's name.
+            Assignment assignment = await GetAssignment(args.AssignmentId);
+            if(!assignment.Name.Equals(ASSIGNMENT_NAME)) return;
+
+            //Now handle the card update event based on the card's id
             var shouldResetCard = false;
 
             switch(args.CardId) {
@@ -85,7 +91,7 @@ namespace Assignments
             cardPatch.Add("isDone", false); //Important note: Make sure that the keys (e.g. isDone) are lower case
             cardPatch.Add("component", new ComponentCompletion() { Completed = false });
             
-            var cardUpdateBody = new Skylight.Api.Assignments.V1.CardRequests.UpdateCardPatchRequest(cardPatch, card.AssignmentId, card.SequenceId, card.Id);
+            var cardUpdateBody = new Skylight.Api.Assignments.V1.CardRequests.PatchCardRequest(cardPatch, card.AssignmentId, card.SequenceId, card.Id);
             var cardUpdateResult = await SkyManager.ApiClient.ExecuteRequestAsync(cardUpdateBody);
             
             //Handle the resulting status code appropriately
@@ -136,7 +142,7 @@ namespace Assignments
             };
 
             //Create our sequence
-            var sequenceCreateResult = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.SequenceRequests.CreateSequenceRequest(new System.Collections.Generic.List<SequenceNew>{ newSequence }, assignmentId));
+            var sequenceCreateResult = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.SequenceRequests.CreateSequenceRequest(newSequence, assignmentId));
 
             //Handle the resulting status code appropriately
             switch(sequenceCreateResult.StatusCode) {
@@ -159,7 +165,7 @@ namespace Assignments
             //@skydocs.end()
 
             //Get our current sequence's cards information so we can add a new card to it
-            var sequenceInfoRequest = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.CardRequests.GetCardListRequest(assignmentId, sequenceId));
+            var sequenceInfoRequest = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.CardRequests.GetSequenceCardsRequest(assignmentId, sequenceId));
 
             //Handle the resulting status code appropriately
             switch(sequenceInfoRequest.StatusCode) {
@@ -196,7 +202,7 @@ namespace Assignments
                 }
             };
 
-            var cardCreateResult = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.CardRequests.CreateCardsRequest(new System.Collections.Generic.List<CardNew>{ openSequenceCard }, assignmentId, ROOT_SEQUENCE_ID));
+            var cardCreateResult = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.CardRequests.CreateCardRequest(new System.Collections.Generic.List<CardNew>{ openSequenceCard }, assignmentId, ROOT_SEQUENCE_ID));
 
             //Handle the resulting status code appropriately
             switch(cardCreateResult.StatusCode) {
@@ -226,7 +232,7 @@ namespace Assignments
             //First, delete the openSequence card that points to this sequence
             
             //Get the root sequence's cards to see which one points to this sequence. Theoretically we could also delete the proper card based on the sequenceId.
-            var sequenceInfoRequest = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.CardRequests.GetCardListRequest(assignmentId, ROOT_SEQUENCE_ID));
+            var sequenceInfoRequest = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.CardRequests.GetSequenceCardsRequest(assignmentId, ROOT_SEQUENCE_ID));
 
             //Handle the resulting status code appropriately
             switch(sequenceInfoRequest.StatusCode) {
@@ -306,6 +312,33 @@ namespace Assignments
             //@skydocs.end()
         }
 
+        static async Task<Assignment> GetAssignment(string assignmentId) {
+            //@skydocs.start(assignments.get)
+            var result = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.AssignmentRequests.GetAssignmentRequest(assignmentId));
+
+            //Handle the resulting status code appropriately
+            switch(result.StatusCode) {
+                case System.Net.HttpStatusCode.Forbidden:
+                    Console.Error.WriteLine("Error getting assignment: Permission forbidden.");
+                    throw new Exception("Error getting assignment.");
+                case System.Net.HttpStatusCode.Unauthorized:
+                    Console.Error.WriteLine("Error getting assignment: Method call was unauthenticated.");
+                    throw new Exception("Error getting assignment.");
+                case System.Net.HttpStatusCode.NotFound:
+                    Console.Error.WriteLine("Error retrieving assignment: Assignment not found.");
+                    throw new Exception("Error getting assignment.");
+                case System.Net.HttpStatusCode.OK:
+                    Console.WriteLine("Successfully retrieved assignment.");
+                    break;
+                default:
+                    Console.Error.WriteLine("Unhandled assignment retrieval status code: " + result.StatusCode);
+                    throw new Exception("Error getting assignment.");
+            }
+
+            return result.Content; //result.Content has our Assignment object
+            //@skydocs.end()
+        }
+
         static async Task<Card> GetCard(string assignmentId, string sequenceId, string cardId) {
             //@skydocs.start(cards.get)
             var result = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.CardRequests.GetCardRequest(assignmentId, sequenceId, cardId));
@@ -319,7 +352,7 @@ namespace Assignments
                     Console.Error.WriteLine("Error getting card: Method call was unauthenticated.");
                     throw new Exception("Error getting card.");
                 case System.Net.HttpStatusCode.NotFound:
-                    Console.Error.WriteLine("Error retrieving card: User not found.");
+                    Console.Error.WriteLine("Error retrieving card: Assignment, sequence, or card not found.");
                     throw new Exception("Error getting card.");
                 case System.Net.HttpStatusCode.OK:
                     Console.WriteLine("Successfully retrieved card.");
@@ -348,7 +381,7 @@ namespace Assignments
                 AssignedTo = assignUser,
                 Description = "This is an assignment created by the SDK example.",
                 IntegrationId = SkyManager.IntegrationId,
-                Name = "SDK Example Assignment"
+                Name = ASSIGNMENT_NAME
             };
 
             //Create a sequence -- theoretically, this would be better placed in another function
@@ -416,7 +449,7 @@ namespace Assignments
         static async Task<string> GetUserIdForUsername(string username) {
             //@skydocs.start(users.getbyname)
             //Create an API request for retrieving all users
-            var getUsersRequest = new Skylight.Api.Authentication.V1.UsersRequests.GetUsersListRequest();
+            var getUsersRequest = new Skylight.Api.Authentication.V1.UsersRequests.GetUsersRequest();
 
             //Execute the API request
             var result = await SkyManager.ApiClient.ExecuteRequestAsync(getUsersRequest);
@@ -432,7 +465,7 @@ namespace Assignments
         
         static async Task RemoveAllAssignmentsForUser(string userId) {
             //First, get a list of all the user's assignments.
-            var assignmentsRequest = new Skylight.Api.Assignments.V1.AssignmentRequests.GetAssignmentListRequest();
+            var assignmentsRequest = new Skylight.Api.Assignments.V1.AssignmentRequests.GetAssignmentsRequest();
 
             //Make sure we only get assignments for our user
             assignmentsRequest.AddUserIdsQuery(userId);

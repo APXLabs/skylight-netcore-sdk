@@ -24,3 +24,6 @@ C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\Media\obj\Debug\netcoreapp3.1\Media.dll
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\Media\obj\Debug\netcoreapp3.1\Media.pdb
 C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\Media\bin\Debug\netcoreapp3.1\Skylight.FileClient.dll
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\Media\bin\Debug\netcoreapp3.1\JsonSubTypes.dll
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\Media\bin\Debug\netcoreapp3.1\Skylight.pdb
+C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Examples\Media\bin\Debug\netcoreapp3.1\Skylight.FileClient.pdb

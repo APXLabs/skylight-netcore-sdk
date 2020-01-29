@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <StartupObject>Tests.Authentication.Program</StartupObject>
+  </PropertyGroup>
+  
+  <ItemGroup Condition="Exists('..\..\..\Skylight.Sdk')">
+    <ProjectReference Include="..\..\..\Skylight.Sdk\Skylight.Sdk.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="!Exists('..\..\..\Skylight.Sdk')"> 
+    <PackageReference Include="Skylight.Sdk" Version="1.0.11" />
+  </ItemGroup>
+
+</Project>

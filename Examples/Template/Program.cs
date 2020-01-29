@@ -10,12 +10,12 @@ using MQTTnet.Client.Disconnecting;
 using Skylight.Mqtt;
 using System.Threading;
 using Skylight.Api.Assignments.V1.Models;
+using Skylight.Api.Authentication.V1.Models;
 
 class Program
 {
     public static Manager SkyManager;
     public static string UserId;
-    public static string UserName;
     private readonly static string MARK_COMPLETE_TAG = "seq1completion"; //Tags can only be up to 20 characters long
     private readonly static string PHOTO_CAPTURE_TAG = "seq1photo"; //Tags can only be up to 20 characters long
     private readonly static string FILES_DIRECTORY = Path.Join(".", "tmp"); //We'll download our uploaded files to a folder called "tmp"
@@ -25,7 +25,7 @@ class Program
         try {
             //Create our manager and point it to our credentials file
             //We leave the parameter blank, so that it looks for the `credentials.json` in the root directory.
-            SkyManager = new Manager();
+            SkyManager = new Manager("..\\..\\credentials.json");
         } catch { return; }
         
         /* In this Hello World example, we:
@@ -138,7 +138,7 @@ class Program
             Console.WriteLine("Card is marked complete");
 
             //Otherwise, reassign the assignment
-            await RemoveAllAssignmentsForUser(UserId);
+            await DeleteAssignment(args.AssignmentId);
             var assignmentBody = CreateAssignment();
             await AssignToUser(assignmentBody, UserId);
         } else if(cardInfo.Tags.Contains(PHOTO_CAPTURE_TAG)) {
@@ -190,8 +190,7 @@ class Program
 
         //If the file exists, don't re-download
         if(File.Exists(filePath))return;
-        //await SkyManager.MediaClient.DownloadFile(photoId, photoData.Filename, FILES_DIRECTORY);
-        var fileResult = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Media.V3.FilesRequests.DownloadFileRequest(photoId));
+        var fileResult = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Media.V3.FilesRequests.GetFileContentRequest(photoId));
         
         //Handle the resulting status code appropriately
         switch(fileResult.StatusCode) {
@@ -254,7 +253,7 @@ class Program
 
         //Otherwise, prompt for a password and create the user
         string password = GetPassword();
-        await CreateUser("Hello", "World", "user", username, password);
+        await CreateUser("Hello", "World", Role.User, username, password);
         userId = await GetUserIdForUsername(username);
         
         //At this point, if userId is still null, we've thrown an exception.
@@ -282,7 +281,7 @@ class Program
     //As the name suggests, this method will get the user ID for a given username -- or will return null, if the user doesn't exist
     static async Task<string> GetUserIdForUsername(string username) {
         //Create an API request for retrieving all users
-        var getUsersRequest = new Skylight.Api.Authentication.V1.UsersRequests.GetUsersListRequest();
+        var getUsersRequest = new Skylight.Api.Authentication.V1.UsersRequests.GetUsersRequest();
 
         //Execute the API request
         var result = await SkyManager.ApiClient.ExecuteRequestAsync(getUsersRequest);
@@ -311,9 +310,9 @@ class Program
         return null;
     }
 
-    static async Task CreateUser(string first, string last, string role, string username, string password) {
+    static async Task CreateUser(string first, string last, Role role, string username, string password) {
         //This is the body of information we use to create a new user
-        var newUserBody = new Skylight.Api.Authentication.V1.Models.UserNew
+        var newUserBody = new Skylight.Api.Authentication.V1.Models.CreateUserBody
         {
             FirstName = first,
             LastName = last,
@@ -347,7 +346,7 @@ class Program
     
     static async Task RemoveAllAssignmentsForUser(string userId) {
         //First, get a list of all the user's assignments.
-        var assignmentsRequest = new Skylight.Api.Assignments.V1.AssignmentRequests.GetAssignmentListRequest();
+        var assignmentsRequest = new Skylight.Api.Assignments.V1.AssignmentRequests.GetAssignmentsRequest();
         //Make sure we only get assignments for our user
         assignmentsRequest.AddUserIdsQuery(userId);
 
@@ -377,8 +376,15 @@ class Program
         }
     }
 
-    static async Task DeleteAssignment(string assignmentId) {
-        var result = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.AssignmentRequests.DeleteAssignmentRequest(assignmentId));
+    //@skydocs.start(assignments.delete)
+    static async Task DeleteAssignment(string assignmentId, bool shouldPurge = false) {
+        var deleteRequestBody = new Skylight.Api.Assignments.V1.AssignmentRequests.DeleteAssignmentRequest(assignmentId);
+        /*
+            This next line is optional. If the purge parameter is added and is set to true, the assignment will be purged forever.
+            Otherwise the default action will be for the assignment to be archived.
+        */
+        deleteRequestBody.AddPurgeQuery(shouldPurge);
+        var result = await SkyManager.ApiClient.ExecuteRequestAsync(deleteRequestBody);
         
         //Handle the resulting status code appropriately
         switch(result.StatusCode) {
@@ -399,6 +405,7 @@ class Program
                 throw new Exception("Error deleting assignment.");
         }
     }
+    //@skydocs.end()
 
     static AssignmentNew CreateAssignment() {
 
