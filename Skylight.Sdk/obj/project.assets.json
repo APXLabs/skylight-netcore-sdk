@@ -483,6 +483,21 @@
           }
         }
       },
+      "Skylight.Api/1.1.0": {
+        "type": "package",
+        "dependencies": {
+          "JsonSubTypes": "1.6.0",
+          "Skylight.Client": "1.1.0",
+          "Skylight.Utilities": "1.1.0",
+          "System.IdentityModel.Tokens.Jwt": "5.5.0"
+        },
+        "compile": {
+          "lib/netcoreapp2.2/Skylight.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.2/Skylight.dll": {}
+        }
+      },
       "Skylight.Client/1.1.0": {
         "type": "package",
         "dependencies": {
@@ -494,6 +509,18 @@
         },
         "runtime": {
           "lib/netcoreapp2.2/Skylight.Client.dll": {}
+        }
+      },
+      "Skylight.FileClient/1.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Skylight.Api": "1.1.0"
+        },
+        "compile": {
+          "lib/netcoreapp2.2/Skylight.FileClient.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp2.2/Skylight.FileClient.dll": {}
         }
       },
       "Skylight.Mqtt/1.1.0": {
@@ -1315,35 +1342,6 @@
         },
         "compile": {
           "ref/netstandard1.2/_._": {}
-        }
-      },
-      "Skylight.Api/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v2.2",
-        "dependencies": {
-          "JsonSubTypes": "1.6.0",
-          "Skylight.Client": "1.1.0",
-          "Skylight.Utilities": "1.1.0",
-          "System.IdentityModel.Tokens.Jwt": "5.5.0"
-        },
-        "compile": {
-          "bin/placeholder/Skylight.Api.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Skylight.Api.dll": {}
-        }
-      },
-      "Skylight.FileClient/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v2.2",
-        "dependencies": {
-          "Skylight.Api": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/Skylight.FileClient.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Skylight.FileClient.dll": {}
         }
       }
     },
@@ -1656,6 +1654,21 @@
           }
         }
       },
+      "Skylight.Api/1.1.0": {
+        "type": "package",
+        "dependencies": {
+          "JsonSubTypes": "1.6.0",
+          "Skylight.Client": "1.1.0",
+          "Skylight.Utilities": "1.1.0",
+          "System.IdentityModel.Tokens.Jwt": "5.5.0"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Skylight.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Skylight.dll": {}
+        }
+      },
       "Skylight.Client/1.1.0": {
         "type": "package",
         "dependencies": {
@@ -1667,6 +1680,18 @@
         },
         "runtime": {
           "lib/netcoreapp3.1/Skylight.Client.dll": {}
+        }
+      },
+      "Skylight.FileClient/1.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Skylight.Api": "1.1.0"
+        },
+        "compile": {
+          "lib/netcoreapp3.1/Skylight.FileClient.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/Skylight.FileClient.dll": {}
         }
       },
       "Skylight.Mqtt/1.1.0": {
@@ -2489,35 +2514,6 @@
         "compile": {
           "ref/netstandard1.2/_._": {}
         }
-      },
-      "Skylight.Api/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
-        "dependencies": {
-          "JsonSubTypes": "1.6.0",
-          "Skylight.Client": "1.1.0",
-          "Skylight.Utilities": "1.1.0",
-          "System.IdentityModel.Tokens.Jwt": "5.5.0"
-        },
-        "compile": {
-          "bin/placeholder/Skylight.Api.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Skylight.Api.dll": {}
-        }
-      },
-      "Skylight.FileClient/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
-        "dependencies": {
-          "Skylight.Api": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/Skylight.FileClient.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Skylight.FileClient.dll": {}
-        }
       }
     },
     ".NETStandard,Version=v2.0": {
@@ -2829,6 +2825,21 @@
           }
         }
       },
+      "Skylight.Api/1.1.0": {
+        "type": "package",
+        "dependencies": {
+          "JsonSubTypes": "1.6.0",
+          "Skylight.Client": "1.1.0",
+          "Skylight.Utilities": "1.1.0",
+          "System.IdentityModel.Tokens.Jwt": "5.5.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Skylight.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Skylight.dll": {}
+        }
+      },
       "Skylight.Client/1.1.0": {
         "type": "package",
         "dependencies": {
@@ -2840,6 +2851,18 @@
         },
         "runtime": {
           "lib/netstandard2.0/Skylight.Client.dll": {}
+        }
+      },
+      "Skylight.FileClient/1.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Skylight.Api": "1.1.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Skylight.FileClient.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Skylight.FileClient.dll": {}
         }
       },
       "Skylight.Mqtt/1.1.0": {
@@ -3661,35 +3684,6 @@
         },
         "compile": {
           "ref/netstandard1.2/_._": {}
-        }
-      },
-      "Skylight.Api/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "dependencies": {
-          "JsonSubTypes": "1.6.0",
-          "Skylight.Client": "1.1.0",
-          "Skylight.Utilities": "1.1.0",
-          "System.IdentityModel.Tokens.Jwt": "5.5.0"
-        },
-        "compile": {
-          "bin/placeholder/Skylight.Api.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Skylight.Api.dll": {}
-        }
-      },
-      "Skylight.FileClient/1.0.0": {
-        "type": "project",
-        "framework": ".NETStandard,Version=v2.0",
-        "dependencies": {
-          "Skylight.Api": "1.0.0"
-        },
-        "compile": {
-          "bin/placeholder/Skylight.FileClient.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Skylight.FileClient.dll": {}
         }
       }
     }
@@ -4805,6 +4799,19 @@
         "runtimes/ubuntu.16.10-x64/native/System.Security.Cryptography.Native.OpenSsl.so"
       ]
     },
+    "Skylight.Api/1.1.0": {
+      "sha512": "plroCxLLhVlouVO8kQHTIABXQCFEiv13G7x9mz3j1f4et2clBRmA3bhIkRJErb9WRKBu6QMYBSEskJMzk7/HVw==",
+      "type": "package",
+      "path": "skylight.api/1.1.0",
+      "files": [
+        ".nupkg.metadata",
+        "lib/netcoreapp2.2/Skylight.dll",
+        "lib/netcoreapp3.1/Skylight.dll",
+        "lib/netstandard2.0/Skylight.dll",
+        "skylight.api.1.1.0.nupkg.sha512",
+        "skylight.api.nuspec"
+      ]
+    },
     "Skylight.Client/1.1.0": {
       "sha512": "IZy0he4ec4iGBm49ckOt2kRK5iRhgWwPFz32YZwnQRg5iFC8DlPKQMI9q78DxtTtvfbaNEPgh27NLd2qUfEjVg==",
       "type": "package",
@@ -4816,6 +4823,19 @@
         "lib/netstandard2.0/Skylight.Client.dll",
         "skylight.client.1.1.0.nupkg.sha512",
         "skylight.client.nuspec"
+      ]
+    },
+    "Skylight.FileClient/1.1.0": {
+      "sha512": "mWQ0KHoQfJjbWGGm5zszGkJQl6/lfTSduqZowW78HTXgwe5KVkI2XV7/wtHbWOS34oTdeeBI+VCT2Xe6n0IpRA==",
+      "type": "package",
+      "path": "skylight.fileclient/1.1.0",
+      "files": [
+        ".nupkg.metadata",
+        "lib/netcoreapp2.2/Skylight.FileClient.dll",
+        "lib/netcoreapp3.1/Skylight.FileClient.dll",
+        "lib/netstandard2.0/Skylight.FileClient.dll",
+        "skylight.fileclient.1.1.0.nupkg.sha512",
+        "skylight.fileclient.nuspec"
       ]
     },
     "Skylight.Mqtt/1.1.0": {
@@ -7217,39 +7237,29 @@
         "system.threading.timer.4.3.0.nupkg.sha512",
         "system.threading.timer.nuspec"
       ]
-    },
-    "Skylight.Api/1.0.0": {
-      "type": "project",
-      "path": "../../../skylight-netcore-api/Skylight/Skylight.csproj",
-      "msbuildProject": "../../../skylight-netcore-api/Skylight/Skylight.csproj"
-    },
-    "Skylight.FileClient/1.0.0": {
-      "type": "project",
-      "path": "../../../skylight-netcore-api/Skylight.FileClient/Skylight.FileClient.csproj",
-      "msbuildProject": "../../../skylight-netcore-api/Skylight.FileClient/Skylight.FileClient.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
       "Microsoft.CSharp >= 4.7.0",
       "Microsoft.NETCore.App >= 2.2.0",
-      "Skylight.Api >= 1.0.0",
-      "Skylight.FileClient >= 1.0.0",
+      "Skylight.Api >= 1.1.0",
+      "Skylight.FileClient >= 1.1.0",
       "Skylight.Mqtt >= 1.1.0",
       "System.IdentityModel.Tokens.Jwt >= 5.5.0"
     ],
     ".NETCoreApp,Version=v3.1": [
       "Microsoft.CSharp >= 4.7.0",
-      "Skylight.Api >= 1.0.0",
-      "Skylight.FileClient >= 1.0.0",
+      "Skylight.Api >= 1.1.0",
+      "Skylight.FileClient >= 1.1.0",
       "Skylight.Mqtt >= 1.1.0",
       "System.IdentityModel.Tokens.Jwt >= 5.5.0"
     ],
     ".NETStandard,Version=v2.0": [
       "Microsoft.CSharp >= 4.7.0",
       "NETStandard.Library >= 2.0.3",
-      "Skylight.Api >= 1.0.0",
-      "Skylight.FileClient >= 1.0.0",
+      "Skylight.Api >= 1.1.0",
+      "Skylight.FileClient >= 1.1.0",
       "Skylight.Mqtt >= 1.1.0",
       "System.IdentityModel.Tokens.Jwt >= 5.5.0"
     ]
@@ -7287,34 +7297,13 @@
       },
       "frameworks": {
         "netcoreapp2.2": {
-          "projectReferences": {
-            "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight.FileClient\\Skylight.FileClient.csproj": {
-              "projectPath": "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight.FileClient\\Skylight.FileClient.csproj"
-            },
-            "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight\\Skylight.csproj": {
-              "projectPath": "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight\\Skylight.csproj"
-            }
-          }
+          "projectReferences": {}
         },
         "netcoreapp3.1": {
-          "projectReferences": {
-            "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight.FileClient\\Skylight.FileClient.csproj": {
-              "projectPath": "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight.FileClient\\Skylight.FileClient.csproj"
-            },
-            "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight\\Skylight.csproj": {
-              "projectPath": "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight\\Skylight.csproj"
-            }
-          }
+          "projectReferences": {}
         },
         "netstandard2.0": {
-          "projectReferences": {
-            "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight.FileClient\\Skylight.FileClient.csproj": {
-              "projectPath": "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight.FileClient\\Skylight.FileClient.csproj"
-            },
-            "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight\\Skylight.csproj": {
-              "projectPath": "C:\\Users\\andrew.sugaya\\Documents\\SDKS\\skylight-netcore-api\\Skylight\\Skylight.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {
@@ -7335,6 +7324,14 @@
             "target": "Package",
             "version": "[2.2.0, )",
             "autoReferenced": true
+          },
+          "Skylight.Api": {
+            "target": "Package",
+            "version": "[1.1.0, )"
+          },
+          "Skylight.FileClient": {
+            "target": "Package",
+            "version": "[1.1.0, )"
           },
           "Skylight.Mqtt": {
             "target": "Package",
@@ -7362,6 +7359,14 @@
           "Microsoft.CSharp": {
             "target": "Package",
             "version": "[4.7.0, )"
+          },
+          "Skylight.Api": {
+            "target": "Package",
+            "version": "[1.1.0, )"
+          },
+          "Skylight.FileClient": {
+            "target": "Package",
+            "version": "[1.1.0, )"
           },
           "Skylight.Mqtt": {
             "target": "Package",
@@ -7400,6 +7405,14 @@
             "target": "Package",
             "version": "[2.0.3, )",
             "autoReferenced": true
+          },
+          "Skylight.Api": {
+            "target": "Package",
+            "version": "[1.1.0, )"
+          },
+          "Skylight.FileClient": {
+            "target": "Package",
+            "version": "[1.1.0, )"
           },
           "Skylight.Mqtt": {
             "target": "Package",
