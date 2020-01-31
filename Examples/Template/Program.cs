@@ -17,7 +17,7 @@ using System.Reflection;
 class Program
 {
     public static Manager SkyManager;
-    private static readonly log4net.ILog Logger = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+    private static readonly log4net.ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
     
     static async Task Main(string[] args)
     {
@@ -34,8 +34,9 @@ class Program
         //Subscribe to MQTT events
         await SubscribeToSkylightEvents();
 
+
         //Example of using a setting from App.config
-        var extensionName = settings["ExtensionName"];
+        var extensionName = ConfigurationManager.AppSettings["ExtensionName"];
         Logger.Info(extensionName + " is now connected to " + SkyManager.Domain);
         
         //Wait forever (at least, until the program is stopped)
