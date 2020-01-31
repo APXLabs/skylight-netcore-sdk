@@ -1,8 +1,0 @@
-C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Skylight.Sdk\bin\Debug\netcoreapp3.1\Skylight.Sdk.deps.json
-C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Skylight.Sdk\bin\Debug\netcoreapp3.1\Skylight.Sdk.dll
-C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Skylight.Sdk\bin\Debug\netcoreapp3.1\Skylight.Sdk.pdb
-C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Skylight.Sdk\obj\Debug\netcoreapp3.1\Skylight.Sdk.csprojAssemblyReference.cache
-C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Skylight.Sdk\obj\Debug\netcoreapp3.1\Skylight.Sdk.AssemblyInfoInputs.cache
-C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Skylight.Sdk\obj\Debug\netcoreapp3.1\Skylight.Sdk.AssemblyInfo.cs
-C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Skylight.Sdk\obj\Debug\netcoreapp3.1\Skylight.Sdk.dll
-C:\Users\andrew.sugaya\Documents\SDKS\skylight-netcore-sdk\skylight-netcore-sdk\Skylight.Sdk\obj\Debug\netcoreapp3.1\Skylight.Sdk.pdb
