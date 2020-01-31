@@ -25,7 +25,10 @@ namespace Skylight.Sdk
                 successfullyReadCredentials = this.ReadCredentials(potentialCredentialPath);
                 if(successfullyReadCredentials)break;
             } 
-            if(!successfullyReadCredentials) throw new Exception("Credentials Error");
+            if(!successfullyReadCredentials) {
+                Console.Error.WriteLine("Please ensure the credentials.json path points to a file with valid Skylight API credentials.");
+                throw new Exception("Credentials Error");
+            }
             
             //Set up a new connection
             var connection = new ConnectionInfo((string)Credentials.username, (string)Credentials.password, (string)Credentials.domain, (string)Credentials.apiUrl);
@@ -67,7 +70,7 @@ namespace Skylight.Sdk
                 }
             } catch {
                 //Either the file doesn't exist, or the file's contents are corrupted
-                Console.Error.WriteLine("Please ensure credentials.json path points to a file with valid Skylight API credentials. If using the Skytool CLI, copy the API credentials to the credentials.json file in the root working directory.");
+                //Console.Error.WriteLine("Please ensure credentials.json path points to a file with valid Skylight API credentials. If using the Skytool CLI, copy the API credentials to the credentials.json file in the root working directory.");
                 return false;
             }
         }
