@@ -19,7 +19,13 @@ namespace Skylight.Sdk
 
         private dynamic Credentials;
         public Manager(string credentialsPath = "credentials.json" ) {
-            if(!this.ReadCredentials(credentialsPath)) throw new Exception("Credentials Error");
+            var potentialCredentialsPaths = new String[]{credentialsPath, "credentials.json", Path.Join("config", "credentials.json")};
+            var successfullyReadCredentials = false;
+            foreach(var credentialsPath in potentialCredentialsPaths){
+                successfullyReadCredentials = this.ReadCredentials(credentialsPath);
+                if(successfullyReadCredentials)break;
+            } 
+            if(!successfullyReadCredentials) throw new Exception("Credentials Error");
             
             //Set up a new connection
             var connection = new ConnectionInfo((string)Credentials.username, (string)Credentials.password, (string)Credentials.domain, (string)Credentials.apiUrl);

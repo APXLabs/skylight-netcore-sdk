@@ -12,6 +12,11 @@ using System.Threading;
 
 namespace Assignments
 {
+    /*
+        INFO: Throughout this example, there are comments that begin with @skydocs -- 
+        these are tags used by the Skylight Developer Portal and are not necessary for
+        this example to function.
+     */
     class Program
     {
         public static Manager SkyManager;

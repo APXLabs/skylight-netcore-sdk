@@ -7,8 +7,13 @@ using Skylight.Mqtt;
 using Skylight.Sdk;
 using Skylight.Api.Assignments.V1.Models;
 
-namespace mqtt
+namespace Mqtt
 {
+    /*
+        INFO: Throughout this example, there are comments that begin with @skydocs -- 
+        these are tags used by the Skylight Developer Portal and are not necessary for
+        this example to function.
+     */
     class Program
     {
         public static Manager SkyManager;
