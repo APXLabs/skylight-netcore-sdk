@@ -165,7 +165,7 @@ namespace HelloWorld {
             //First, get the file metadata so we have some more information about the file
             string[] splitString = uri.Split("/");
             var photoId = splitString[splitString.Length-2];
-            var metadataResult = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Media.V3.FilesRequests.GetFileMetadataRequest(photoId));
+            var metadataResult = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Media.V3.FilesRequests.GetFileRequest(photoId));
 
             //Handle the resulting status code appropriately
             switch(metadataResult.StatusCode) {
@@ -196,7 +196,7 @@ namespace HelloWorld {
 
             //If the file exists, don't re-download
             if(File.Exists(filePath))return;
-            var fileResult = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Media.V3.FilesRequests.GetFileContentRequest(photoId));
+            var fileResult = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Media.V3.FilesRequests.GetContentRequest(photoId));
             
             //Handle the resulting status code appropriately
             switch(fileResult.StatusCode) {
@@ -318,7 +318,7 @@ namespace HelloWorld {
 
         static async Task CreateUser(string first, string last, Role role, string username, string password) {
             //This is the body of information we use to create a new user
-            var newUserBody = new Skylight.Api.Authentication.V1.Models.CreateUserBody
+            var newUserBody = new Skylight.Api.Authentication.V1.Models.UserNew
             {
                 FirstName = first,
                 LastName = last,

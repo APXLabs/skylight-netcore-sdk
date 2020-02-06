@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Runtime.InteropServices;
+using System.Collections.ObjectModel;
 using System;
 using System.IO;
 using Newtonsoft.Json;
@@ -18,7 +19,7 @@ namespace Skylight.Sdk
         public string Domain;
 
         private dynamic Credentials;
-        public Manager(string credentialsPath = "credentials.json" ) {
+        public Manager(string credentialsPath = "credentials.json", ConnectionType mqttConnectionType = ConnectionType.Auto ) {
             var potentialCredentialsPaths = new String[]{credentialsPath, "credentials.json", Path.Combine("config", "credentials.json")};
             var successfullyReadCredentials = false;
             foreach(var potentialCredentialPath in potentialCredentialsPaths){
@@ -29,17 +30,24 @@ namespace Skylight.Sdk
                 Console.Error.WriteLine("Please ensure the credentials.json path points to a file with valid Skylight API credentials.");
                 throw new Exception("Credentials Error");
             }
-            
+            var mqttUrl = (string)Credentials.mqttUrl;
+            mqttUrl = mqttUrl.Substring(mqttUrl.IndexOf("://") + 3);
+            this.Setup((string)Credentials.id, (string)Credentials.username, (string)Credentials.password, (string)Credentials.domain, (string)Credentials.apiUrl, mqttUrl, mqttConnectionType);
+        }
+
+        public Manager(string integrationId, string username, string password, string domain, string apiUrl, string mqttUrl) {
+            this.Setup(integrationId, username, password, domain, apiUrl, mqttUrl);
+        }
+
+        private void Setup(string integrationId, string username, string password, string domain, string apiUrl, string mqttUrl, ConnectionType mqttConnectionType = ConnectionType.Auto) {
             //Set up a new connection
-            var connection = new ConnectionInfo((string)Credentials.username, (string)Credentials.password, (string)Credentials.domain, (string)Credentials.apiUrl);
+            var connection = new ConnectionInfo(username, password, domain, apiUrl);
 
             //Use the connection to create a client
             ApiClient = new ApiClient(connection);
 
             //Set up a new MQTT connection
-            var mqttUrl = (string)Credentials.mqttUrl;
-            mqttUrl = mqttUrl.Substring(mqttUrl.IndexOf("://") + 3);
-            var mqttConnection = new MqttConnectionInfo((string)Credentials.username, (string)Credentials.password, (string)Credentials.domain, (string)Credentials.apiUrl, mqttUrl);
+            var mqttConnection = new MqttConnectionInfo(username, password, domain, apiUrl, mqttUrl, 30, mqttConnectionType);
         
             //Use the MQTT connection information to create a messaging client
             MessagingClient = new MessagingClient(mqttConnection);
@@ -48,11 +56,10 @@ namespace Skylight.Sdk
             MediaClient = new FileTransferClient(ApiClient);
 
             //Set our integration id
-            IntegrationId = (string)Credentials.id;
+            IntegrationId = integrationId;
 
             //Set our domain
-            Domain = (string)Credentials.domain;
-
+            Domain = domain;
         }
 
         public async Task StartListening() {
