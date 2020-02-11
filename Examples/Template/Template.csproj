@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <StartupObject>Program</StartupObject>
+    <RestoreSources>https://api.nuget.org/v3/index.json;https://pkgs.dev.azure.com/UpskillSDK/dotnet-sdk/_packaging/skylight-sdk/nuget/v3/index.json</RestoreSources>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,6 +12,7 @@
       <PackageReference Include="nunit" Version="3.11.0" />
       <PackageReference Include="NUnit3TestAdapter" Version="3.11.0" />
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+      <PackageReference Include="log4net" Version="2.0.8" />
       <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.6.0-rc1.19456.4" />
   </ItemGroup>
 
@@ -20,6 +22,6 @@
   </ItemGroup>
   
   <ItemGroup Condition="!Exists('..\..\Skylight.Sdk')"> 
-    <PackageReference Include="Skylight.Sdk" Version="1.0.11" />
+    <PackageReference Include="Skylight.Sdk" Version="1.2.0" />
   </ItemGroup>
 </Project>
