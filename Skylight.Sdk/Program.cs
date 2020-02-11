@@ -19,7 +19,8 @@ namespace Skylight.Sdk
         public string Domain;
 
         private dynamic Credentials;
-        public Manager(string credentialsPath = "credentials.json", ConnectionType mqttConnectionType = ConnectionType.Auto ) {
+        private static ConnectionType MqttConnectionType = ConnectionType.Auto;
+        public Manager(string credentialsPath = "credentials.json" ) {
             var potentialCredentialsPaths = new String[]{credentialsPath, "credentials.json", Path.Combine("config", "credentials.json")};
             var successfullyReadCredentials = false;
             foreach(var potentialCredentialPath in potentialCredentialsPaths){
@@ -32,14 +33,14 @@ namespace Skylight.Sdk
             }
             var mqttUrl = (string)Credentials.mqttUrl;
             mqttUrl = mqttUrl.Substring(mqttUrl.IndexOf("://") + 3);
-            this.Setup((string)Credentials.id, (string)Credentials.username, (string)Credentials.password, (string)Credentials.domain, (string)Credentials.apiUrl, mqttUrl, mqttConnectionType);
+            this.Setup((string)Credentials.id, (string)Credentials.username, (string)Credentials.password, (string)Credentials.domain, (string)Credentials.apiUrl, mqttUrl);
         }
 
         public Manager(string integrationId, string username, string password, string domain, string apiUrl, string mqttUrl) {
             this.Setup(integrationId, username, password, domain, apiUrl, mqttUrl);
         }
 
-        private void Setup(string integrationId, string username, string password, string domain, string apiUrl, string mqttUrl, ConnectionType mqttConnectionType = ConnectionType.Auto) {
+        private void Setup(string integrationId, string username, string password, string domain, string apiUrl, string mqttUrl) {
             //Set up a new connection
             var connection = new ConnectionInfo(username, password, domain, apiUrl);
 
@@ -47,7 +48,7 @@ namespace Skylight.Sdk
             ApiClient = new ApiClient(connection);
 
             //Set up a new MQTT connection
-            var mqttConnection = new MqttConnectionInfo(username, password, domain, apiUrl, mqttUrl, 30, mqttConnectionType);
+            var mqttConnection = new MqttConnectionInfo(username, password, domain, apiUrl, mqttUrl, 30, MqttConnectionType);
         
             //Use the MQTT connection information to create a messaging client
             MessagingClient = new MessagingClient(mqttConnection);
@@ -64,6 +65,10 @@ namespace Skylight.Sdk
 
         public async Task StartListening() {
             await MessagingClient.StartListeningAsync();
+        }
+
+        public static void SetMqttConnectionType(ConnectionType type) {
+            MqttConnectionType = type;
         }
 
         private bool ReadCredentials(string credentialsPath) {

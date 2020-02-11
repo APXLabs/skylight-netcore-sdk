@@ -20,7 +20,7 @@
   </ItemGroup>
   
   <ItemGroup Condition="!Exists('..\..\Skylight.Sdk')"> 
-    <PackageReference Include="Skylight.Sdk" Version="1.2.0-beta.8" />
+    <PackageReference Include="Skylight.Sdk" Version="1.2.0" />
   </ItemGroup>
      
 </Project>

@@ -207,7 +207,7 @@ namespace Assignments
                 }
             };
 
-            var cardCreateResult = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.CardRequests.CreateCardRequest(new System.Collections.Generic.List<CardNew>{ openSequenceCard }, assignmentId, ROOT_SEQUENCE_ID));
+            var cardCreateResult = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.CardRequests.CreateCardsRequest(new System.Collections.Generic.List<CardNew>{ openSequenceCard }, assignmentId, ROOT_SEQUENCE_ID));
 
             //Handle the resulting status code appropriately
             switch(cardCreateResult.StatusCode) {

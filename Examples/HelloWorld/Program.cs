@@ -1,4 +1,5 @@
 ﻿
+using System.Runtime.InteropServices;
 using System.Net.Http.Headers;
 using System.IO;
 using System;
@@ -31,6 +32,7 @@ namespace HelloWorld {
             try {
                 //Create our manager and point it to our credentials file
                 //We leave the parameter blank, so that it looks for the `credentials.json` in the root directory.
+                Manager.SetMqttConnectionType(ConnectionType.Auto);
                 SkyManager = new Manager();
             } catch { return; }
             

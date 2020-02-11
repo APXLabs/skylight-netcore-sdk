@@ -15,7 +15,7 @@ namespace CreateUserManagerGroup
      */
     class Program
     {
-        public static Manager Manager;
+        public static Manager SkyManager;
         public static string Username = "api.test.user";
         public static string Groupname = "API Test Group";
         static async Task Main(string[] args)
@@ -23,7 +23,7 @@ namespace CreateUserManagerGroup
 
             try {
                 //Create our manager and point it to our credentials file
-                Manager = new Manager(Path.Combine("..", "..", "credentials.json"));
+                SkyManager = new Manager(Path.Combine("..", "..", "credentials.json"));
             } catch { return; }
 
             string userId;
@@ -56,7 +56,7 @@ namespace CreateUserManagerGroup
         static async Task<string> CreateUser(string first, string last, Role role, string username, string password) {
             //@skydocs.start(users.create)
             //This is the body of information we use to create a new user
-            var newUserBody = new Skylight.Api.Authentication.V1.Models.CreateUserBody
+            var newUserBody = new Skylight.Api.Authentication.V1.Models.UserNew
             {
                 FirstName = first,
                 LastName = last,
@@ -69,7 +69,7 @@ namespace CreateUserManagerGroup
             var createUserRequest = new Skylight.Api.Authentication.V1.UsersRequests.CreateUserRequest(newUserBody);
 
             //Execute the request
-            var result = await Manager.ApiClient.ExecuteRequestAsync(createUserRequest);
+            var result = await SkyManager.ApiClient.ExecuteRequestAsync(createUserRequest);
 
             //Handle the resulting status code appropriately
             switch(result.StatusCode) {
@@ -94,7 +94,7 @@ namespace CreateUserManagerGroup
         static async Task<string> CreateGroup(string name, string description) {
             //@skydocs.start(groups.create)
             //This is the body of information we use to create a new group
-            var newGroupBody = new Skylight.Api.Authentication.V1.Models.CreateGroupBody
+            var newGroupBody = new Skylight.Api.Authentication.V1.Models.GroupNew
             {
                 Name = name,
                 Description = description
@@ -104,7 +104,7 @@ namespace CreateUserManagerGroup
             var createGroupRequest = new Skylight.Api.Authentication.V1.GroupsRequests.CreateGroupRequest(newGroupBody);
 
             //Execute our API request
-            var result = await Manager.ApiClient.ExecuteRequestAsync(createGroupRequest);
+            var result = await SkyManager.ApiClient.ExecuteRequestAsync(createGroupRequest);
 
             //Handle the resulting status code appropriately
             switch(result.StatusCode) {
@@ -132,7 +132,7 @@ namespace CreateUserManagerGroup
             var assignGroupRequest = new Skylight.Api.Authentication.V1.UsersRequests.AssignUserGroupRequest(userId, groupId);
 
             //Execute the API request
-            var result = await Manager.ApiClient.ExecuteRequestAsync(assignGroupRequest);
+            var result = await SkyManager.ApiClient.ExecuteRequestAsync(assignGroupRequest);
 
             //Handle the resulting status code appropriately
             switch(result.StatusCode) {
@@ -162,7 +162,7 @@ namespace CreateUserManagerGroup
             var unassignGroupRequest = new Skylight.Api.Authentication.V1.UsersRequests.UnassignUserGroupRequest(userId, groupId);
 
             //Execute the API request
-            var result = await Manager.ApiClient.ExecuteRequestAsync(unassignGroupRequest);
+            var result = await SkyManager.ApiClient.ExecuteRequestAsync(unassignGroupRequest);
 
             //Handle the resulting status code appropriately
             switch(result.StatusCode) {
@@ -198,7 +198,7 @@ namespace CreateUserManagerGroup
             var temporaryPasswordRequest = new Skylight.Api.Authentication.V1.UsersRequests.ChangeUserPasswordRequest(temporaryPasswordRequestBody, userId);
 
             //Execute the API request
-            var result = await Manager.ApiClient.ExecuteRequestAsync(temporaryPasswordRequest);
+            var result = await SkyManager.ApiClient.ExecuteRequestAsync(temporaryPasswordRequest);
 
             //Handle the resulting status code appropriately
             switch(result.StatusCode) {
@@ -230,7 +230,7 @@ namespace CreateUserManagerGroup
             var deleteUserRequest = new Skylight.Api.Authentication.V1.UsersRequests.DeleteUserRequest(userId);
             
             //Execute the API request
-            var result = await Manager.ApiClient.ExecuteRequestAsync(deleteUserRequest);
+            var result = await SkyManager.ApiClient.ExecuteRequestAsync(deleteUserRequest);
 
             //Handle the resulting status code appropriately
             switch(result.StatusCode) {
@@ -259,7 +259,7 @@ namespace CreateUserManagerGroup
             var deleteGroupRequest = new Skylight.Api.Authentication.V1.GroupsRequests.DeleteGroupRequest(groupId);
 
             //Execute our API request
-            var result = await Manager.ApiClient.ExecuteRequestAsync(deleteGroupRequest);
+            var result = await SkyManager.ApiClient.ExecuteRequestAsync(deleteGroupRequest);
             
             //Handle the resulting status code appropriately
             switch(result.StatusCode) {
@@ -286,7 +286,7 @@ namespace CreateUserManagerGroup
             //@skydocs.start(users.update)
             //This is the body of information for updating the user
             //In this example, we update the job title
-            var replaceUserBody = new UpdateUserBody {
+            var replaceUserBody = new UserUpdate {
                 JobTitle = jobTitle
             };
 
@@ -294,7 +294,7 @@ namespace CreateUserManagerGroup
             var updateUserRequest = new Skylight.Api.Authentication.V1.UsersRequests.UpdateUserRequest(replaceUserBody, userId);
 
             //Execute the API request
-            var result = await Manager.ApiClient.ExecuteRequestAsync(updateUserRequest);
+            var result = await SkyManager.ApiClient.ExecuteRequestAsync(updateUserRequest);
 
             //Handle the resulting status code appropriately
             switch(result.StatusCode) {
@@ -328,7 +328,7 @@ namespace CreateUserManagerGroup
             var updateUserRoleRequest = new Skylight.Api.Authentication.V1.UsersRequests.ChangeUserRoleRequest(updateUserRoleBody, userId);
 
             //Execute the API request
-            var result = await Manager.ApiClient.ExecuteRequestAsync(updateUserRoleRequest);
+            var result = await SkyManager.ApiClient.ExecuteRequestAsync(updateUserRoleRequest);
 
             //Handle the resulting status code appropriately
             switch(result.StatusCode) {
@@ -357,7 +357,7 @@ namespace CreateUserManagerGroup
             var logoutUserRequest = new Skylight.Api.Authentication.V1.UsersRequests.LogoutUserRequest(userId);
 
             //Execute the API request
-            var result = await Manager.ApiClient.ExecuteRequestAsync(logoutUserRequest);
+            var result = await SkyManager.ApiClient.ExecuteRequestAsync(logoutUserRequest);
 
             //Handle the resulting status code appropriately
             switch(result.StatusCode) {
@@ -383,13 +383,13 @@ namespace CreateUserManagerGroup
             //@skydocs.end()
         }
 
-        static async Task<UserInfo> GetUserById(string userId) {
+        static async Task<UserWithGroups> GetUserById(string userId) {
             //@skydocs.start(users.getbyid)
             //Create an API request for retrieving the user by its id
             var getUserRequest = new Skylight.Api.Authentication.V1.UsersRequests.GetUserRequest(userId);
 
             //Execute the API request
-            var result = await Manager.ApiClient.ExecuteRequestAsync(getUserRequest);
+            var result = await SkyManager.ApiClient.ExecuteRequestAsync(getUserRequest);
 
             //Handle the resulting status code appropriately
             switch(result.StatusCode) {
@@ -420,7 +420,7 @@ namespace CreateUserManagerGroup
             var getUsersRequest = new Skylight.Api.Authentication.V1.UsersRequests.GetUsersRequest();
 
             //Execute the API request
-            var result = await Manager.ApiClient.ExecuteRequestAsync(getUsersRequest);
+            var result = await SkyManager.ApiClient.ExecuteRequestAsync(getUsersRequest);
 
             //The users will be stored as a list in the result's Content, so we can iterate through them
             foreach(var user in result.Content) {
@@ -435,7 +435,7 @@ namespace CreateUserManagerGroup
             //@skydocs.start(groups.update)
             //This is the body of information for updating the group
             //In this example, we update the job title
-            var updateGroupBody = new UpdateGroupBody {
+            var updateGroupBody = new GroupUpdate {
                 Description = description
             };
 
@@ -443,7 +443,7 @@ namespace CreateUserManagerGroup
             var updateGroupRequest = new Skylight.Api.Authentication.V1.GroupsRequests.UpdateGroupRequest(updateGroupBody, groupId);
 
             //Execute the API request
-            var result = await Manager.ApiClient.ExecuteRequestAsync(updateGroupRequest);
+            var result = await SkyManager.ApiClient.ExecuteRequestAsync(updateGroupRequest);
 
             //Handle the resulting status code appropriately
             switch(result.StatusCode) {
@@ -472,7 +472,7 @@ namespace CreateUserManagerGroup
             var getGroupRequest = new Skylight.Api.Authentication.V1.GroupsRequests.GetGroupRequest(groupId);
 
             //Execute the API request
-            var result = await Manager.ApiClient.ExecuteRequestAsync(getGroupRequest);
+            var result = await SkyManager.ApiClient.ExecuteRequestAsync(getGroupRequest);
 
             //Handle the resulting status code appropriately
             switch(result.StatusCode) {
@@ -503,7 +503,7 @@ namespace CreateUserManagerGroup
             var getGroupsRequest = new Skylight.Api.Authentication.V1.GroupsRequests.GetGroupsRequest();
             
             //Execute the API request
-            var result = await Manager.ApiClient.ExecuteRequestAsync(getGroupsRequest);
+            var result = await SkyManager.ApiClient.ExecuteRequestAsync(getGroupsRequest);
 
             //The list of groups visible using our API credentials will be returned in the result's Content
             foreach(var group in result.Content) {

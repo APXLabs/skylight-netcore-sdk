@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using Skylight.Sdk;
 using Skylight.Mqtt;
 using Skylight.Api.Assignments.V1.Models;
+using Skylight.Api.Authentication.V1.Models;
 using System.Threading;
 using MQTTnet.Client;
 using Newtonsoft.Json;
@@ -23,7 +24,7 @@ namespace AssignmentHandoff
     class Program
     {
         public static Manager SkyManager;
-        private static readonly string TEST_ACCOUNT_USERNAME = "api.test.user";
+        private static readonly string TEST_ACCOUNT_GROUP = "api.test.group";
         private static readonly string ROOT_SEQUENCE_ID = "rootSequence";
         private const string CARD_ID_DELIMITER = "-";
         private const string CHECKOUT_CARD_ID_PREFIX = "checkin";
@@ -33,7 +34,7 @@ namespace AssignmentHandoff
         private const int NUM_SUB_ASSIGNMENTS = 5;
 
         private static List<string> SubAssignmentIds = new List<string>();
-        private static string userId = "";
+        private static List<string> SuperAssignmentIds = new List<string>();
         static async Task Main(string[] args)
         {
             try {
@@ -55,17 +56,12 @@ namespace AssignmentHandoff
                 var assignmentId = (string)message["assignmentId"];
                 var sequenceId = (string)message["sequenceId"];
                 var cardId = (string)message["cardId"];
-                Console.WriteLine(userId);
-                await CardUpdated(cardId, sequenceId, assignmentId, userId);
+                await CardUpdated(cardId, sequenceId, assignmentId);
                 
             };
             await SkyManager.StartListening();
 
-            //Remove all of the user's assignments to clean up for this example
-            userId = await GetUserIdForUsername(TEST_ACCOUNT_USERNAME);
-            await RemoveAllAssignmentsForUser(userId);
-
-            await CreateSuperAssignment();
+            await CreateSuperAssignments();
 
             //Create the low-level assignments
             await CreateSubAssignments();
@@ -74,7 +70,7 @@ namespace AssignmentHandoff
             SpinWait.SpinUntil(() => false);
         }
 
-        static async Task CardUpdated(string cardId, string sequenceId, string assignmentId, string userId) {
+        static async Task CardUpdated(string cardId, string sequenceId, string assignmentId) {
 
             //Handle the card update event based on the card's id
             var shouldResetCard = false;
@@ -86,11 +82,15 @@ namespace AssignmentHandoff
                     shouldResetCard = true;
                     int checkinAssignmentIndex = int.Parse(cardIdSplit[1]);//Given that we know the prefix, this will work assuming that we are within our assignment
                     await UnassignSubAssignment(checkinAssignmentIndex);
+                    await CheckinAssignmentCard(checkinAssignmentIndex);
                     break;
                 case CHECKOUT_CARD_ID_PREFIX:
-                    shouldResetCard = true;
+                    var assignment = await GetAssignment(assignmentId);
+                    var userId = assignment.AssignedTo;
                     int checkoutAssignmentIndex = int.Parse(cardIdSplit[1]);//Given that we know the prefix, this will work assuming that we are within our assignment
                     await AssignSubAssignment(checkoutAssignmentIndex, userId);
+
+                    await CheckoutAssignmentCard(userId, checkoutAssignmentIndex);
                     break;
             }
 
@@ -106,6 +106,39 @@ namespace AssignmentHandoff
 
             //Mark the card as not done, to allow the user to select the card again.
             await ResetCard(card);
+        }
+
+        static async Task CheckoutAssignmentCard(string userId, int assignmentIndex) {
+            //First we'll get the username for this userId
+            var userResult = await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Authentication.V1.UsersRequests.GetUserRequest(userId));
+            var username = userResult.Content.Username;
+            
+            var cardPatch = new CardPatch();
+            cardPatch.Add("isDone", false);
+            cardPatch.Add("component", new ComponentCompletion() { Completed = false });
+            cardPatch.Add("label", "Assignment " + assignmentIndex + " checked out by " + username);
+            cardPatch.Add("selectable", false);
+            cardPatch.Add("subdued", true);
+            //For each of our super assignments, update the card
+            foreach(var assignmentId in SuperAssignmentIds) {
+                await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.CardRequests.PatchCardRequest(cardPatch, assignmentId, ROOT_SEQUENCE_ID, CHECKOUT_CARD_ID_PREFIX + CARD_ID_DELIMITER + assignmentIndex));
+                Console.WriteLine("Patching " + assignmentId);
+            }
+        }
+
+        static async Task CheckinAssignmentCard(int assignmentIndex) {
+
+            var cardPatch = new CardPatch();
+            cardPatch.Add("isDone", false);
+            cardPatch.Add("component", new ComponentCompletion() { Completed = false });
+            cardPatch.Add("label", "Check out " + assignmentIndex);
+            cardPatch.Add("selectable", true);
+            cardPatch.Add("subdued", false);
+            //For each of our super assignments, update the card
+            foreach(var assignmentId in SuperAssignmentIds) {
+                await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.CardRequests.PatchCardRequest(cardPatch, assignmentId, ROOT_SEQUENCE_ID, CHECKOUT_CARD_ID_PREFIX + CARD_ID_DELIMITER + assignmentIndex));
+            Console.WriteLine("Patching " + assignmentId);
+            }
         }
 
         static async Task ResetCard(Card card) {
@@ -218,7 +251,9 @@ namespace AssignmentHandoff
             };
 
             var decisionComponent = new ComponentDecision(){
-                MaxSelected = 1
+                MaxSelected = 1,
+                Mutable = true,
+                IncludeCapture = true
             };
             decisionComponent.Choices = new Dictionary<string, Choice>();
             decisionComponent.Choices.Add("0", new Choice(){
@@ -251,7 +286,9 @@ namespace AssignmentHandoff
                 Label = "What is your favorite color?",
                 Position = 1, //Position of cards is 1-indexed
                 Size = 2, //Size can be 1, 2, or 3 and determines how much of the screen a card takes up (3 being fullscreen)
-                Layout = new LayoutText(),
+                Layout = new LayoutImage() {
+                    Uri = "resource://image/ic_state_multiplechoice_01"
+                },
                 Selectable = true,
                 Component = decisionComponent
             };
@@ -367,19 +404,21 @@ namespace AssignmentHandoff
 
         }
 
-        
-        static async Task CreateSuperAssignment() {
-            //Retrieve the user to whom we'd like to assign this assignment
-            var assignUser = await GetUserIdForUsername(TEST_ACCOUNT_USERNAME);
-            if(assignUser == null) {
-                Console.Error.WriteLine("User does not exist for super assignment creation");
-                return;
+        static async Task CreateSuperAssignments() {
+            var groupId = await GetGroupIdForGroupname(TEST_ACCOUNT_GROUP);
+            var group = await GetGroupById(groupId);
+            foreach(var member in group.Members) {
+                //Remove all of the user's assignments to clean up for this example
+                var userId = member.Id;
+                await RemoveAllAssignmentsForUser(userId);
+                await CreateSuperAssignment(userId);
             }
-
+        }
+        static async Task CreateSuperAssignment(string userId) {
             //Create the assignment body
             var assignment = new AssignmentNew
             {
-                AssignedTo = assignUser,
+                AssignedTo = userId,
                 Description = "This is an assignment created by the SDK example.",
                 IntegrationId = SkyManager.IntegrationId,
                 Name = SUPER_ASSIGNMENT_NAME
@@ -447,6 +486,8 @@ namespace AssignmentHandoff
                     Console.Error.WriteLine("Unhandled assignment creation status code: " + result.StatusCode);
                     break;
             }
+
+            SuperAssignmentIds.Add(result.Content.Id);
         }
 
         static async Task<string> GetUserIdForUsername(string username) {
@@ -463,6 +504,53 @@ namespace AssignmentHandoff
             return null;
         }
 
+
+        static async Task<string> GetGroupIdForGroupname(string name) {
+            
+            //@skydocs.start(groups.getall)
+            //Create an API request for retrieving all groups
+            var getGroupsRequest = new Skylight.Api.Authentication.V1.GroupsRequests.GetGroupsRequest();
+            
+            //Execute the API request
+            var result = await SkyManager.ApiClient.ExecuteRequestAsync(getGroupsRequest);
+
+            //The list of groups visible using our API credentials will be returned in the result's Content
+            foreach(var group in result.Content) {
+                if(group.Name == name)return group.Id;
+            }
+            return null;
+            //@skydocs.end()
+        }
+
+        static async Task<GroupWithMembers> GetGroupById(string groupId) {
+            //@skydocs.start(groups.getbyid)
+            //Create an API request for retrieving the group by its id
+            var getGroupRequest = new Skylight.Api.Authentication.V1.GroupsRequests.GetGroupRequest(groupId);
+
+            //Execute the API request
+            var result = await SkyManager.ApiClient.ExecuteRequestAsync(getGroupRequest);
+
+            //Handle the resulting status code appropriately
+            switch(result.StatusCode) {
+                case System.Net.HttpStatusCode.Forbidden:
+                    Console.Error.WriteLine("Error retrieving group: Permission forbidden.");
+                    break;
+                case System.Net.HttpStatusCode.NotFound:
+                    Console.Error.WriteLine("Error retrieving group: Group not found.");
+                    break;
+                case System.Net.HttpStatusCode.Unauthorized:
+                    Console.Error.WriteLine("Error retrieving group: Method call was unauthenticated.");
+                    break;
+                case System.Net.HttpStatusCode.OK:
+                    Console.WriteLine("Group successfully retrieved.");
+                    break;
+                default:
+                    Console.Error.WriteLine("Unhandled group update status code: " + result.StatusCode);
+                    break;
+            }
+            return result.Content;
+            //@skydocs.end()
+        }
         
         static async Task RemoveAllAssignmentsForUser(string userId) {
             //First, get a list of all the user's assignments.
