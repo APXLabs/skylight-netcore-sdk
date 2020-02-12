@@ -94,7 +94,7 @@ namespace HelloWorld {
             };
 
             SkyManager.MessagingClient.MessageReceived += (object sender, MessageReceivedEventArgs args) => {
-                Console.WriteLine("Skylight Message received on topic " + args.Topic + " " + args.Message); //Uncomment this for more verbose logging of Skylight event messages
+                //Console.WriteLine("Skylight Message received on topic " + args.Topic + " " + args.Message); //Uncomment this for more verbose logging of Skylight event messages
             };
 
             SkyManager.MessagingClient.CardUpdated += async (object sender, CardUpdatedEventArgs args) => { await CardUpdated(sender, args); };

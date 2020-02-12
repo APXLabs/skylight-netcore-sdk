@@ -51,7 +51,7 @@ namespace AssignmentHandoff
                 dynamic message = JsonConvert.DeserializeObject(args.Message);
                 if(!((string)message["eventType"]).Equals("cards"))return;
                 if(!((string)message["event"]).Equals("update"))return;
-
+                Console.WriteLine(message);
                 //var userId = args.Topic.Split("/")[3];
                 var assignmentId = (string)message["assignmentId"];
                 var sequenceId = (string)message["sequenceId"];

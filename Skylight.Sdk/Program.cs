@@ -17,6 +17,10 @@ namespace Skylight.Sdk
         public FileClient.FileTransferClient MediaClient;
         public string IntegrationId;
         public string Domain;
+        public string ApiUrl;
+        public string MqttUrl;
+        public string Username;
+        public string Password;
 
         private dynamic Credentials;
         private static ConnectionType MqttConnectionType = ConnectionType.Auto;
@@ -58,6 +62,18 @@ namespace Skylight.Sdk
 
             //Set our integration id
             IntegrationId = integrationId;
+
+            //Set our API Url
+            ApiUrl = apiUrl;
+
+            //Set our Mqtt Url
+            MqttUrl = mqttUrl;
+
+            //Set our username
+            Username = username;
+
+            //Set our password
+            Password = password;
 
             //Set our domain
             Domain = domain;
