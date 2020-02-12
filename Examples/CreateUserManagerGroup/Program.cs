@@ -21,10 +21,12 @@ namespace CreateUserManagerGroup
         static async Task Main(string[] args)
         {
 
-            try {
-                //Create our manager and point it to our credentials file
-                SkyManager = new Manager(Path.Combine("..", "..", "credentials.json"));
-            } catch { return; }
+            //Create our manager and point it to our credentials file
+            SkyManager = new Manager(Path.Combine("..", "..", "credentials.json"));
+            
+            //Connect to Skylight
+            await SkyManager.Connect();
+            Console.WriteLine("Skylight connected");
 
             string userId;
             try {

@@ -25,11 +25,13 @@ class Program
         SetupLogConfig();
         SetupAppConfig();
 
-        try {
-            //Create our manager and point it to our credentials file
-            //We leave the parameter blank, so that it looks for the `credentials.json` in the root directory.
-            SkyManager = new Manager();
-        } catch { return; }
+        //Create our manager and point it to our credentials file
+        //We leave the parameter blank, so that it looks for the `credentials.json` in the `config` directory.
+        SkyManager = new Manager();
+        
+        //Connect to Skylight
+        await SkyManager.Connect();
+        Console.WriteLine("Skylight connected");
     
         //Subscribe to MQTT events
         await SubscribeToSkylightEvents();

@@ -29,51 +29,54 @@ namespace HelloWorld {
         private static int AssignmentCount = 0;
         static async Task Main(string[] args)
         {
-            try {
-                //Create our manager and point it to our credentials file
-                //We leave the parameter blank, so that it looks for the `credentials.json` in the root directory.
-                Manager.SetMqttConnectionType(ConnectionType.Auto);
-                SkyManager = new Manager();
-            } catch { return; }
+            //Create our manager and point it to our credentials file
+            //We leave the parameter blank, so that it looks for the `credentials.json` in the root directory.
+            Manager.SetMqttConnectionType(ConnectionType.Auto);
+            SkyManager = new Manager();
             
             /* In this Hello World example, we:
-                0. Subscribe to Skylight events, to listen for `Mark Complete` events. When one of these events is detected, we'll archive that assignment and create a new one for the same user
-                1. Prompt for a username on the command line
+                0. Connect to Skylight
+                1. Subscribe to Skylight events, to listen for `Mark Complete` events. When one of these events is detected, we'll archive that assignment and create a new one for the same user.
+                2. Prompt for a username on the command line
                     a. If a user with that username exists, prompt whether we should go ahead and use that user for the rest of this Hello World.
                     b. If a user with that username doesn't exist, prompt for a password and then create that user.
-                2. Remove all assignments from the user.
-                3. Create a simple assignment with one sequence that has three cards, including:
+                3. Remove all assignments from the user.
+                4. Create a simple assignment with one sequence that has three cards, including:
                     a. A label card that says "Hello World"
                     b. A photo capture card that, when a photo is captured, this extension will download the photo
                     c. A mark complete card that will emit the mark complete event when tapped, which will trigger our listener from the earlier step.
-                4. Assign the assignment to the user
-                5. Keep the program alive by using SpinWait.
+                5. Assign the assignment to the user
+                6. Keep the program alive by using SpinWait.
             */
         
-            //0. Subscribe
+            //0. Connect to Skylight
+            await SkyManager.Connect();
+            Console.WriteLine("Skylight connected");
+
+            //1. Subscribe
             await SubscribeToSkylightEvents();
 
-            //1. Get the userId of the Hello World user based on the command prompt input
+            //2. Get the userId of the Hello World user based on the command prompt input
             UserId = await GetHelloWorldUserId();
             if (UserId == null) {
                 Console.WriteLine("Exiting Skylight Hello World extension.");
                 return;
             }
 
-            //2. Remove all assignments
+            //3. Remove all assignments
             await RemoveAllAssignmentsForUser(UserId);
             
-            //3. Create a new assignment
+            //4. Create a new assignment
             //It is important to note that this next call doesn't reach out to the servers -- the assignment information is created in one fell swoop in memory first.
             var assignmentBody = CreateAssignment();
 
-            //4. Assign the assignment to the user
+            //5. Assign the assignment to the user
             await AssignToUser(assignmentBody, UserId);
 
             //Let the user know that we've completed our work here and that they should continue on a device.
             Console.WriteLine("Congratulations! Your user is now set up with a the Hello World assignment. Log in to the domain `" + SkyManager.Domain + "` using that username and password in Skylight Web to view this assignment.");
             
-            //5. Wait forever (at least, until the program is stopped)
+            //6. Wait forever (at least, until the program is stopped)
             SpinWait.SpinUntil(() => false);
 
         }
@@ -98,7 +101,6 @@ namespace HelloWorld {
             };
 
             SkyManager.MessagingClient.CardUpdated += async (object sender, CardUpdatedEventArgs args) => { await CardUpdated(sender, args); };
-
 
             await SkyManager.StartListening();
         }

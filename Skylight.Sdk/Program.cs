@@ -12,9 +12,28 @@ namespace Skylight.Sdk
 {
     public class Manager
     {
-        public ApiClient ApiClient;
-        public MessagingClient MessagingClient;
-        public FileClient.FileTransferClient MediaClient;
+        private ApiClient _apiClient;
+        public ApiClient ApiClient {
+            get {
+                if(_apiClient == null) throw new Exception("ApiClient is null, please make sure Connect() is called right after instantiating the Manager.");
+                return _apiClient;
+            }
+        }
+        private MessagingClient _messagingClient;
+        public MessagingClient MessagingClient {
+            get {
+                if(_messagingClient == null) throw new Exception("MessagingClient is null, please make sure Connect() is called right after instantiating the Manager.");
+                return _messagingClient;
+            }
+        }
+
+        private FileClient.FileTransferClient _mediaClient;
+        public FileClient.FileTransferClient MediaClient {
+            get {
+                if(_mediaClient == null) throw new Exception("MediaClient is null, please make sure Connect() is called right after instantiating the Manager.");
+                return _mediaClient;
+            }
+        }
         public string IntegrationId;
         public string Domain;
         public string ApiUrl;
@@ -45,21 +64,6 @@ namespace Skylight.Sdk
         }
 
         private void Setup(string integrationId, string username, string password, string domain, string apiUrl, string mqttUrl) {
-            //Set up a new connection
-            var connection = new ConnectionInfo(username, password, domain, apiUrl);
-
-            //Use the connection to create a client
-            ApiClient = new ApiClient(connection);
-
-            //Set up a new MQTT connection
-            var mqttConnection = new MqttConnectionInfo(username, password, domain, apiUrl, mqttUrl, 30, MqttConnectionType);
-        
-            //Use the MQTT connection information to create a messaging client
-            MessagingClient = new MessagingClient(mqttConnection);
-
-            //Use our API client to create a media client
-            MediaClient = new FileTransferClient(ApiClient);
-
             //Set our integration id
             IntegrationId = integrationId;
 
@@ -79,8 +83,40 @@ namespace Skylight.Sdk
             Domain = domain;
         }
 
+        public async Task Connect() {
+            //Set up a new connection
+            var connection = new ConnectionInfo(Username, Password, Domain, ApiUrl);
+
+            //Use the connection to create a client
+            _apiClient = new ApiClient(connection);
+            
+            //Test our connection
+            await TestConnection();
+
+            //Set up a new MQTT connection
+            var mqttConnection = new MqttConnectionInfo(Username, Password, Domain, ApiUrl, MqttUrl, 30, MqttConnectionType);
+        
+            //Use the MQTT connection information to create a messaging client
+            _messagingClient = new MessagingClient(mqttConnection);
+
+            //Use our API client to create a media client
+            _mediaClient = new FileTransferClient(_apiClient);
+
+        }
+
+        private async Task TestConnection() {
+            try {
+                await ApiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.APIRequests.GetApiRequest());
+            } catch (Exception e) {
+                throw new Exception("Connection to Skylight Web API failed. Please check that the username, password, and API URL are valid and that the extension can reach the Skylight server.");
+            }
+        }
+
         public async Task StartListening() {
-            await MessagingClient.StartListeningAsync();
+            var mqttSuccess = await MessagingClient.StartListeningAsync();
+            if(!mqttSuccess) {
+                throw new Exception("MQTT connection failed. Please check that the MQTT URL is valid.");
+            }
         }
 
         public static void SetMqttConnectionType(ConnectionType type) {
