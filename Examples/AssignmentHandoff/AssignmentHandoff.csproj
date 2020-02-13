@@ -13,14 +13,7 @@
       <PackageReference Include="NUnit3TestAdapter" Version="3.11.0" />
       <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
       <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.6.0-rc1.19456.4" />
-  </ItemGroup>
-
-  <ItemGroup Condition="Exists('..\..\Skylight.Sdk')">
-    <ProjectReference Include="..\..\Skylight.Sdk\Skylight.Sdk.csproj" />
-  </ItemGroup>
-  
-  <ItemGroup Condition="!Exists('..\..\Skylight.Sdk')"> 
-    <PackageReference Include="Skylight.Sdk" Version="1.2.0" />
+    <PackageReference Include="Skylight.Sdk" Version="1.3.0-beta.1" />
   </ItemGroup>
      
 </Project>

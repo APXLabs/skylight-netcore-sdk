@@ -31,15 +31,16 @@ class Program
         
         //Connect to Skylight
         await SkyManager.Connect();
-        Console.WriteLine("Skylight connected");
     
         //Subscribe to MQTT events
         await SubscribeToSkylightEvents();
 
+        //Start listening to MQTT events
+        await SkyManager.StartListening();
 
         //Example of using a setting from App.config
         var extensionName = ConfigurationManager.AppSettings["ExtensionName"];
-        Logger.Info(extensionName + " is now connected to " + SkyManager.Domain);
+        Logger.Info(extensionName + " is now running and connected to " + SkyManager.Domain);
         
         //Wait forever (at least, until the program is stopped)
         SpinWait.SpinUntil(() => false);
@@ -87,8 +88,6 @@ class Program
 
         SkyManager.MessagingClient.CardUpdated += async (object sender, CardUpdatedEventArgs args) => { await CardUpdated(sender, args); };
 
-
-        await SkyManager.StartListening();
     }
 
     static async Task CardUpdated(object sender, CardUpdatedEventArgs args) { }
