@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tests
+namespace Skylight.Sdk.Tests
 {
     class Program
     {
