@@ -1,18 +1,23 @@
-﻿using System;
+using System;
 using Xunit;
 
 namespace Skylight.Sdk.Tests
 {
-    class Program
+    class WorkflowTests : APITest
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
+        public WorkflowTests() {
+
         }
 
+        protected override void InnerRun() {
+
+        }
+
+        
         [Fact]
         public static void Test() {
             Assert.True(true);
         }
+
     }
 }
