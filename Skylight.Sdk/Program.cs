@@ -138,5 +138,16 @@ namespace Skylight.Sdk
                 return false;
             }
         }
+
+        
+        public string GetFileIdFromUri(string fileUri) {
+            var fileUriSplit = fileUri.Split("/");
+            if(fileUriSplit.Length < 2) throw new Exception("Error in getting file id from URI. URI is malformed.");
+            return fileUriSplit[fileUriSplit.Length-2];
+        }
+
+        public string GetFileUriFromId(string fileId) {
+            return $"{ApiUri}{Skylight.Api.Media.V3.Constants.BaseEndpointPath}/files/{fileId}/content";
+        }
     }
 }
