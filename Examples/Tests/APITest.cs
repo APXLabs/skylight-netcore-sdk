@@ -1,17 +1,21 @@
 using System;
+using Xunit;
 
 namespace Skylight.Sdk.Tests
 {
-    abstract class APITest
+    public class SkylightFixture : IDisposable {
+        public string test = "lala";
+        public SkylightFixture() {
+        }
+        public void Dispose(){
+        }
+    }
+
+    public abstract class APITest : IClassFixture<SkylightFixture>
     {
-        public APITest() {
-
+        protected SkylightFixture fixture;
+        public APITest(SkylightFixture fixture) {
+            this.fixture = fixture;
         }
-
-        public void Run() {
-            InnerRun();
-        }
-
-        protected abstract void InnerRun();
     }
 }

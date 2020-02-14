@@ -3,20 +3,14 @@ using Xunit;
 
 namespace Skylight.Sdk.Tests
 {
-    class WorkflowTests : APITest
+    public class WorkflowTests : APITest
     {
-        public WorkflowTests() {
-
+        public WorkflowTests(SkylightFixture fixture) : base(fixture) {
         }
 
-        protected override void InnerRun() {
-
-        }
-
-        
         [Fact]
-        public static void Test() {
-            Assert.True(true);
+        public void GenericTest() {
+            Assert.True(this.fixture.test.Equals("lala"));
         }
 
     }
