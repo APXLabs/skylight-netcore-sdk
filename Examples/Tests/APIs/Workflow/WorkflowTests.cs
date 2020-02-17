@@ -18,7 +18,7 @@ namespace Skylight.Sdk.Tests
         [Fact, Priority(0)]
         public async Task A_TestOne() {
             var requestBody = new WorkflowNew() {
-                Name = "Test Workflow"
+                Name = "Test Workflow (Delete me)"
                 , Description = "This was created using the SDK"
                 , RootSequence = "rootSequence"
                 , IntegrationId = SkyManager.IntegrationId
@@ -47,7 +47,7 @@ namespace Skylight.Sdk.Tests
 
             var request = new CreateWorkflowRequest(requestBody);
             await SkyManager.ApiClient.ExecuteRequestAsync(request);
-            
+
         }
 
         [Fact, Priority(1)]
