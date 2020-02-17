@@ -144,9 +144,16 @@ namespace Skylight.Sdk.Tests
         [MemberData(nameof(GetWorkflows))]
         public async Task CreateAndDeleteWorkflow(XUnitWorkflow xWorkflow) {
             
-            var workflow = xWorkflow.Workflow;
-            var request = new CreateWorkflowRequest(workflow);
-            await SkyManager.ApiClient.ExecuteRequestAsync(request);
+            WorkflowNew workflow = xWorkflow.Workflow;
+            var createRequest = new CreateWorkflowRequest(workflow);
+            var createResponse = await SkyManager.ApiClient.ExecuteRequestAsync(createRequest);
+            var workflowId = createResponse.Content.WorkflowId;
+            var assignWorkflowBody = new AssignWorkflowBody() {
+                Name = "Assigned Workflow"
+            };
+            await SkyManager.ApiClient.ExecuteRequestAsync(new AssignWorkflowRequest(assignWorkflowBody, workflowId, TestUserId));
+
+            await SkyManager.ApiClient.ExecuteRequestAsync(new DeleteWorkflowRequest(workflowId));
 
         }
 

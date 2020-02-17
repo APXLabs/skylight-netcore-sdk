@@ -1,3 +1,4 @@
+using System.Net;
 using System.IO;
 using System;
 using Xunit;
@@ -18,14 +19,14 @@ namespace Skylight.Sdk.Tests
         public async Task InitializeAsync()
         {
             await SkyManager.Connect();
-
             //Create a default user for our tests to use
             var userNew = new Skylight.Api.Authentication.V1.Models.UserNew() {
-                Username = "SDK Integration Test User"
+                Username = "sdk.test.user." + Guid.NewGuid().ToString()
                 , Password = "password"
             };
             var userResponse = await SkyManager.ApiClient.ExecuteRequestAsync(new CreateUserRequest(userNew));
             TestUserId = userResponse.Content.Id;
+            
 
         }
 
@@ -36,7 +37,15 @@ namespace Skylight.Sdk.Tests
         }
     }
 
-    public abstract class APITest : IClassFixture<SkylightFixture>
+    [CollectionDefinition("Skylight collection")]
+    public class SkylightCollectionFixture : ICollectionFixture<SkylightFixture> {
+        // This class has no code, and is never created. Its purpose is simply
+        // to be the place to apply [CollectionDefinition] and all the
+        // ICollectionFixture<> interfaces.
+    }
+
+    [Collection("Skylight collection")]
+    public abstract class APITest
     {
         protected SkylightFixture fixture;
         public APITest(SkylightFixture fixture) {
