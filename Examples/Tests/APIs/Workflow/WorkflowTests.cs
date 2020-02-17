@@ -42,6 +42,22 @@ namespace Skylight.Sdk.Tests
                         }
                         , ViewMode = ViewMode.Native
                     }
+                    , new SequenceNew() {
+                        Id = "testSequence"
+                        , Cards = new List<CardNew>() {
+                            new CardNew() {
+                                Id = "card1"
+                                , Component = new ComponentDefault()
+                                , Layout = new LayoutText() {
+                                    Text = "Layout Text"
+                                }
+                                , Label = "Label"
+                                , Position = 1
+                                , Size = 1
+                            }
+                        }
+                        , ViewMode = ViewMode.Native
+                    }
                 }
             };
 
