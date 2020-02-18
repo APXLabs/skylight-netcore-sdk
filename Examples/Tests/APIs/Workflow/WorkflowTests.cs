@@ -42,10 +42,22 @@ namespace Skylight.Sdk.Tests
 
         //This provides the data for our tests
         public static IEnumerable<object[]> GetWorkflows(){
+            var choices = new Dictionary<string, Choice>();
+            choices.Add("id1", new Choice() {
+                Label = "Select Yes"
+                , Position = 1
+                ,Selected = false
+            });
+
+            choices.Add("id2", new Choice() {
+                Label = "Select No"
+                , Position = 2
+                ,Selected = false
+            });
             yield return new object[] {
                 new XUnitWorkflow(
                     new WorkflowNew()    {
-                        Name = "Test Workflow (Delete)"
+                        Name = "Test Workflow MC (Delete)"
                         , Description = "This was created using the SDK"
                         , RootSequence = "rootSequence"
                         , IntegrationId = SkyManager.IntegrationId
@@ -58,13 +70,37 @@ namespace Skylight.Sdk.Tests
                                 , Cards = new List<CardNew>() {
                                     new CardNew() {
                                         Id = "card1"
-                                        , Component = new ComponentDefault()
-                                        , Layout = new LayoutText() {
-                                            Text = "Layout Text"
+                                        , Component = new ComponentDecision() {
+                                            Choices = choices
+                                            , MinSelected = 1
+                                            , MaxSelected = 1
+                                            , Mutable = true
+                                            , Done = new DoneMinChoices() 
+                                        }
+                                        , Layout = new LayoutImage() {
+                                            Uri = "resource://image/ic_mc_multiplechoice_01"
                                         }
                                         , Label = "Label"
                                         , Position = 1
                                         , Size = 1
+                                        , Selectable = true
+                                    }
+                                    , new CardNew() {
+                                        Id = "card2"
+                                        , Component = new ComponentDecision() {
+                                            Choices = choices
+                                            , MinSelected = 1
+                                            , MaxSelected = 1
+                                            , Mutable = true
+                                            , Done = new DoneMinChoices() 
+                                        }
+                                        , Layout = new LayoutImage() {
+                                            Uri = "resource://image/ic_state_multiplechoice_01"
+                                        }
+                                        , Label = "Label"
+                                        , Position = 2
+                                        , Size = 1
+                                        , Selectable = true
                                     }
                                         }
                                 , ViewMode = ViewMode.Native
@@ -142,7 +178,7 @@ namespace Skylight.Sdk.Tests
         //Our tests
         [Theory]
         [MemberData(nameof(GetWorkflows))]
-        public async Task CreateAndDeleteWorkflow(XUnitWorkflow xWorkflow) {
+        public async Task CreateAssignAndDeleteGoodWorkflow(XUnitWorkflow xWorkflow) {
             
             WorkflowNew workflow = xWorkflow.Workflow;
             var createRequest = new CreateWorkflowRequest(workflow);
@@ -151,7 +187,14 @@ namespace Skylight.Sdk.Tests
             var assignWorkflowBody = new AssignWorkflowBody() {
                 Name = "Assigned Workflow"
             };
-            await SkyManager.ApiClient.ExecuteRequestAsync(new AssignWorkflowRequest(assignWorkflowBody, workflowId, TestUserId));
+            
+            var assignRequest = new AssignWorkflowRequest(assignWorkflowBody, workflowId, TestUserId);
+            var assignResponse = await SkyManager.ApiClient.ExecuteRequestAsync(assignRequest);
+            var assignmentId = assignResponse.Content.Id;
+            
+            var getWorkflowRequest = new GetWorkflowRequest(workflowId);
+            var getWorkflowResponse = await SkyManager.ApiClient.ExecuteRequestAsync(getWorkflowRequest);
+            var workflowResponse = getWorkflowResponse.Content;
 
             await SkyManager.ApiClient.ExecuteRequestAsync(new DeleteWorkflowRequest(workflowId));
 
