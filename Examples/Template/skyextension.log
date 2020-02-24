@@ -1,0 +1,14 @@
+2020-02-24 13:09:41,072 [1] INFO Program - Logging framework configured.
+2020-02-24 13:12:00,388 [1] INFO Program - Logging framework configured.
+2020-02-24 13:13:30,888 [1] INFO Program - Logging framework configured.
+2020-02-24 13:13:43,813 [1] INFO Program - Logging framework configured.
+2020-02-24 13:13:58,321 [1] INFO Program - Logging framework configured.
+2020-02-24 13:14:54,954 [1] INFO Program - Logging framework configured.
+2020-02-24 13:16:14,983 [1] INFO Program - Logging framework configured.
+2020-02-24 13:16:22,007 [1] INFO Program - Logging framework configured.
+2020-02-24 13:20:40,613 [1] INFO Program - Logging framework configured.
+2020-02-24 13:24:27,292 [1] INFO Program - Logging framework configured.
+2020-02-24 13:24:28,932 [7] INFO Program - Skylight MQTT client subscribed to: realms/cs_sandbox/events/#
+2020-02-24 13:24:28,933 [7] INFO Program - Skylight MQTT client subscribed to: realms/cs_sandbox/users/df2bb664-73b1-4498-92e8-92c5b19692f5/#
+2020-02-24 13:24:29,375 [6] INFO Program - Skylight MQTT client connected.
+2020-02-24 13:24:29,958 [6] INFO Program - Skylight Extension is now running and connected to cs_sandbox
