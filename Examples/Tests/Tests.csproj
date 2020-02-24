@@ -22,4 +22,10 @@
     <ProjectReference Include="..\..\Skylight.Sdk\Skylight.Sdk.csproj" />
   </ItemGroup>
 
+  <ItemGroup> 
+  <Content Include="testFiles/*">
+    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+  </Content> 
+  </ItemGroup>
+
 </Project>

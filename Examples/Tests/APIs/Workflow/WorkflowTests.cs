@@ -184,13 +184,16 @@ namespace Skylight.Sdk.Tests
             var createRequest = new CreateWorkflowRequest(workflow);
             var createResponse = await SkyManager.ApiClient.ExecuteRequestAsync(createRequest);
             var workflowId = createResponse.Content.WorkflowId;
-            var assignWorkflowBody = new AssignWorkflowBody() {
-                Name = "Assigned Workflow"
-            };
+            var assignWorkflowBody = new AssignWorkflowBody().SetDefaults();
+            assignWorkflowBody.Name = "Assigned Workflow";
+            Assert.NotNull(assignWorkflowBody.ToJson());
+            Assert.NotNull(assignWorkflowBody.ToString());
             
             var assignRequest = new AssignWorkflowRequest(assignWorkflowBody, workflowId, TestUserId);
             var assignResponse = await SkyManager.ApiClient.ExecuteRequestAsync(assignRequest);
             var assignmentId = assignResponse.Content.Id;
+
+            await SkyManager.ApiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.AssignmentRequests.DeleteAssignmentRequest(assignmentId));
             
             var getWorkflowRequest = new GetWorkflowRequest(workflowId);
             var getWorkflowResponse = await SkyManager.ApiClient.ExecuteRequestAsync(getWorkflowRequest);
@@ -198,6 +201,13 @@ namespace Skylight.Sdk.Tests
 
             await SkyManager.ApiClient.ExecuteRequestAsync(new DeleteWorkflowRequest(workflowId));
 
+        }
+
+        [Fact]
+        public void TestWorkflowProperties() {
+            WorkflowNew workflow = new WorkflowNew().SetDefaults();
+            Assert.NotNull(workflow.ToJson());
+            Assert.NotNull(workflow.ToString());
         }
 
     }

@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Net.Mime;
 using System;
 using Xunit;
@@ -34,6 +35,8 @@ namespace Skylight.Sdk.Tests
             var sequenceTwo = AssignmentUtils.AddSequenceToAssignment("sequence2", assignment);
             AssignmentUtils.AddCardToSequence("card1", sequenceTwo);
             AssignmentUtils.AddCardToSequence("card2", sequenceTwo);
+
+            assignment.ConfirmCaptures = true;
             return assignment;
         }
 
@@ -55,9 +58,11 @@ namespace Skylight.Sdk.Tests
         [Fact]
         public async Task TestGetAssignment() {
             var assignment = CreateSimpleAssignmentNew();
+            assignment.AssignedTo = TestUserId;
             var assignmentId = await AssignmentUtils.CreateAssignment(assignment);
             var returnedAssignment = await AssignmentUtils.GetAssignment(assignmentId);
-            Assert.True(returnedAssignment.Id.Equals(assignmentId));
+            Assert.Equal(returnedAssignment.Id, assignmentId);
+            Assert.Equal(returnedAssignment.AssignedTo, TestUserId);
             await AssignmentUtils.DeleteAssignment(assignmentId);
         }
 
@@ -102,7 +107,8 @@ namespace Skylight.Sdk.Tests
             //When we set isComplete to true, Skylight will set the completedBy field to our integration id
             assignmentPatch.Add("completedAt", DateTime.Now.ToString("yyyy-MM-dd'T'HH:mm:ss.fffzzz"));
             assignmentPatch.Add("isComplete", true);
-            
+            assignmentPatch.Add("completionDetails", "Completed by SDK");
+
             var assignmentPatchRequest = new PatchAssignmentRequest(assignmentPatch, assignmentId);
             await SkyManager.ApiClient.ExecuteRequestAsync(assignmentPatchRequest);
             
@@ -115,6 +121,11 @@ namespace Skylight.Sdk.Tests
             
             //There should exist at least one assignment in the realm, as we just made one
             Assert.InRange(queriedAssignments.Count, 1, Int16.MaxValue);
+            var returnedAssignment = queriedAssignments.First();
+            Assert.NotNull(returnedAssignment.CompletedAt);
+            Assert.Equal(returnedAssignment.CompletedBy, SkyManager.IntegrationId);
+            Assert.NotNull(returnedAssignment.CompletionDetails);
+            Assert.True(returnedAssignment.IsComplete);
             await AssignmentUtils.DeleteAssignment(assignmentId);
         }
 
@@ -163,6 +174,17 @@ namespace Skylight.Sdk.Tests
 
             var assignmentUpdate = new AssignmentUpdate() {
                 Name = new Guid().ToString()
+                , AssignedTo = TestUserId
+                , CompletedAt = null
+                , CompletedBy = ""
+                , CompletionDetails = ""
+                , ConfirmCaptures = false
+                , Description = ""
+                , Fade = new Fade()
+                , IntegrationId = SkyManager.IntegrationId
+                , IsComplete = false
+                , RootSequence = AssignmentUtils.ROOT_SEQUENCE_ID
+                , WorkflowId = ""
             };
             
             var assignmentUpdateRequest = new UpdateAssignmentRequest(assignmentUpdate, assignmentId);
@@ -208,12 +230,16 @@ namespace Skylight.Sdk.Tests
             
             //There should exist at least one assignment in the realm, as we just made one
             Assert.InRange(queriedAssignments.Count, 1, Int16.MaxValue);
+            var returnedAssignment = queriedAssignments.First();
+            Assert.NotNull(returnedAssignment.Created);
+            Assert.Equal(returnedAssignment.CreatedBy, SkyManager.IntegrationId);
             await AssignmentUtils.DeleteAssignment(assignmentId);
         }
 
         [Fact]
         public async Task TestWorkflowIdQueryAssignments() {
             var assignment = CreateSimpleAssignmentNew();
+            assignment.WorkflowId = "";//This is the equivalent of not specifying a workflow id (the default)
             var assignmentId = await AssignmentUtils.CreateAssignment(assignment);
             
             var returnedAssignment = await AssignmentUtils.GetAssignment(assignmentId);
@@ -226,6 +252,7 @@ namespace Skylight.Sdk.Tests
             
             //There should exist at least one assignment in the realm, as we just made one
             Assert.InRange(queriedAssignments.Count, 1, Int16.MaxValue);
+            Assert.Equal(assignment.WorkflowId, returnedAssignment.WorkflowId); //No workflow id should be assigned, so these should be empty
             await AssignmentUtils.DeleteAssignment(assignmentId);
         }
 
@@ -245,7 +272,57 @@ namespace Skylight.Sdk.Tests
             Assert.InRange(queriedAssignments.Count, 1, Int16.MaxValue);
             await AssignmentUtils.DeleteAssignment(assignmentId);
         }
-        
 
+        [Fact]
+        public async Task TestCoverageAssignment() {
+            var assignment = CreateSimpleAssignmentNew();
+            assignment.SetDefaults();//This line is mostly here for code coverage; setting the fields explicitly is recommended
+            assignment.AssignedTo = TestUserId;
+            assignment.ConfirmCaptures = true;
+            var assignmentId = await AssignmentUtils.CreateAssignment(assignment);
+            var returnedAssignment = await AssignmentUtils.GetAssignment(assignmentId);
+            
+            Assert.NotNull(assignment.ToJson());
+            Assert.NotNull(assignment.ToString());
+            Assert.NotNull(returnedAssignment.ToJson());
+            Assert.NotNull(returnedAssignment.ToString());
+            Assert.True(returnedAssignment.ConfirmCaptures);
+
+            returnedAssignment.SetDefaults();//This line is 100% here for code coverage, this should not be used in practice.
+            
+            await AssignmentUtils.DeleteAssignment(assignmentId);
+        }
+        
+        [Fact]
+        public async Task TestFade() {
+            var fade = new Fade();
+            var assignment = CreateSimpleAssignmentNew();
+            assignment.Fade = fade;
+            var assignmentId = await AssignmentUtils.CreateAssignment(assignment);
+            await AssignmentUtils.DeleteAssignment(assignmentId);
+
+            //For coverage
+            Assert.NotNull(fade.ToJson());
+            Assert.NotNull(fade.ToString());
+        }
+
+        
+        [Fact]
+        public void TestPatchAssignments() {
+            //This exists mostly for code coverage
+            var assignmentPatch = new AssignmentPatch();
+            assignmentPatch.SetDefaults();
+            Assert.NotNull(assignmentPatch.ToJson());
+            Assert.NotNull(assignmentPatch.ToString());
+        }
+
+        [Fact]
+        public void TestUpdateAssignments() {
+            //This exists mostly for code coverage as well
+            var assignmentUpdate = new AssignmentUpdate();
+            assignmentUpdate.SetDefaults();
+            Assert.NotNull(assignmentUpdate.ToJson());
+            Assert.NotNull(assignmentUpdate.ToString());
+        }
     }
 }

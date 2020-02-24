@@ -8,10 +8,10 @@
     <ItemGroup>
       <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />
       <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-      <PackageReference Include="Skylight.Mqtt" Version="1.3.0-beta.0" />
-      <ProjectReference Include="..\..\..\skylight-netcore-api\Skylight\Skylight.csproj"  />
-      <!-- <PackageReference Include="Skylight.Api" Version="1.3.0-beta.22" /> -->
-      <PackageReference Include="Skylight.FileClient" Version="1.3.0-beta.22" />
+      <PackageReference Include="Skylight.Mqtt" Version="1.3.0" />
+      <!-- <ProjectReference Include="..\..\..\skylight-netcore-api\Skylight\Skylight.csproj"  /> -->
+      <PackageReference Include="Skylight.Api" Version="1.3.0" />
+      <PackageReference Include="Skylight.FileClient" Version="1.3.0" />
     </ItemGroup>
 
 </Project>
