@@ -101,7 +101,7 @@ namespace AssignmentHandoff
             CurrentAssignmentCount += 1;
             
 
-            await CreateCoordinatorAssignments();
+            await CreateCoordinatorAssignments(); 
             await CreateWorkerAssignments();
 
             //Create the low-level assignments
@@ -163,7 +163,8 @@ namespace AssignmentHandoff
         }
 
         static async Task UpdateWorkerAssignments() {
-            //Sort our assignments for how they appear to workers
+            //Sort our assignments for how they appear to workers -- We've commented this out, as we've decided to not alter the list for now
+            /*
             Assignments.Sort((assignment1, assignment2) => { 
                 
                 //If one is reviewed and the other isn't, we have a clear winner
@@ -184,7 +185,7 @@ namespace AssignmentHandoff
 
                 //Otherwise sort by name
                 return assignment1.Name.CompareTo(assignment2.Name);
-            });
+            });*/
 
             List<string> assignmentIdsInOrder = Assignments.Select((a) => a.Id).ToList();
 

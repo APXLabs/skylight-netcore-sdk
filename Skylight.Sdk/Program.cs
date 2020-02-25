@@ -26,7 +26,7 @@ namespace Skylight.Sdk
 
     public class Manager
     {
-        private class SkylightApiClient : ApiClient {
+        public class SkylightApiClient : ApiClient {
 
             private readonly int _maxApiPayloadSize;
             public SkylightApiClient(ConnectionInfo connectionInfo, int MaxApiPayloadSize) : base(connectionInfo)
@@ -237,7 +237,7 @@ namespace Skylight.Sdk
             /// <exception cref="ApiException">Thrown if there was an error in the request</exception>
             public new async Task<ApiResponse<TResult>> ExecuteRequestAsync<TResult>(ApiRequest<TResult> request)
             {
-                if(request.Payload.Content is AssignmentNew assignmentNew) {
+                if(request.Payload != null && request.Payload.Content is AssignmentNew assignmentNew) {
                     var assignment = await CreateAssignmentInMultipleRequests(assignmentNew);
                     if(assignment is TResult assignmentResult) {
                         return new ApiResponse<TResult>(HttpStatusCode.Created, assignmentResult);
@@ -247,8 +247,8 @@ namespace Skylight.Sdk
             }
 
         }
-        private ApiClient _apiClient;
-        public ApiClient ApiClient {
+        private SkylightApiClient _apiClient;
+        public SkylightApiClient ApiClient {
             get {
                 if(_apiClient == null) throw new Exception("ApiClient is null, please make sure Connect() is called right after instantiating the Manager.");
                 return _apiClient;
@@ -347,9 +347,9 @@ namespace Skylight.Sdk
 
         private async Task TestConnection() {
             try {
-                await ApiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.APIRequests.GetApiRequest());
+                await _apiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.APIRequests.GetApiRequest());
             } catch (Exception e) {
-                throw new Exception("Connection to Skylight Web API failed. Please check that the username, password, and API URL are valid and that the extension can reach the Skylight server.");
+                throw e;//new Exception("Connection to Skylight Web API failed. Please check that the username, password, and API URL are valid and that the extension can reach the Skylight server.");
             }
         }
 

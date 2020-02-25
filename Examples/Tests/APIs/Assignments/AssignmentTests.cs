@@ -26,6 +26,18 @@ namespace Skylight.Sdk.Tests
             return assignment;
         }
 
+        private static AssignmentNew CreateBigAssignmentNew() {
+            var assignment = AssignmentUtils.CreateAssignmentNew();
+            var sequence = AssignmentUtils.AddSequenceToAssignment(AssignmentUtils.ROOT_SEQUENCE_ID, assignment);
+            AssignmentUtils.AddCardToSequence("card1", sequence);
+
+            for(var i = 0; i < 10000; i++) {
+                sequence = AssignmentUtils.AddSequenceToAssignment("sequence" + i, assignment);
+                AssignmentUtils.AddCardToSequence("card1", sequence);
+            }
+            return assignment;
+        }
+
         private static AssignmentNew CreateComplexAssignmentNew() {
             var assignment = AssignmentUtils.CreateAssignmentNew();
             var sequenceOne = AssignmentUtils.AddSequenceToAssignment(AssignmentUtils.ROOT_SEQUENCE_ID, assignment);
@@ -47,6 +59,15 @@ namespace Skylight.Sdk.Tests
             var assignmentId = await AssignmentUtils.CreateAssignment(assignment);
             await AssignmentUtils.DeleteAssignment(assignmentId);
         }
+
+        /* This should only be run when this test is necessary
+        [Fact]
+        public async Task TestCreateAndDeleteBigAssignment() {
+            var assignment = CreateBigAssignmentNew();
+            var assignmentId = await AssignmentUtils.CreateAssignment(assignment);
+            await AssignmentUtils.DeleteAssignment(assignmentId);
+        }
+        */
 
         [Fact]
         public async Task TestCreateAndDeleteComplexAssignment() {
