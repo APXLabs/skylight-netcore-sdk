@@ -347,7 +347,7 @@ namespace Skylight.Sdk
 
         private async Task TestConnection() {
             try {
-                await _apiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.APIRequests.GetApiRequest());
+                await _apiClient.ExecuteRequestAsync(new Skylight.Api.Authentication.V1.UsersRequests.GetUsersRequest());
             } catch (Exception e) {
                 throw e;//new Exception("Connection to Skylight Web API failed. Please check that the username, password, and API URL are valid and that the extension can reach the Skylight server.");
             }
