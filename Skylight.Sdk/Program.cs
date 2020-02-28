@@ -307,8 +307,6 @@ namespace Skylight.Sdk
             IntegrationId = integrationId;
 
             //Set our API Url
-            if(apiUrl.EndsWith("/"))apiUrl = apiUrl.Substring(0, apiUrl.Length-1);
-            Console.WriteLine(apiUrl);
             ApiUrl = apiUrl;
 
             //Set our Mqtt Url
@@ -349,7 +347,7 @@ namespace Skylight.Sdk
 
         private async Task TestConnection() {
             try {
-                await _apiClient.ExecuteRequestAsync(new Skylight.Api.Authentication.V1.UsersRequests.GetUsersRequest());
+                await _apiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.APIRequests.GetApiRequest());
             } catch (Exception e) {
                 throw e;//new Exception("Connection to Skylight Web API failed. Please check that the username, password, and API URL are valid and that the extension can reach the Skylight server.");
             }
