@@ -307,6 +307,8 @@ namespace Skylight.Sdk
             IntegrationId = integrationId;
 
             //Set our API Url
+            if(apiUrl.EndsWith("/"))apiUrl = apiUrl.Substring(0, apiUrl.Length-1);
+            Console.WriteLine(apiUrl);
             ApiUrl = apiUrl;
 
             //Set our Mqtt Url
