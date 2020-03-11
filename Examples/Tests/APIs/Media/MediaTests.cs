@@ -20,15 +20,28 @@ namespace Skylight.Sdk.Tests
 
         //Our tests
         [Fact]
-        public async Task TestUploadAndDeleteFile( ) {
+        public async Task TestUploadUpdateDownloadAndDeleteFile( ) {
             var fileInfo = new System.IO.FileInfo(Path.Join(".", "testFiles", "test.png"));
             var fileDescription = "File Description";
             var uploadFileResponse = await SkyManager.MediaClient.UploadFile(fileInfo, "File Title", fileDescription);
             var fileId = uploadFileResponse.FileId;
 
+            var updateFileBody = new FileUpdate();
+            updateFileBody.Filename = "File.png";
+            updateFileBody.Title = "Updated File Title";
+            updateFileBody.Description = "Updated File Description";
+            updateFileBody.Tags = new List<string>();
+            updateFileBody.Properties = new Properties();
+
+            var updateFileRequest = new UpdateFileRequest(updateFileBody, fileId);
+            updateFileRequest.AdditionalRequestHeaders.Add(new KeyValuePair<string, string>("If-Match", uploadFileResponse.ETag));
+            await SkyManager.ApiClient.ExecuteRequestAsync(updateFileRequest);
+
+            await SkyManager.MediaClient.DownloadFile(fileId);
+
             var getFileRequest = new GetFileRequest(fileId);
             var getFileResponse = await SkyManager.ApiClient.ExecuteRequestAsync(getFileRequest);
-            Assert.Equal(fileDescription, getFileResponse.Content.Description);
+            Assert.Equal("Updated File Description", getFileResponse.Content.Description);
 
             await SkyManager.ApiClient.ExecuteRequestAsync(new DeleteFileRequest(fileId));
         }
