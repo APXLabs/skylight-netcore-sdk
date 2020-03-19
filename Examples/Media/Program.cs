@@ -33,6 +33,8 @@ namespace Media
             //Upload a file
             await UploadFile();
 
+            //Download the file
+
             //See the Hello World extension for an example of downloading a file that captured on a device
         }
 
@@ -40,7 +42,7 @@ namespace Media
             //@skydocs.start(media.upload)
             //We upload a file by specifying its file path, title, and description
             //The SDK takes care of deciding between whether to use a singlepart or multipart upload.
-            await SkyManager.MediaClient.UploadFile(new FileInfo(Path.Join(".", "files", "test.png")), "SDK Upload Test", "This is a file uploaded using the Skylight C# SDK");
+            var response = await SkyManager.MediaClient.UploadFile(new FileInfo(Path.Join(".", "files", "test.png")), "SDK Upload Test", "This is a file uploaded using the Skylight C# SDK");          
             //@skydocs.end()
         }
     }

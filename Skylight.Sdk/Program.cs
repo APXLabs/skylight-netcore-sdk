@@ -10,7 +10,6 @@ using System.Linq;
 using Newtonsoft.Json;
 using Skylight.Client;
 using Skylight.Mqtt;
-using System.Threading.Tasks;
 using Skylight.FileClient;
 using Skylight.Utilities;
 using Skylight.Utilities.Extensions;
@@ -43,6 +42,7 @@ namespace Skylight.Sdk
             private int GetEstimatedPayloadSize(object payload)
             {
                 var serialized = JsonConvert.SerializeObject(payload);
+                //This is technically 2 times bigger than the actual, given that our payloads send as UTF-8 (1 byte per char) and C# uses UTF-16 (2 bytes per char)
                 return serialized.Length * sizeof(char);
             }
             
