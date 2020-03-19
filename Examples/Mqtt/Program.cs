@@ -55,6 +55,8 @@ namespace Mqtt
             SkyManager.MessagingClient.CardUpdated += async (object sender, CardUpdatedEventArgs args) => { await CardUpdated(sender, args); };
 
             await SkyManager.StartListening(); //IMPORTANT: This line starts the MQTT client and is necessary for receiving MQTT messages
+            await SkyManager.StopListening();
+            await SkyManager.StartListening();
             Console.ReadLine(); //This line keeps our program alive so that it can listen to messages
             //@skydocs.end()
         }

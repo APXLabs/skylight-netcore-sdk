@@ -20,6 +20,11 @@ using Skylight.Api.Assignments.V1.AssignmentRequests;
 using Skylight.Api.Assignments.V1.SequenceRequests;
 using Skylight.Api.Assignments.V1.CardRequests;
 using Skylight.Api.Assignments.V1.Models;
+using Skylight.Api.Authentication.V1.Models;
+using Skylight.Api.Authentication.V1.GroupsRequests;
+using Skylight.Api.Authentication.V1.UsersRequests;
+using Skylight.Api.Messaging.V1.Models;
+using Skylight.Api.Messaging.V1.NotificationsRequests;
 
 namespace Skylight.Sdk
 {
@@ -57,13 +62,13 @@ namespace Skylight.Sdk
             /// <summary>
             /// This method should be used for creating assignment that exceeds API maximum payload size
             /// It will split creating of the assignment in multiple parts
-            /// In order to use this method ApiHelper should be provided with maximum payload size that API supports
+            /// In order to use this method, this Manager should be provided with maximum payload size that API supports
             /// </summary>
             /// <param name="assignment">Assignment model to create</param>
             /// <returns>Created assignment</returns>
             /// <exception cref="ArgumentNullException">Thrown when assignment model is null</exception>
             /// <exception cref="ArgumentException">Thrown when maximum payload size that API supports was not provided</exception>
-            public async Task<Assignment> CreateAssignmentInMultipleRequests(AssignmentNew assignment)
+            private async Task<Assignment> CreateAssignmentInMultipleRequests(AssignmentNew assignment)
             {
                 if (assignment == null)
                     throw new ArgumentNullException(nameof(assignment));
@@ -308,6 +313,7 @@ namespace Skylight.Sdk
 
             //Set our API Url
             if(apiUrl.EndsWith("/"))apiUrl = apiUrl.Substring(0, apiUrl.Length-1);
+            Console.WriteLine(apiUrl);
             ApiUrl = apiUrl;
 
             //Set our Mqtt Url
@@ -361,6 +367,10 @@ namespace Skylight.Sdk
             }
         }
 
+        public async Task StopListening() {
+            await MessagingClient.CleanUp();
+        }
+
         public static void SetMqttConnectionType(ConnectionType type) {
             if(Connected) throw new Exception("Please call SetMqttConnectionType before calling Connect.");
             MqttConnectionType = type;
@@ -369,7 +379,7 @@ namespace Skylight.Sdk
         public static void SetMaxApiPayloadSize(int size) {
             if(Connected) throw new Exception("Please call SetMaxApiPayloadSize before calling Connect.");
             if (size <= 0)
-                throw new ArgumentException("For creating assignment in multiple requests ApiHelper should be provided with correct maximum payload size that API supports");
+                throw new ArgumentException("The maximum payload size should be greater than 0.");
             MaxApiPayloadSize = size;
         }
 
@@ -391,13 +401,137 @@ namespace Skylight.Sdk
 
         
         public string GetFileIdFromUri(string fileUri) {
-            var fileUriSplit = fileUri.Split('/');
-            if(fileUriSplit.Length < 2) throw new Exception("Error in getting file id from URI. URI is malformed.");
-            return fileUriSplit[fileUriSplit.Length-2];
+            string[] parts = fileUri.Split('/');
+            //v2 does not end with content and v3 does
+            if (parts[parts.Length - 1] == "content")
+                return parts[parts.Length - 2];
+            else
+                return parts[parts.Length - 1];
         }
 
         public string GetFileUriFromId(string fileId) {
             return $"{ApiUrl}{Skylight.Api.Media.V3.Constants.BaseEndpointPath}/files/{fileId}/content";
         }
+
+        
+        #region Notifications
+
+        /// <summary>
+        /// Send a notification to a user
+        /// </summary>
+        /// <param name="userId">Id of the user receiving the notification</param>
+        /// <param name="message">The message displayed to the user</param>
+        /// <param name="alertType">The alert type</param>
+        /// <exception cref="ArgumentNullException">If any argument is null</exception>
+        /// <exception cref="ArgumentException">If any argument is invalid</exception>
+        /// <exception cref="ApiException">Thrown if the API call fails</exception>
+        /// <exception cref="Exception">If the _apiClient is null; most likely because Init() was not run</exception>
+        public async Task SendNotification(string userId, string message, int alertType)
+        {
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                throw new ArgumentException("userId cannot be null or whitespace", nameof(userId));
+            }
+
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                throw new ArgumentException("message cannot be null or whitespace", nameof(message));
+            }
+
+            var notification = new NotificationRequest
+            {
+                To = new Guid(userId),
+                Alert = new NotificationRequestAlert
+                {
+                    Message = message,
+                    Type = alertType
+                }
+            };
+            var notificationPost = new NotificationsPostRequest(notification);
+            await _apiClient.ExecuteRequestAsync(notificationPost);
+        }
+
+        #endregion Notifications
+
+        #region Group
+
+        /// <summary>
+        /// Is the user in the group?
+        /// </summary>
+        /// <param name="userId">The user id</param>
+        /// <param name="groupName">The group name</param>
+        /// <returns>Return true if the user is in the group, otherwise return false</returns>
+        /// <exception cref="ArgumentNullException">Thrown if null argument</exception>
+        /// <exception cref="ArgumentException">Thrown if invalid argument</exception>
+        /// <exception cref="ApiException">Thrown if the API call fails</exception>
+        public async Task<bool> IsUserInGroup(string userId, string groupName)
+        {
+            // check the arguments
+            if (string.IsNullOrWhiteSpace(userId))
+            {
+                throw new ArgumentException("userId cannot be null or whitespace", nameof(userId));
+            }
+            if (string.IsNullOrWhiteSpace(groupName))
+            {
+                throw new ArgumentException("groupName cannot be null or whitespace", nameof(groupName));
+            }
+
+            // get the groups for the user
+            var getUserGroupsRequest = new Skylight.Api.Authentication.V1.GroupsRequests.GetUserGroupsRequest(userId);
+            var response = await _apiClient.ExecuteRequestAsync(getUserGroupsRequest);
+            if (response.Content == null)
+            {
+                // the user isn't a member of any groups
+                return false;
+            }
+
+            // is the user a member of the group?
+            foreach (var group in response.Content)
+            {
+                if (group.Name == groupName)
+                {
+                    // the user is a memeber of the group
+                    return true;
+                }
+            }
+
+            // the user isn't a member of the group
+            return false;
+        }
+
+        /// <summary>
+        /// Get the Group with specified name.
+        /// </summary>
+        /// <param name="groupName">name of group to retrieve</param>
+        /// <returns>Group having the specified groupName; null if group not found</returns>
+        /// <exception cref="ArgumentException">Thrown if invalid argument</exception>
+        /// <exception cref="ApiException">Thrown if the API call fails</exception>
+        public async Task<GroupWithMembers> GetGroup(string groupName)
+        {
+            if (string.IsNullOrWhiteSpace(groupName))
+            {
+                throw new ArgumentException("groupName cannot be null or whitespace", nameof(groupName));
+            }
+                       
+            // get all groups
+            var getAllGroupsRequest = new GetGroupsRequest();
+            var getAllGroupsResponse = await _apiClient.ExecuteRequestAsync(getAllGroupsRequest);
+
+            // find the group matching "groupName"; this group object does NOT include all the members.
+            var group = getAllGroupsResponse.Content.FirstOrDefault(x => x.Name == groupName);
+
+            if (group == null)
+            {
+                //group with name of groupName not found
+                return null;
+            }
+
+            // get the full group data for the found group
+            var getGroupRequest = new GetGroupRequest(group.Id);
+            var getGroupResponse = await _apiClient.ExecuteRequestAsync(getGroupRequest);
+            return getGroupResponse.Content;
+        }
+
+        #endregion Group
     }
 }
