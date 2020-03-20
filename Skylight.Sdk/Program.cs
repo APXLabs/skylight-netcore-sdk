@@ -4,6 +4,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Threading;
 using System.Collections.Generic;
 using System.Net;
 using System.Linq;
@@ -283,6 +284,10 @@ namespace Skylight.Sdk
         private dynamic Credentials;
         private static ConnectionType MqttConnectionType = ConnectionType.Auto;
         private static bool Connected = false;
+
+        private static Timer MqttCheckTimer;
+        private static int MqttCheckTimerIntervalInMs = 10000;
+        private static bool ReceivedMqttCheckForInterval = true;
         /// <summary>
         /// Maximum payload size that API supports (in bytes)
         /// </summary>
@@ -344,6 +349,14 @@ namespace Skylight.Sdk
         
             //Use the MQTT connection information to create a messaging client
             _messagingClient = new MessagingClient(mqttConnection);
+            
+            MessagingClient.MessageReceived += (sender, e) => {
+                if(!e.Topic.EndsWith("notifications"))return;
+                dynamic messageData = JsonConvert.DeserializeObject(e.Message);
+                if(!((string)messageData.to).Equals(IntegrationId))return;
+                if(!((string)messageData.from).Equals(IntegrationId))return;
+                ReceivedMqttCheckForInterval = true;
+            };
 
             //Use our API client to create a media client
             _mediaClient = new FileTransferClient(_apiClient, MaxApiPayloadSize);
@@ -365,9 +378,29 @@ namespace Skylight.Sdk
             if(!mqttSuccess) {
                 throw new Exception("MQTT connection failed. Please check that the MQTT URL is valid.");
             }
+
+            //Start our check timer
+            MqttCheckTimer = new Timer(async (o) => {
+                if(MqttCheckTimer == null) return; //If the timer is null, we've stopped listening
+                if(!ReceivedMqttCheckForInterval) {
+                    //We've missed a packet -- perform stop start here
+                    Console.WriteLine("MQTT disconnect detected, performing reconnect.");
+                    await StopListening();
+                    await StartListening();
+                }
+                else {
+                    ReceivedMqttCheckForInterval = false;
+                    await SendNotification(IntegrationId, "mqttcheck", 0);
+                }
+            }, null, 0, MqttCheckTimerIntervalInMs);
         }
 
         public async Task StopListening() {
+            if(MqttCheckTimer != null) {
+                MqttCheckTimer.Dispose();
+                MqttCheckTimer = null;
+            }
+            ReceivedMqttCheckForInterval = true;
             await MessagingClient.CleanUp();
         }
 
@@ -506,7 +539,7 @@ namespace Skylight.Sdk
         /// <returns>Group having the specified groupName; null if group not found</returns>
         /// <exception cref="ArgumentException">Thrown if invalid argument</exception>
         /// <exception cref="ApiException">Thrown if the API call fails</exception>
-        public async Task<GroupWithMembers> GetGroup(string groupName)
+        public async Task<GroupWithMembers> x(string groupName)
         {
             if (string.IsNullOrWhiteSpace(groupName))
             {
