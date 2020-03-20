@@ -369,15 +369,13 @@ namespace Skylight.Sdk
             try {
                 await _apiClient.ExecuteRequestAsync(new Skylight.Api.Assignments.V1.APIRequests.GetApiRequest());
             } catch (Exception e) {
+                Console.WriteLine("Connection to Skylight Web API failed.  Please check that the username, password, and API URL are valid and that the extension can reach the Skylight server.");
                 throw e;//new Exception("Connection to Skylight Web API failed. Please check that the username, password, and API URL are valid and that the extension can reach the Skylight server.");
             }
         }
 
         public async Task StartListening() {
             var mqttSuccess = await MessagingClient.StartListeningAsync();
-            if(!mqttSuccess) {
-                throw new Exception("MQTT connection failed. Please check that the MQTT URL is valid.");
-            }
 
             //Start our check timer
             MqttCheckTimer = new Timer(async (o) => {
@@ -390,9 +388,19 @@ namespace Skylight.Sdk
                 }
                 else {
                     ReceivedMqttCheckForInterval = false;
-                    await SendNotification(IntegrationId, "mqttcheck", 0);
+                    try {
+                        await SendNotification(IntegrationId, "mqttcheck", 0);
+                    } catch(Exception e) {
+
+                    }
                 }
             }, null, 0, MqttCheckTimerIntervalInMs);
+            
+            if(!mqttSuccess) {
+                Console.WriteLine("MQTT connection failed. Attempting reconnect, but please check that the MQTT URL is valid and the server is reachable by the extension.");
+                await StopListening();
+                await StartListening();
+            }
         }
 
         public async Task StopListening() {
