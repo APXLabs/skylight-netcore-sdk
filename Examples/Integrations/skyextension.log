@@ -1,0 +1,122 @@
+2020-02-24 13:09:41,072 [1] INFO Program - Logging framework configured.
+2020-02-24 13:12:00,388 [1] INFO Program - Logging framework configured.
+2020-02-24 13:13:30,888 [1] INFO Program - Logging framework configured.
+2020-02-24 13:13:43,813 [1] INFO Program - Logging framework configured.
+2020-02-24 13:13:58,321 [1] INFO Program - Logging framework configured.
+2020-02-24 13:14:54,954 [1] INFO Program - Logging framework configured.
+2020-02-24 13:16:14,983 [1] INFO Program - Logging framework configured.
+2020-02-24 13:16:22,007 [1] INFO Program - Logging framework configured.
+2020-02-24 13:20:40,613 [1] INFO Program - Logging framework configured.
+2020-02-24 13:24:27,292 [1] INFO Program - Logging framework configured.
+2020-02-24 13:24:28,932 [7] INFO Program - Skylight MQTT client subscribed to: realms/cs_sandbox/events/#
+2020-02-24 13:24:28,933 [7] INFO Program - Skylight MQTT client subscribed to: realms/cs_sandbox/users/df2bb664-73b1-4498-92e8-92c5b19692f5/#
+2020-02-24 13:24:29,375 [6] INFO Program - Skylight MQTT client connected.
+2020-02-24 13:24:29,958 [6] INFO Program - Skylight Extension is now running and connected to cs_sandbox
+2020-03-25 09:41:48,054 [1] INFO Program - Logging framework configured.
+2020-03-25 09:41:50,875 [7] INFO Program - Skylight MQTT client subscribed to: realms/cs_sandbox/events/#
+2020-03-25 09:41:50,876 [7] INFO Program - Skylight MQTT client subscribed to: realms/cs_sandbox/users/df2bb664-73b1-4498-92e8-92c5b19692f5/#
+2020-03-25 09:41:51,720 [6] INFO Program - Skylight MQTT client connected.
+2020-03-25 09:41:51,889 [6] INFO Program - Skylight Extension is now running and connected to cs_sandbox
+2020-03-25 09:44:29,668 [1] INFO Program - Logging framework configured.
+2020-03-25 09:45:24,591 [1] INFO Program - Logging framework configured.
+2020-03-25 09:45:51,932 [1] INFO Program - Logging framework configured.
+2020-03-25 09:45:53,446 [7] INFO Program - Skylight MQTT client subscribed to: realms/cs_sandbox/events/#
+2020-03-25 09:45:53,447 [7] INFO Program - Skylight MQTT client subscribed to: realms/cs_sandbox/users/df2bb664-73b1-4498-92e8-92c5b19692f5/#
+2020-03-25 09:46:06,703 [4] INFO Program - Skylight MQTT client disconnected.
+2020-03-25 09:46:06,704 [4] INFO Program - Exception of type 'MQTTnet.Exceptions.MqttCommunicationTimedOutException' was thrown.
+2020-03-25 09:46:15,111 [4] INFO Program - Skylight MQTT client connected.
+2020-03-25 09:46:15,518 [4] INFO Program - Skylight Extension is now running and connected to cs_sandbox
+2020-03-25 09:46:15,580 [7] INFO Program - Found 45 integrations.
+2020-03-25 09:46:15,580 [7] INFO Program - Integration:
+2020-03-25 09:46:15,581 [7] INFO Program - Clara 0e4d0179-cda0-455d-b00b-d5e78c5c52d0
+2020-03-25 09:46:15,581 [7] INFO Program - Integration:
+2020-03-25 09:46:15,581 [7] INFO Program - WireHarness 35c8ef7f-e689-4931-87e6-05e3d9f9e5a1
+2020-03-25 09:46:15,581 [7] INFO Program - Integration:
+2020-03-25 09:46:15,582 [7] INFO Program - Stephanie c208b668-8793-4c3c-9f92-3b0e37785556
+2020-03-25 09:46:15,582 [7] INFO Program - Integration:
+2020-03-25 09:46:15,582 [7] INFO Program - Test dc5fd6ba-623e-4a56-8a00-4b6cf77d974a
+2020-03-25 09:46:15,582 [7] INFO Program - Integration:
+2020-03-25 09:46:15,583 [7] INFO Program - LogisticsTestApp f052130e-b832-43da-9390-f40152381378
+2020-03-25 09:46:15,583 [7] INFO Program - Integration:
+2020-03-25 09:46:15,583 [7] INFO Program - Aqil d74c921e-dee6-4bbb-ae16-5d4c8ba15614
+2020-03-25 09:46:15,583 [7] INFO Program - Integration:
+2020-03-25 09:46:15,583 [7] INFO Program - Toro 0203c7a1-064c-47b3-b66f-e64f6858a9b2
+2020-03-25 09:46:15,584 [7] INFO Program - Integration:
+2020-03-25 09:46:15,584 [7] INFO Program - DHL-Dev c0c84753-3fb1-4aca-adf5-3c4a8de27be1
+2020-03-25 09:46:15,584 [7] INFO Program - Integration:
+2020-03-25 09:46:15,584 [7] INFO Program - Alexey-Duke 38ce60da-51c7-4082-bc80-c503954dc704
+2020-03-25 09:46:15,585 [7] INFO Program - Integration:
+2020-03-25 09:46:15,585 [7] INFO Program - TestMqttDisconnectEvents_no_change 32f126c3-d637-4dfb-b1a5-1cf23b7e3b48
+2020-03-25 09:46:15,586 [7] INFO Program - Integration:
+2020-03-25 09:46:15,586 [7] INFO Program - TestMqttDisconnectEvents_change 0904b973-47e9-4fed-9633-4d376045b258
+2020-03-25 09:46:15,586 [7] INFO Program - Integration:
+2020-03-25 09:46:15,586 [7] INFO Program - Alexey-Duke-picking 75a1c851-e8e1-4dd1-b1c7-9b0c0bfaaa8b
+2020-03-25 09:46:15,588 [7] INFO Program - Integration:
+2020-03-25 09:46:15,589 [7] INFO Program - Duke Energy - counting fa893e66-d1b1-4da9-88f9-4b04116e0bb5
+2020-03-25 09:46:15,589 [7] INFO Program - Integration:
+2020-03-25 09:46:15,589 [7] INFO Program - Gulfstream-Dev 5f87e0b8-7768-4da9-ae1b-7f73da0eb595
+2020-03-25 09:46:15,590 [7] INFO Program - Integration:
+2020-03-25 09:46:15,590 [7] INFO Program - Duke Energy - picking 1e8678a6-6747-4531-8803-f34ea9609132
+2020-03-25 09:46:15,590 [7] INFO Program - Integration:
+2020-03-25 09:46:15,590 [7] INFO Program - johny-orizon ed17fdc0-a793-4d4a-ad71-6cfd58da2dcf
+2020-03-25 09:46:15,591 [7] INFO Program - Integration:
+2020-03-25 09:46:15,591 [7] INFO Program - Aptiv2019 1de15599-52d2-4c81-86f4-e44aaa598654
+2020-03-25 09:46:15,591 [7] INFO Program - Integration:
+2020-03-25 09:46:15,591 [7] INFO Program - RyderTest d9c7a958-c53c-4766-a5fb-a6b21a50950b
+2020-03-25 09:46:15,591 [7] INFO Program - Integration:
+2020-03-25 09:46:15,592 [7] INFO Program - RyderAudit 6491ef89-dd8b-4d0f-9bef-db798a3eb089
+2020-03-25 09:46:15,592 [7] INFO Program - Integration:
+2020-03-25 09:46:15,592 [7] INFO Program - Clara2 e63b6f51-d3ed-4652-bda5-6beec1f0d6f0
+2020-03-25 09:46:15,592 [7] INFO Program - Integration:
+2020-03-25 09:46:15,593 [7] INFO Program - Wallmart-OGP d6235b44-6aed-4b4a-b6aa-f5d6095e294f
+2020-03-25 09:46:15,593 [7] INFO Program - Integration:
+2020-03-25 09:46:15,593 [7] INFO Program - KenTestExtension c9dcd50e-1765-440f-94cf-bb492a2f69ae
+2020-03-25 09:46:15,593 [7] INFO Program - Integration:
+2020-03-25 09:46:15,593 [7] INFO Program - wogp-function 5ea9b066-52eb-49a2-88c5-837b08c005cd
+2020-03-25 09:46:15,593 [7] INFO Program - Integration:
+2020-03-25 09:46:15,594 [7] INFO Program - Haznozii_Duke 261a246e-c1ca-46c6-b253-3d157c72bc6f
+2020-03-25 09:46:15,594 [7] INFO Program - Integration:
+2020-03-25 09:46:15,594 [7] INFO Program - AaronDashboard 072126a1-f0a6-415e-931a-ec6ca5236728
+2020-03-25 09:46:15,594 [7] INFO Program - Integration:
+2020-03-25 09:46:15,594 [7] INFO Program - Haznozii-Wmart-Dev 2326881d-2415-46fd-8b65-fca730b6f51e
+2020-03-25 09:46:15,595 [7] INFO Program - Integration:
+2020-03-25 09:46:15,595 [7] INFO Program - AndrewTest 587e6f71-f6b1-4021-8201-d4f972bfb3ef
+2020-03-25 09:46:15,595 [7] INFO Program - Integration:
+2020-03-25 09:46:15,595 [7] INFO Program - DUKE-DH 50932e1e-47fa-4252-9bae-8a273bbe5cba
+2020-03-25 09:46:15,595 [7] INFO Program - Integration:
+2020-03-25 09:46:15,596 [7] INFO Program - Toolkit Credentials df2bb664-73b1-4498-92e8-92c5b19692f5
+2020-03-25 09:46:15,596 [7] INFO Program - Integration:
+2020-03-25 09:46:15,596 [7] INFO Program - Clara Test 788c8e8d-b15e-4e4c-a199-bc95f9a0f01a
+2020-03-25 09:46:15,596 [7] INFO Program - Integration:
+2020-03-25 09:46:15,596 [7] INFO Program - Ryder_DH c98f6ced-a23c-46f4-8bbb-dbd286f38ae3
+2020-03-25 09:46:15,597 [7] INFO Program - Integration:
+2020-03-25 09:46:15,597 [7] INFO Program - portaltest f31bb1d5-318e-43c3-abb9-517bd9340080
+2020-03-25 09:46:15,597 [7] INFO Program - Integration:
+2020-03-25 09:46:15,597 [7] INFO Program - ClaraSDK 4c8e561d-57f9-4e7a-bfd1-2c552ee732bd
+2020-03-25 09:46:15,597 [7] INFO Program - Integration:
+2020-03-25 09:46:15,598 [7] INFO Program - RyderEvents 5ea24eaf-fffb-4f17-a54f-3fdbd512df17
+2020-03-25 09:46:15,598 [7] INFO Program - Integration:
+2020-03-25 09:46:15,598 [7] INFO Program - wmart-haznozii 83f7d0c1-5127-4742-8390-2e9571e94806
+2020-03-25 09:46:15,599 [7] INFO Program - Integration:
+2020-03-25 09:46:15,599 [7] INFO Program - Aaron Dashboard 2 08998357-484e-4cc5-81fc-eb8f47f62f5c
+2020-03-25 09:46:15,599 [7] INFO Program - Integration:
+2020-03-25 09:46:15,599 [7] INFO Program - Adam test 96794cd8-9e38-400c-9b93-3201c8f757bf
+2020-03-25 09:46:15,600 [7] INFO Program - Integration:
+2020-03-25 09:46:15,600 [7] INFO Program - wogp-dev d8a3446a-2505-401e-b09a-3afcb28b5930
+2020-03-25 09:46:15,600 [7] INFO Program - Integration:
+2020-03-25 09:46:15,601 [7] INFO Program - Suggy Dev 6a7dcf55-6ebd-4866-9627-8994189060df
+2020-03-25 09:46:15,601 [7] INFO Program - Integration:
+2020-03-25 09:46:15,601 [7] INFO Program - jnj-test 0bc83685-b18c-4a4e-a449-3f6a7831231b
+2020-03-25 09:46:15,602 [7] INFO Program - Integration:
+2020-03-25 09:46:15,602 [7] INFO Program - tst1 455017f3-0393-4bac-abc8-b094133ec32c
+2020-03-25 09:46:15,602 [7] INFO Program - Integration:
+2020-03-25 09:46:15,602 [7] INFO Program - Andrew Dev 1e366ae2-b7aa-449c-80a5-160c3c73c80f
+2020-03-25 09:46:15,603 [7] INFO Program - Integration:
+2020-03-25 09:46:15,603 [7] INFO Program - newToken 77aeeb48-0cee-4407-a086-44f86b185486
+2020-03-25 09:46:15,603 [7] INFO Program - Integration:
+2020-03-25 09:46:15,603 [7] INFO Program - aqil etester fe098cd6-4071-491f-9f5e-0b0a45d0d80a
+2020-03-25 09:46:15,604 [7] INFO Program - Integration:
+2020-03-25 09:46:15,604 [7] INFO Program - tst_2 e536de7e-887c-4180-b227-f1def39078bd
+2020-03-25 09:47:04,737 [15] INFO Program - Skylight MQTT client disconnected.
+2020-03-25 09:47:04,738 [15] INFO Program - A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.
+2020-03-25 09:47:05,400 [18] INFO Program - Skylight MQTT client connected.
