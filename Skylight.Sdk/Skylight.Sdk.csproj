@@ -13,7 +13,7 @@
       <ProjectReference Include="..\..\..\skylight-netcore-api\Skylight\Skylight.csproj"  /> 
       <ProjectReference Include="..\..\..\skylight-netcore-api\Skylight.FileClient\Skylight.FileClient.csproj"  />-->
       <PackageReference Include="Skylight.Api" Version="1.5.0" />
-      <PackageReference Include="Skylight.FileClient" Version="1.5.0" />
+      <PackageReference Include="Skylight.FileClient" Version="1.6.0-beta.1" />
     </ItemGroup>
 
 </Project>
