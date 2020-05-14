@@ -547,7 +547,7 @@ namespace Skylight.Sdk
         /// <returns>Group having the specified groupName; null if group not found</returns>
         /// <exception cref="ArgumentException">Thrown if invalid argument</exception>
         /// <exception cref="ApiException">Thrown if the API call fails</exception>
-        public async Task<GroupWithMembers> x(string groupName)
+        public async Task<GroupWithMembers> GetGroup(string groupName)
         {
             if (string.IsNullOrWhiteSpace(groupName))
             {
