@@ -12,8 +12,8 @@
       <!--<ProjectReference Include="..\..\skylight-netcore-mqtt\Skylight.Mqtt\Skylight.Mqtt.csproj"  />
       <ProjectReference Include="..\..\..\skylight-netcore-api\Skylight\Skylight.csproj"  /> 
       <ProjectReference Include="..\..\..\skylight-netcore-api\Skylight.FileClient\Skylight.FileClient.csproj"  />-->
-      <PackageReference Include="Skylight.Api" Version="1.6.0-beta.5" />
-      <PackageReference Include="Skylight.FileClient" Version="1.6.0-beta.5" />
+      <PackageReference Include="Skylight.Api" Version="1.6.0-beta.6" />
+      <PackageReference Include="Skylight.FileClient" Version="1.6.0-beta.6" />
     </ItemGroup>
 
 </Project>
