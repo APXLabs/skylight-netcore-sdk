@@ -142,7 +142,7 @@ namespace Skylight.Sdk
             public async Task<IEnumerable<Sequence>> CreateSequences(string assignmentId, List<SequenceNew> sequences)
             {
                 string threadId = RandomString(10);
-                /*
+                
                 Logger.Info($"[{threadId}] CreateSequences({assignmentId},{sequences?.Count} sequences)");
                 foreach (var seq in sequences)
                 {
@@ -161,7 +161,7 @@ namespace Skylight.Sdk
                 {
                     Logger.Error($"[{threadId}] CreateSequences: precheck -- Assignment {assignmentId} already contains sequence with id {duplicate.Id}");
                 }
-                */
+                
                 try
                 {
                     var request = new CreateSequencesRequest(sequences, assignmentId);
@@ -174,19 +174,19 @@ namespace Skylight.Sdk
                 catch (Exception ex)
                 {
                     Logger.Error($"[{threadId}] CreateSequences error. Ex = {ex.Message}");
-                    /*
+                    
                     GetAssignmentSequencesRequest request = new GetAssignmentSequencesRequest(assignmentId);
                     var response = await base.ExecuteRequestAsync(request);
                     
                     //check to see if assignment already contains any of these sequences
                     var assignmentSequences2 = response.Content;
                     Logger.Info($"[{threadId}] CreateSequences: after exception -- Assignment {assignmentId} currently has {assignmentSequences2.Count} sequences.");
-                    var duplicate2 = assignmentSequences.FirstOrDefault(x => sequenceIds.Contains(x.Id));
+                    var duplicate2 = assignmentSequences2.FirstOrDefault(x => sequenceIds.Contains(x.Id));
                     if (duplicate2 != null)
                     {
                         Logger.Error($"[{threadId}] CreateSequences: after exception -- Assignment {assignmentId} already contains sequence with id {duplicate2.Id}");
                     }
-                    */
+                    
                     throw ex;
                 }
             }
