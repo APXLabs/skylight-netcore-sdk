@@ -85,16 +85,15 @@ namespace Skylight.Sdk
                     throw new ArgumentNullException(nameof(assignment));
                 
                 var payloadSize = GetEstimatedPayloadSize(assignment);
-                Logger.Info($"Estimated payload size = {payloadSize}");
-                Logger.Info($"Max payload size = {_maxApiPayloadSize}");
+                //Logger.Info($"Estimated payload size = {payloadSize}");
+                //Logger.Info($"Max payload size = {_maxApiPayloadSize}");
                 if (payloadSize >= _maxApiPayloadSize)
-                {
-                    
+                {                    
                     var sequences = assignment.Sequences.ToList();
                     assignment.Sequences = new List<SequenceNew>();
                     
                     var createdAssignment = await CreateAssignment(assignment);
-                    Logger.Info($"Created assignment {createdAssignment.Id} with no sequences.");
+                    //Logger.Info($"Created assignment {createdAssignment.Id} with no sequences.");
                     await ProcessSequencesCreation(createdAssignment.Id, sequences);
                     return createdAssignment;
                 }
@@ -108,13 +107,13 @@ namespace Skylight.Sdk
                 if (sequences == null)
                     throw new ArgumentNullException(nameof(sequences));
 
-                Logger.Info($"ProcessSequencesCreation({assignmentId}, sequences)");
+                //Logger.Info($"ProcessSequencesCreation({assignmentId}, sequences)");
 
                 // filter sequences that fit max payload size to create groups of them
                 var payloadFitSequences = sequences.Where(sequence => GetEstimatedPayloadSize(sequence) < _maxApiPayloadSize).ToList();
                 if (payloadFitSequences.Any())
                 {
-                    Logger.Info("Grouping payloadFitSequences");
+                    //Logger.Info("Grouping payloadFitSequences");
                     // split sequences into groups
                     var groups = PackFitSequencesIntoGroups(payloadFitSequences).ToList();
                     Logger.Info($"PackFitSequencesIntoGroups created {groups.Count} groups.");
@@ -144,11 +143,13 @@ namespace Skylight.Sdk
             public async Task<IEnumerable<Sequence>> CreateSequences(string assignmentId, List<SequenceNew> sequences)
             {
                 string threadId = RandomString(10);
+                /*
                 Logger.Info($"[{threadId}] CreateSequences({assignmentId},{sequences?.Count} sequences)");
                 foreach (var seq in sequences)
                 {
                     Logger.Debug($"[{threadId}] new sequence {seq.Id}");
                 }
+                
                 //cross-check new sequences with existing assignment sequences
                 List<string> sequenceIds = sequences.Select(s => s.Id).ToList();
                 GetAssignmentSequencesRequest assignmentRequest = new GetAssignmentSequencesRequest(assignmentId);
@@ -161,7 +162,7 @@ namespace Skylight.Sdk
                 {
                     Logger.Error($"[{threadId}] CreateSequences: precheck -- Assignment {assignmentId} already contains sequence with id {duplicate.Id}");
                 }
-
+                */
                 try
                 {
                     var request = new CreateSequencesRequest(sequences, assignmentId);
@@ -174,7 +175,7 @@ namespace Skylight.Sdk
                 catch (Exception ex)
                 {
                     Logger.Error($"[{threadId}] CreateSequences error. Ex = {ex.Message}");
-                    
+                    /*
                     GetAssignmentSequencesRequest request = new GetAssignmentSequencesRequest(assignmentId);
                     var response = await base.ExecuteRequestAsync(request);
                     
@@ -186,7 +187,7 @@ namespace Skylight.Sdk
                     {
                         Logger.Error($"[{threadId}] CreateSequences: after exception -- Assignment {assignmentId} already contains sequence with id {duplicate2.Id}");
                     }
-                    
+                    */
                     throw ex;
                 }
             }
