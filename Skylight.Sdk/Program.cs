@@ -36,12 +36,20 @@ namespace Skylight.Sdk
 
             private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
             private readonly int _maxApiPayloadSize;
+            private static Random random = new Random();
+
             public SkylightApiClient(ConnectionInfo connectionInfo, int MaxApiPayloadSize) : base(connectionInfo)
             {
                 _maxApiPayloadSize = MaxApiPayloadSize;   
             }
 
-            
+            public static string RandomString(int length)
+            {
+                const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
+                return new string(Enumerable.Repeat(chars, length)
+                  .Select(s => s[random.Next(s.Length)]).ToArray());
+            }
+
             private int GetEstimatedPayloadSize(object payload)
             {
                 var serialized = JsonConvert.SerializeObject(payload);
@@ -110,7 +118,7 @@ namespace Skylight.Sdk
                     // split sequences into groups
                     var groups = PackFitSequencesIntoGroups(payloadFitSequences).ToList();
                     var groupsCreationTasks = groups.Select(group => CreateSequences(assignmentId, group));
-
+                    Logger.Info($"Started {groupsCreationTasks.Count()} creation tasks.");
                     await Task.WhenAll(groupsCreationTasks);
                 }
                         
@@ -133,10 +141,11 @@ namespace Skylight.Sdk
             /// <param name="sequences">List of sequences</param>
             public async Task<IEnumerable<Sequence>> CreateSequences(string assignmentId, List<SequenceNew> sequences)
             {
-                Logger.Info($"CreateSequences({assignmentId},{sequences?.Count} sequences)");
+                string threadId = RandomString(10);
+                Logger.Info($"[{threadId}] CreateSequences({assignmentId},{sequences?.Count} sequences)");
                 foreach (var seq in sequences)
                 {
-                    Logger.Debug($"new sequence {seq.Id}");
+                    Logger.Debug($"[{threadId}] new sequence {seq.Id}");
                 }
                 //cross-check new sequences with existing assignment sequences
                 List<string> sequenceIds = sequences.Select(s => s.Id).ToList();
@@ -144,11 +153,11 @@ namespace Skylight.Sdk
                 var assignmentResponse = await base.ExecuteRequestAsync(assignmentRequest);
                 //check to see if assignment already contains any of these sequences
                 var assignmentSequences = assignmentResponse.Content;
-                Logger.Info($"Assignment {assignmentId} currently has {assignmentSequences.Count} sequences. Cross-checking for duplicates in new sequences.");
+                Logger.Info($"[{threadId}] Assignment {assignmentId} currently has {assignmentSequences.Count} sequences. Cross-checking for duplicates in new sequences.");
                 var duplicate = assignmentSequences.FirstOrDefault(x => sequenceIds.Contains(x.Id));
                 if (duplicate != null)
                 {
-                    Logger.Error($"CreateSequences: precheck -- Assignment {assignmentId} already contains sequence with id {duplicate.Id}");
+                    Logger.Error($"[{threadId}] CreateSequences: precheck -- Assignment {assignmentId} already contains sequence with id {duplicate.Id}");
                 }
 
                 try
@@ -162,18 +171,18 @@ namespace Skylight.Sdk
                 } 
                 catch (Exception ex)
                 {
-                    Logger.Error($"CreateSequences error. Ex = {ex.Message}");
+                    Logger.Error($"[{threadId}] CreateSequences error. Ex = {ex.Message}");
                     
                     GetAssignmentSequencesRequest request = new GetAssignmentSequencesRequest(assignmentId);
                     var response = await base.ExecuteRequestAsync(request);
                     
                     //check to see if assignment already contains any of these sequences
                     var assignmentSequences2 = response.Content;
-                    Logger.Info($"CreateSequences: after exception -- Assignment {assignmentId} currently has {assignmentSequences2.Count} sequences.");
+                    Logger.Info($"[{threadId}] CreateSequences: after exception -- Assignment {assignmentId} currently has {assignmentSequences2.Count} sequences.");
                     var duplicate2 = assignmentSequences.FirstOrDefault(x => sequenceIds.Contains(x.Id));
                     if (duplicate2 != null)
                     {
-                        Logger.Error($"CreateSequences: after exception -- Assignment {assignmentId} already contains sequence with id {duplicate2.Id}");
+                        Logger.Error($"[{threadId}] CreateSequences: after exception -- Assignment {assignmentId} already contains sequence with id {duplicate2.Id}");
                     }
                     
                     throw ex;
