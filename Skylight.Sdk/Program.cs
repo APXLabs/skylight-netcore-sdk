@@ -117,9 +117,11 @@ namespace Skylight.Sdk
                     Logger.Info("Grouping payloadFitSequences");
                     // split sequences into groups
                     var groups = PackFitSequencesIntoGroups(payloadFitSequences).ToList();
+                    Logger.Info($"PackFitSequencesIntoGroups created {groups.Count} groups.");
                     var groupsCreationTasks = groups.Select(group => CreateSequences(assignmentId, group));
                     Logger.Info($"Started {groupsCreationTasks.Count()} creation tasks.");
                     await Task.WhenAll(groupsCreationTasks);
+                    Logger.Info($"All {groupsCreationTasks.Count()} creation tasks completed.");
                 }
                         
                 var sequenceCreationTasks = sequences.Except(payloadFitSequences).Select(async sequence =>
