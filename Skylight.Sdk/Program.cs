@@ -132,6 +132,20 @@ namespace Skylight.Sdk
             /// <param name="sequences">List of sequences</param>
             public async Task<IEnumerable<Sequence>> CreateSequences(string assignmentId, List<SequenceNew> sequences)
             {
+                Logger.Info($"CreateSequences({assignmentId},{sequences?.Count} sequences)");
+
+                //cross-check new sequences with existing assignment sequences
+                List<string> sequenceIds = sequences.Select(s => s.Id).ToList();
+                GetAssignmentSequencesRequest assignmentRequest = new GetAssignmentSequencesRequest(assignmentId);
+                var assignmentResponse = await base.ExecuteRequestAsync(assignmentRequest);
+                //check to see if assignment already contains any of these sequences
+                var assignmentSequences = assignmentResponse.Content;
+                var duplicate = assignmentSequences.FirstOrDefault(x => sequenceIds.Contains(x.Id));
+                if (duplicate != null)
+                {
+                    Logger.Error($"CreateSequences: precheck -- Assignment {assignmentId} already contains sequence with id {duplicate.Id}");
+                }
+
                 try
                 {
                     var request = new CreateSequencesRequest(sequences, assignmentId);
@@ -144,6 +158,7 @@ namespace Skylight.Sdk
                 catch (Exception ex)
                 {
                     Logger.Error($"CreateSequences error. Ex = {ex.Message}");
+                    /*
                     List<string> sequenceIds = sequences.Select(s => s.Id).ToList();
                     GetAssignmentSequencesRequest request = new GetAssignmentSequencesRequest(assignmentId);
                     var response = await base.ExecuteRequestAsync(request);
@@ -154,6 +169,7 @@ namespace Skylight.Sdk
                     {
                         Logger.Error($"CreateSequences: Assignment {assignmentId} already contains at least one sequence with id {duplicate.Id}");
                     }
+                    */
                     throw ex;
                 }
             }
@@ -167,6 +183,18 @@ namespace Skylight.Sdk
             /// <returns>Created sequence</returns>
             public async Task<Sequence> CreateSequence(string assignmentId, SequenceNew sequence)
             {
+
+                //cross-check new sequence with existing assignment sequences
+                GetAssignmentSequencesRequest assignmentRequest = new GetAssignmentSequencesRequest(assignmentId);
+                var assignmentResponse = await base.ExecuteRequestAsync(assignmentRequest);
+                //check to see if assignment already contains any of these sequences
+                var assignmentSequences = assignmentResponse.Content;
+                var duplicate = assignmentSequences.FirstOrDefault(x => x.Id == sequence.Id);
+                if (duplicate != null)
+                {
+                    Logger.Error($"CreateSequence: precheck -- Assignment {assignmentId} already contains sequence with id {duplicate.Id}");
+                }
+
                 try
                 {
                     var request = new CreateSequenceRequest(sequence, assignmentId);
@@ -177,6 +205,7 @@ namespace Skylight.Sdk
                 catch (Exception ex)
                 {
                     Logger.Error($"CreateSequence error. Ex = {ex.Message}");
+                    /*
                     GetAssignmentSequencesRequest request = new GetAssignmentSequencesRequest(assignmentId);
                     var response = await base.ExecuteRequestAsync(request);
                     //check to see if assignment already contains this sequence
@@ -186,6 +215,7 @@ namespace Skylight.Sdk
                     {
                         Logger.Error($"CreateSequence: Assignment {assignmentId} already contains sequence with id {duplicate.Id}");
                     }
+                    */
                     throw ex;
                 }
             }
