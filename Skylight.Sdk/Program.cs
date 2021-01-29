@@ -85,15 +85,15 @@ namespace Skylight.Sdk
                     throw new ArgumentNullException(nameof(assignment));
                 
                 var payloadSize = GetEstimatedPayloadSize(assignment);
-                //Logger.Info($"Estimated payload size = {payloadSize}");
-                //Logger.Info($"Max payload size = {_maxApiPayloadSize}");
+                Logger.Info($"Estimated payload size = {payloadSize}");
+                Logger.Info($"Max payload size = {_maxApiPayloadSize}");
                 if (payloadSize >= _maxApiPayloadSize)
                 {                    
                     var sequences = assignment.Sequences.ToList();
                     assignment.Sequences = new List<SequenceNew>();
                     
                     var createdAssignment = await CreateAssignment(assignment);
-                    //Logger.Info($"Created assignment {createdAssignment.Id} with no sequences.");
+                    Logger.Info($"Created assignment {createdAssignment.Id} with no sequences.");
                     await ProcessSequencesCreation(createdAssignment.Id, sequences);
                     return createdAssignment;
                 }
@@ -107,7 +107,7 @@ namespace Skylight.Sdk
                 if (sequences == null)
                     throw new ArgumentNullException(nameof(sequences));
 
-                //Logger.Info($"ProcessSequencesCreation({assignmentId}, sequences)");
+                Logger.Info($"ProcessSequencesCreation({assignmentId}, sequences)");
 
                 // filter sequences that fit max payload size to create groups of them
                 var payloadFitSequences = sequences.Where(sequence => GetEstimatedPayloadSize(sequence) < _maxApiPayloadSize).ToList();
