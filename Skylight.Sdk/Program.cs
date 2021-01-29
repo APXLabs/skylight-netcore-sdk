@@ -25,6 +25,7 @@ using Skylight.Api.Authentication.V1.GroupsRequests;
 using Skylight.Api.Authentication.V1.UsersRequests;
 using Skylight.Api.Messaging.V1.Models;
 using Skylight.Api.Messaging.V1.NotificationsRequests;
+using log4net;
 
 namespace Skylight.Sdk
 {
@@ -33,6 +34,7 @@ namespace Skylight.Sdk
     {
         public class SkylightApiClient : ApiClient {
 
+            private static readonly ILog Logger = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
             private readonly int _maxApiPayloadSize;
             public SkylightApiClient(ConnectionInfo connectionInfo, int MaxApiPayloadSize) : base(connectionInfo)
             {
@@ -78,11 +80,12 @@ namespace Skylight.Sdk
 
                 if (payloadSize >= _maxApiPayloadSize)
                 {
+                    Logger.Info($"Estimated payload size = {payloadSize}");
                     var sequences = assignment.Sequences.ToList();
                     assignment.Sequences = new List<SequenceNew>();
                     
                     var createdAssignment = await CreateAssignment(assignment);
-                    
+                    Logger.Info($"Created assignment {createdAssignment.Id} with no sequences.");
                     await ProcessSequencesCreation(createdAssignment.Id, sequences);
                     return createdAssignment;
                 }
@@ -96,10 +99,13 @@ namespace Skylight.Sdk
                 if (sequences == null)
                     throw new ArgumentNullException(nameof(sequences));
 
+                Logger.Info($"ProcessSequencesCreation({assignmentId}, sequences)");
+
                 // filter sequences that fit max payload size to create groups of them
                 var payloadFitSequences = sequences.Where(sequence => GetEstimatedPayloadSize(sequence) < _maxApiPayloadSize).ToList();
                 if (payloadFitSequences.Any())
                 {
+                    Logger.Info("Grouping payloadFitSequences");
                     // split sequences into groups
                     var groups = PackFitSequencesIntoGroups(payloadFitSequences).ToList();
                     var groupsCreationTasks = groups.Select(group => CreateSequences(assignmentId, group));
@@ -126,12 +132,30 @@ namespace Skylight.Sdk
             /// <param name="sequences">List of sequences</param>
             public async Task<IEnumerable<Sequence>> CreateSequences(string assignmentId, List<SequenceNew> sequences)
             {
-                var request = new CreateSequencesRequest(sequences, assignmentId);
-                var response = await base.ExecuteRequestAsync(request);
+                try
+                {
+                    var request = new CreateSequencesRequest(sequences, assignmentId);
+                    var response = await base.ExecuteRequestAsync(request);
 
-                var createdSequences = response.Content;
-                
-                return createdSequences;
+                    var createdSequences = response.Content;
+
+                    return createdSequences;
+                } 
+                catch (Exception ex)
+                {
+                    Logger.Error($"CreateSequences error. Ex = {ex.Message}");
+                    List<string> sequenceIds = sequences.Select(s => s.Id).ToList();
+                    GetAssignmentSequencesRequest request = new GetAssignmentSequencesRequest(assignmentId);
+                    var response = await base.ExecuteRequestAsync(request);
+                    //check to see if assignment already contains any of these sequences
+                    var assignmentSequences = response.Content;
+                    var duplicate = assignmentSequences.FirstOrDefault(x => sequenceIds.Contains(x.Id));
+                    if (duplicate != null)
+                    {
+                        Logger.Error($"CreateSequences: Assignment {assignmentId} already contains at least one sequence with id {duplicate.Id}");
+                    }
+                    throw ex;
+                }
             }
 
             
@@ -143,10 +167,27 @@ namespace Skylight.Sdk
             /// <returns>Created sequence</returns>
             public async Task<Sequence> CreateSequence(string assignmentId, SequenceNew sequence)
             {
-                var request = new CreateSequenceRequest(sequence, assignmentId);
-                var response = await base.ExecuteRequestAsync(request);
+                try
+                {
+                    var request = new CreateSequenceRequest(sequence, assignmentId);
+                    var response = await base.ExecuteRequestAsync(request);
 
-                return response.Content;
+                    return response.Content;
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error($"CreateSequence error. Ex = {ex.Message}");
+                    GetAssignmentSequencesRequest request = new GetAssignmentSequencesRequest(assignmentId);
+                    var response = await base.ExecuteRequestAsync(request);
+                    //check to see if assignment already contains this sequence
+                    var assignmentSequences = response.Content;
+                    var duplicate = assignmentSequences.FirstOrDefault(x => sequence.Id == x.Id);
+                    if (duplicate != null)
+                    {
+                        Logger.Error($"CreateSequence: Assignment {assignmentId} already contains sequence with id {duplicate.Id}");
+                    }
+                    throw ex;
+                }
             }
 
             private IEnumerable<List<SequenceNew>> PackFitSequencesIntoGroups(List<SequenceNew> sequences)
