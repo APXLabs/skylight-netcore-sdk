@@ -85,15 +85,14 @@ namespace Skylight.Sdk
                     throw new ArgumentNullException(nameof(assignment));
                 
                 var payloadSize = GetEstimatedPayloadSize(assignment);
-                Logger.Info($"Estimated payload size = {payloadSize}");
-                Logger.Info($"Max payload size = {_maxApiPayloadSize}");
+                Logger.Debug($"Estimated payload size = {payloadSize}, Max payload size = {_maxApiPayloadSize}");
                 if (payloadSize >= _maxApiPayloadSize)
                 {                    
                     var sequences = assignment.Sequences.ToList();
                     assignment.Sequences = new List<SequenceNew>();
                     
                     var createdAssignment = await CreateAssignment(assignment);
-                    Logger.Info($"Created assignment {createdAssignment.Id} with no sequences.");
+                    Logger.Debug($"Created assignment {createdAssignment.Id} with no sequences.");
                     await ProcessSequencesCreation(createdAssignment.Id, sequences);
                     return createdAssignment;
                 }
@@ -107,18 +106,15 @@ namespace Skylight.Sdk
                 if (sequences == null)
                     throw new ArgumentNullException(nameof(sequences));
 
-                Logger.Info($"ProcessSequencesCreation({assignmentId}, sequences)");
+                Logger.Debug($"ProcessSequencesCreation({assignmentId}, sequences)");
 
                 // filter sequences that fit max payload size to create groups of them
                 var payloadFitSequences = sequences.Where(sequence => GetEstimatedPayloadSize(sequence) < _maxApiPayloadSize).ToList();
                 if (payloadFitSequences.Any())
                 {
-                    //Logger.Info("Grouping payloadFitSequences");
                     // split sequences into groups
                     var groups = PackFitSequencesIntoGroups(payloadFitSequences).ToList();
-                    //Logger.Info($"PackFitSequencesIntoGroups created {groups.Count} groups.");
                     var groupsCreationTasks = groups.Select(group => CreateSequences(assignmentId, group));
-                    //Logger.Info($"Started {groupsCreationTasks.Count()} creation tasks.");
                     await Task.WhenAll(groupsCreationTasks);
                 }
                         
@@ -143,7 +139,7 @@ namespace Skylight.Sdk
             {
                 string threadId = RandomString(10);
                 
-                Logger.Info($"[{threadId}] CreateSequences({assignmentId},{sequences?.Count} sequences)");
+                Logger.Debug($"[{threadId}] CreateSequences({assignmentId},{sequences?.Count} sequences)");
                 foreach (var seq in sequences)
                 {
                     Logger.Debug($"[{threadId}] new sequence {seq.Id}");
@@ -155,7 +151,7 @@ namespace Skylight.Sdk
                 var assignmentResponse = await base.ExecuteRequestAsync(assignmentRequest);
                 //check to see if assignment already contains any of these sequences
                 var assignmentSequences = assignmentResponse.Content;
-                Logger.Info($"[{threadId}] Assignment {assignmentId} currently has {assignmentSequences.Count} sequences. Cross-checking for duplicates in new sequences.");
+                Logger.Debug($"[{threadId}] Assignment {assignmentId} currently has {assignmentSequences.Count} sequences. Cross-checking for duplicates in new sequences.");
                 var duplicate = assignmentSequences.FirstOrDefault(x => sequenceIds.Contains(x.Id));
                 if (duplicate != null)
                 {
@@ -180,7 +176,7 @@ namespace Skylight.Sdk
                     
                     //check to see if assignment already contains any of these sequences
                     var assignmentSequences2 = response.Content;
-                    Logger.Info($"[{threadId}] CreateSequences: after exception -- Assignment {assignmentId} currently has {assignmentSequences2.Count} sequences.");
+                    Logger.Error($"[{threadId}] CreateSequences: after exception -- Assignment {assignmentId} currently has {assignmentSequences2.Count} sequences.");
                     var duplicate2 = assignmentSequences2.FirstOrDefault(x => sequenceIds.Contains(x.Id));
                     if (duplicate2 != null)
                     {
@@ -206,11 +202,12 @@ namespace Skylight.Sdk
                 var assignmentResponse = await base.ExecuteRequestAsync(assignmentRequest);
                 //check to see if assignment already contains any of these sequences
                 var assignmentSequences = assignmentResponse.Content;
-                Logger.Info($"CreateSequence: Assignment {assignmentId} currently has {assignmentSequences.Count} sequences. Cross-checking for duplicates in new sequences.");
+                string threadId = RandomString(10);
+                Logger.Debug($"[{threadId}] CreateSequence: Assignment {assignmentId} currently has {assignmentSequences.Count} sequences. Cross-checking for duplicate of new sequence.");
                 var duplicate = assignmentSequences.FirstOrDefault(x => x.Id == sequence.Id);
                 if (duplicate != null)
                 {
-                    Logger.Error($"CreateSequences: precheck -- Assignment {assignmentId} already contains sequence with id {duplicate.Id}");
+                    Logger.Error($"[{threadId}] CreateSequence: precheck -- Assignment {assignmentId} already contains sequence with id {duplicate.Id}");
                 }
 
                 try
@@ -228,11 +225,11 @@ namespace Skylight.Sdk
                     var response = await base.ExecuteRequestAsync(request);
                     //check to see if assignment already contains any of these sequences
                     var assignmentSequences2 = response.Content;
-                    Logger.Info($"CreateSequence: after exception -- Assignment {assignmentId} currently has {assignmentSequences.Count} sequences. Cross-checking for duplicates.");
-                    var duplicate2 = assignmentSequences.FirstOrDefault(x => x.Id == sequence.Id);
+                    Logger.Error($"[{threadId}] CreateSequence: after exception -- Assignment {assignmentId} currently has {assignmentSequences2.Count} sequences. Cross-checking for duplicates.");
+                    var duplicate2 = assignmentSequences2.FirstOrDefault(x => x.Id == sequence.Id);
                     if (duplicate2 != null)
                     {
-                        Logger.Error($"CreateSequences: after exception -- Assignment {assignmentId} already contains sequence with id {duplicate2.Id}");
+                        Logger.Error($"[{threadId}] CreateSequence: after exception -- Assignment {assignmentId} already contains sequence with id {duplicate2.Id}");
                     }
 
                     throw ex;
